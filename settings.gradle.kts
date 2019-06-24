@@ -9,6 +9,7 @@ include(
         "cfa-metrics",
         "common",
         "core",
+        "expression-diagram",
         "solver",
         "solver-z3",
         "sts",
