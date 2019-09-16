@@ -27,7 +27,8 @@ public class ExpressionNode {
     boolean containsDecl = false;
     HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
     VariableSubstitution variableSubstitution;
-    private static Stack<Expr> stack = new Stack<Expr>();
+    private static Stack<Expr> substStack = new Stack<Expr>();
+    private static Stack<Expr> nodeStack = new Stack<Expr>();
 
     ExpressionNode(VariableSubstitution vs) {
         variableSubstitution = vs;
@@ -74,26 +75,28 @@ public class ExpressionNode {
         Cursor myCursor = makeCursor();
         while (myCursor.moveNext()) {
             myCursor.getNode().calculateSatisfyingSubstitutions();
-            //System.out.println("--- " + expression.toString() + " ---");
-            //System.out.println("--- " + cursor.getLiteral().toString() + "   " + cursor.getNode().expression.toString() + " ---");
         }
     }
 
     void getSatisfyingSubstitutions() {
         if (expression == TrueExpr.getInstance()) {
-            Iterator it = stack.iterator();
-            while (it.hasNext()) {
-                System.out.print(it.next());
+            Iterator it = substStack.iterator();
+            Iterator itn = nodeStack.iterator();
+            while (it.hasNext() && itn.hasNext()) {
+                System.out.print(itn.next() + " " + it.next() + " ");
             }
             System.out.print("\n");
-            stack.pop();
+            substStack.pop();
+            nodeStack.pop();
         }
         else {
             for (Expr key : nextExpression.keySet()) {
-                stack.push(key);
+                substStack.push(key);
+                nodeStack.push(this.expression);
                 nextExpression.get(key).getSatisfyingSubstitutions();
             }
-            if (!stack.empty())stack.pop();
+            if (!substStack.empty()) substStack.pop();
+            if (!nodeStack.empty()) nodeStack.pop();
         }
     }
 
