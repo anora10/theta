@@ -27,8 +27,9 @@ public class ExpressionNode {
     boolean containsDecl = false;
     HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
     VariableSubstitution variableSubstitution;
-    private static Stack<Expr> substStack = new Stack<Expr>();
-    private static Stack<Expr> nodeStack = new Stack<Expr>();
+    //private static Stack<Expr> substStack = new Stack<Expr>();
+    //private static Stack<Expr> nodeStack = new Stack<Expr>();
+    private static Stack<Pair> stack = new Stack<>();
 
     ExpressionNode(VariableSubstitution vs) {
         variableSubstitution = vs;
@@ -78,25 +79,32 @@ public class ExpressionNode {
         }
     }
 
+
+
     void getSatisfyingSubstitutions() {
         if (expression == TrueExpr.getInstance()) {
-            Iterator it = substStack.iterator();
-            Iterator itn = nodeStack.iterator();
-            while (it.hasNext() && itn.hasNext()) {
-                System.out.print(itn.next() + " " + it.next() + " ");
+            //Iterator it = substStack.iterator();
+            //Iterator itn = nodeStack.iterator();
+            Iterator<Pair> it = stack.iterator();
+            while (it.hasNext()) {
+                Pair pair = it.next();
+                System.out.print(pair.expr + " " + pair. substitutedValue+ " ");
             }
             System.out.print("\n");
-            substStack.pop();
-            nodeStack.pop();
+            stack.pop();
+            //substStack.pop();
+            //nodeStack.pop();
         }
         else {
             for (Expr key : nextExpression.keySet()) {
-                substStack.push(key);
-                nodeStack.push(this.expression);
+                //substStack.push(key);
+                //nodeStack.push(this.expression);
+                stack.push(new Pair(this.expression, key));
                 nextExpression.get(key).getSatisfyingSubstitutions();
             }
-            if (!substStack.empty()) substStack.pop();
-            if (!nodeStack.empty()) nodeStack.pop();
+            //if (!substStack.empty()) substStack.pop();
+            //if (!nodeStack.empty()) nodeStack.pop();
+            if (!stack.empty()) stack.pop();
         }
     }
 
@@ -159,6 +167,16 @@ public class ExpressionNode {
                 return true;
             }
             return false;
+        }
+    }
+
+    class Pair {
+        // Type for stack to store expression - substitutedvalue pairs
+        public Expr expr = null, substitutedValue = null;
+
+        Pair(Expr e, Expr s) {
+            expr = e;
+            substitutedValue = s;
         }
     }
 
