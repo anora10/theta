@@ -10,6 +10,7 @@ import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.Type;
 import hu.bme.mit.theta.core.type.anytype.RefExpr;
+import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.core.utils.ExprSimplifier;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.SolverStatus;
@@ -26,6 +27,7 @@ public class ExpressionNode {
     boolean containsDecl = false;
     HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
     VariableSubstitution variableSubstitution;
+    private static Stack<Expr> stack = new Stack<Expr>();
 
     ExpressionNode(VariableSubstitution vs) {
         variableSubstitution = vs;
@@ -67,14 +69,36 @@ public class ExpressionNode {
         return newNode;
     }
 
-    void getSatisfyingSubstitutions() {
+    void calculateSatisfyingSubstitutions() {
         if (isFinal) return;
-        Cursor cursor = new Cursor(this);
-        while (cursor.moveNext()) {
-            cursor.getNode().getSatisfyingSubstitutions();
+        Cursor myCursor = makeCursor();
+        while (myCursor.moveNext()) {
+            myCursor.getNode().calculateSatisfyingSubstitutions();
             //System.out.println("--- " + expression.toString() + " ---");
             //System.out.println("--- " + cursor.getLiteral().toString() + "   " + cursor.getNode().expression.toString() + " ---");
         }
+    }
+
+    void getSatisfyingSubstitutions() {
+        if (expression == TrueExpr.getInstance()) {
+            Iterator it = stack.iterator();
+            while (it.hasNext()) {
+                System.out.print(it.next());
+            }
+            System.out.print("\n");
+            stack.pop();
+        }
+        else {
+            for (Expr key : nextExpression.keySet()) {
+                stack.push(key);
+                nextExpression.get(key).getSatisfyingSubstitutions();
+            }
+            if (!stack.empty())stack.pop();
+        }
+    }
+
+    Cursor makeCursor() {
+        return new Cursor(this);
     }
 
 

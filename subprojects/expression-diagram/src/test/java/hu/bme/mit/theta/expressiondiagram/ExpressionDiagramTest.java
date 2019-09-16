@@ -3,7 +3,6 @@ package hu.bme.mit.theta.expressiondiagram;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
-import hu.bme.mit.theta.core.type.inttype.IntType;
 import org.junit.Test;
 
 import static hu.bme.mit.theta.core.decl.Decls.Const;
@@ -30,12 +29,14 @@ public final class ExpressionDiagramTest {
         Expr expr = And(Or(ca.getRef(), Not(cb.getRef())), Or(cb.getRef(), cc.getRef()));
         ExpressionNode node = new ExpressionNode(vsa);
         node.setExpression(expr);
-        node.getSatisfyingSubstitutions();
+        node.calculateSatisfyingSubstitutions();
 
         node.DFS(1);
 
-        node.getSatisfyingSubstitutions();
+        node.calculateSatisfyingSubstitutions();
 
+        System.out.println("--------------------------------------");
+        node.getSatisfyingSubstitutions();
 
         // TODO ne legyen ennyi solver
         // TODO ne stringgel nézze a tartalmazást
