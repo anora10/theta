@@ -44,14 +44,16 @@ public class ExpressionNode {
         System.out.println("Expression " + e.toString() + ", substituting " + variableSubstitution.getDecl().toString());
     }
 
+    DefaultLitExpr defaultLitExpr = new DefaultLitExpr();
     private ExpressionNode defaultNextNode() {
         ExpressionNode def = new ExpressionNode(variableSubstitution.next);
         if (def.variableSubstitution == null) return null;
         def.setExpression(expression);
         isFinal = true; // no more check needed, as variable is not present
         // the following two lines may be replaced with a default next node
-        nextExpression.put(BoolLitExpr.of(true),def);
-        nextExpression.put(BoolLitExpr.of(false),def);
+        /*nextExpression.put(BoolLitExpr.of(true),def);
+        nextExpression.put(BoolLitExpr.of(false),def);*/
+        nextExpression.put(defaultLitExpr, def);
         return def;
     }
 
@@ -137,7 +139,7 @@ public class ExpressionNode {
             if (cursor != null && cursor.moveNext()) {
                 newNode = cursor.value();
                 litExpr = cursor.key();
-                if (litExpr != null) solver.add(Neq(decl.getRef(), litExpr));
+                if (litExpr != null && litExpr != defaultLitExpr) solver.add(Neq(decl.getRef(), litExpr));
                 //System.out.println("    From cache: " + litExpr.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
                 hasNext = true;
                 return true;
