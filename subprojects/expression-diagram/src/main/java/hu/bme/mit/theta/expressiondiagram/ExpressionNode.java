@@ -21,13 +21,13 @@ import java.util.*;
 import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Neq;
 
 public class ExpressionNode {
-    Expr expression;
-    boolean isFinal = false;
-    boolean containsDecl = false;
-    boolean hasNext = false;
-    HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
-    VariableSubstitution variableSubstitution;
-    static Stack<Cursor> cursorStack = new Stack<>();
+    private Expr expression;
+    private boolean isFinal = false;
+    private boolean containsDecl = false;
+    private boolean hasNext = false;
+    private HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
+    private VariableSubstitution variableSubstitution;
+    private static Stack<Cursor> cursorStack = new Stack<>();
 
     ExpressionNode(VariableSubstitution vs) {
         variableSubstitution = vs;
@@ -43,17 +43,17 @@ public class ExpressionNode {
         System.out.println("Expression " + e.toString() + ", substituting " + variableSubstitution.getDecl().toString());
     }
 
-    ExpressionNode defaultNextNode() {
+    private ExpressionNode defaultNextNode() {
         ExpressionNode def = new ExpressionNode(variableSubstitution.next);
         if (def.variableSubstitution == null) return null;
         def.setExpression(expression);
         return def;
     }
 
-    ExpressionNode substitute (LitExpr<? extends Type> literal) {
+    private ExpressionNode substitute (LitExpr<? extends Type> literal) {
         // if literal is null, expression goes one level below
         if (literal != null && expression!=null)System.out.println("    Substituting " + literal.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
-        if (containsDecl == false) {
+        if (!containsDecl) {
             return defaultNextNode();
         }
         // get variable to substitute
@@ -96,7 +96,7 @@ public class ExpressionNode {
         }
     }
 
-    Cursor makeCursor() {
+    private Cursor makeCursor() {
         return new Cursor(this);
     }
 
