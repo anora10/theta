@@ -10,6 +10,7 @@ import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.Type;
 import hu.bme.mit.theta.core.type.anytype.RefExpr;
+import hu.bme.mit.theta.core.type.booltype.BoolLitExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.core.utils.ExprSimplifier;
 import hu.bme.mit.theta.solver.Solver;
@@ -47,6 +48,10 @@ public class ExpressionNode {
         ExpressionNode def = new ExpressionNode(variableSubstitution.next);
         if (def.variableSubstitution == null) return null;
         def.setExpression(expression);
+        isFinal = true; // no more check needed, as variable is not present
+        // the following two lines may be replaced with a default next node
+        nextExpression.put(BoolLitExpr.of(true),def);
+        nextExpression.put(BoolLitExpr.of(false),def);
         return def;
     }
 
@@ -157,6 +162,7 @@ public class ExpressionNode {
                 hasNext = true;
                 return true;
             }
+            node.isFinal = true;
             hasNext = false;
             return false;
         }
