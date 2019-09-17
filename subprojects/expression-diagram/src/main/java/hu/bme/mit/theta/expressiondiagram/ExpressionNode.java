@@ -22,11 +22,11 @@ import java.util.*;
 import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Neq;
 
 public class ExpressionNode {
-    private Expr expression;
+    Expr expression;
     private boolean isFinal = false;
     private boolean containsDecl = false;
     private boolean hasNext = false;
-    private HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
+    HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
     private VariableSubstitution variableSubstitution;
     private static Stack<Cursor> cursorStack = new Stack<>();
 
@@ -195,4 +195,6 @@ public class ExpressionNode {
         collectDecls(expr, decls);
         return decls;
     }
+
+
 }

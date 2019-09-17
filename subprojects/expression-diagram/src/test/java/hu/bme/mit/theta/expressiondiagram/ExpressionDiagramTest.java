@@ -1,9 +1,13 @@
 package hu.bme.mit.theta.expressiondiagram;
 
 import hu.bme.mit.theta.core.decl.ConstDecl;
+import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
+import java.util.Stack;
 import org.junit.Test;
+
+import java.util.Iterator;
 
 import static hu.bme.mit.theta.core.decl.Decls.Const;
 import static hu.bme.mit.theta.core.type.booltype.BoolExprs.*;
@@ -34,7 +38,19 @@ public final class ExpressionDiagramTest {
         node.DFS(1);
 
         System.out.println("--------------------------------------");
-        node.getSatisfyingSubstitutions();
+        //node.getSatisfyingSubstitutions();
+        ValuationIterator valuationIterator = new ValuationIterator(node);
+        while (valuationIterator.hasNext()) {
+            Stack<ValuationIterator.Pair> stack = valuationIterator.next();
+            if (stack == null) break;
+            Iterator<ValuationIterator.Pair> it = stack.iterator();
+            while(it.hasNext()) {
+                ValuationIterator.Pair pair = it.next();
+                if (pair.value == null) System.out.print(pair.node.expression.toString() + "\t"); // first element
+                else System.out.print(pair.value.toString() + " " + pair.node.expression.toString() + "\t");
+            }
+            System.out.print("\n");
+        }
 
         // TODO ne legyen ennyi solver
         // TODO ne stringgel nézze a tartalmazást
@@ -65,7 +81,19 @@ public final class ExpressionDiagramTest {
         node.DFS(1);
 
         System.out.println("--------------------------------------");
-        node.getSatisfyingSubstitutions();
+        //node.getSatisfyingSubstitutions();
+        ValuationIterator valuationIterator = new ValuationIterator(node);
+        while (valuationIterator.hasNext()) {
+            Stack<ValuationIterator.Pair> stack = valuationIterator.next();
+            if (stack == null) break;
+            Iterator<ValuationIterator.Pair> it = stack.iterator();
+            while(it.hasNext()) {
+                ValuationIterator.Pair pair = it.next();
+                if (pair.value == null) System.out.print(pair.node.expression.toString() + "\t"); // first element
+                else System.out.print(pair.value.toString() + " " + pair.node.expression.toString() + "\t");
+            }
+            System.out.print("\n");
+        }
     }
 
     @Test
