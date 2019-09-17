@@ -19,17 +19,15 @@ import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 import java.util.*;
 
 import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Neq;
-import static hu.bme.mit.theta.core.utils.ExprUtils.getVars;
 
 public class ExpressionNode {
     Expr expression;
     boolean isFinal = false;
     boolean containsDecl = false;
+    boolean hasNext = false;
     HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
     VariableSubstitution variableSubstitution;
-    //private static Stack<Expr> substStack = new Stack<Expr>();
-    //private static Stack<Expr> nodeStack = new Stack<Expr>();
-    private static Stack<Pair> stack = new Stack<>();
+    static Stack<Cursor> cursorStack = new Stack<>();
 
     ExpressionNode(VariableSubstitution vs) {
         variableSubstitution = vs;
@@ -51,8 +49,6 @@ public class ExpressionNode {
         def.setExpression(expression);
         return def;
     }
-
-
 
     ExpressionNode substitute (LitExpr<? extends Type> literal) {
         // if literal is null, expression goes one level below
@@ -79,32 +75,24 @@ public class ExpressionNode {
         }
     }
 
-
-
     void getSatisfyingSubstitutions() {
         if (expression == TrueExpr.getInstance()) {
-            //Iterator it = substStack.iterator();
-            //Iterator itn = nodeStack.iterator();
-            Iterator<Pair> it = stack.iterator();
+            // end of a path reached
+            Iterator<Cursor> it = cursorStack.iterator();
             while (it.hasNext()) {
-                Pair pair = it.next();
-                System.out.print(pair.expr + " " + pair. substitutedValue+ " ");
+                Cursor cursor = it.next();
+                System.out.print(cursor.getLiteral() + " " + cursor.getNode().expression + "\t");
             }
             System.out.print("\n");
-            stack.pop();
-            //substStack.pop();
-            //nodeStack.pop();
+            //cursorStack.pop();
         }
         else {
-            for (Expr key : nextExpression.keySet()) {
-                //substStack.push(key);
-                //nodeStack.push(this.expression);
-                stack.push(new Pair(this.expression, key));
-                nextExpression.get(key).getSatisfyingSubstitutions();
+            Cursor myCursor = makeCursor();
+            cursorStack.add(myCursor);
+            while (myCursor.moveNext() && myCursor != null) {
+                 myCursor.getNode().getSatisfyingSubstitutions();
             }
-            //if (!substStack.empty()) substStack.pop();
-            //if (!nodeStack.empty()) nodeStack.pop();
-            if (!stack.empty()) stack.pop();
+            if (!cursorStack.empty()) cursorStack.pop();
         }
     }
 
@@ -145,7 +133,8 @@ public class ExpressionNode {
                 newNode = cursor.value();
                 litExpr = cursor.key();
                 if (litExpr != null) solver.add(Neq(decl.getRef(), litExpr));
-                System.out.println("    From cache: " + litExpr.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
+                //System.out.println("    From cache: " + litExpr.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
+                hasNext = true;
                 return true;
             }
             cursor = null;
@@ -154,7 +143,8 @@ public class ExpressionNode {
             if(status.isUnsat()) {
                 // no more satisfying assignments
                 node.isFinal = true;
-                System.out.println("        Finished checking " + node.expression.toString());
+                //System.out.println("        Finished checking " + node.expression.toString());
+                hasNext = false;
                 return false;
             }
             Valuation model = solver.getModel();
@@ -164,19 +154,11 @@ public class ExpressionNode {
             newNode = node.substitute(litExpr);
             if (newNode != null && newNode.variableSubstitution.getDecl() != null) {
                 //newNode.getSatisfyingSubstitutions();
+                hasNext = true;
                 return true;
             }
+            hasNext = false;
             return false;
-        }
-    }
-
-    class Pair {
-        // Type for stack to store expression - substitutedvalue pairs
-        public Expr expr = null, substitutedValue = null;
-
-        Pair(Expr e, Expr s) {
-            expr = e;
-            substitutedValue = s;
         }
     }
 
