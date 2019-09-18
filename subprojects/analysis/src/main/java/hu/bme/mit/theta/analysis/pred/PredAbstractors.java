@@ -98,6 +98,91 @@ public class PredAbstractors {
 		return new CartesianAbstractor(solver);
 	}
 
+	private static final class BooleanBddAbstractor implements PredAbstractor {
+
+		private final Solver solver;
+		private final List<ConstDecl<BoolType>> actLits;
+		private final String litPrefix;
+		private static int instanceCounter = 0;
+		private final boolean split;
+
+		public BooleanBddAbstractor(final Solver solver, final boolean split) {
+			this.solver = checkNotNull(solver);
+			this.actLits = new ArrayList<>();
+			this.litPrefix = "__" + getClass().getSimpleName() + "_" + instanceCounter + "_";
+			instanceCounter++;
+			this.split = split;
+		}
+
+		@Override
+		public Collection<PredState> createStatesForExpr(final Expr<BoolType> expr, final VarIndexing exprIndexing,
+														 final PredPrec prec, final VarIndexing precIndexing) {
+			checkNotNull(expr);
+			checkNotNull(exprIndexing);
+			checkNotNull(prec);
+			checkNotNull(precIndexing);
+
+			final List<Expr<BoolType>> preds = new ArrayList<>(prec.getPreds());
+			generateActivationLiterals(preds.size());
+
+			assert actLits.size() >= preds.size();
+
+			final List<PredState> states = new LinkedList<>();
+
+			////////////////////////////////////////////////////////////
+			try (WithPushPop wp = new WithPushPop(solver)) {
+
+				/// Ami itt a solver.add-on belül van, azt kell összeÉSelni
+				solver.add(PathUtils.unfold(expr, exprIndexing));
+				for (int i = 0; i < preds.size(); ++i) {
+					solver.add(Iff(actLits.get(i).getRef(), PathUtils.unfold(preds.get(i), precIndexing)));
+				}
+				/// Ezen a ponton van egy kifejezésed, amiben van mindenféle változó, de ebből
+				/// az actList-beli változók értékei kellenek majd
+
+				// Itt legenerálni az összes megoldást (actLits-re)
+
+				while (solver.check().isSat()) { // Itt kell iterálni az összes megoldáson
+					final Valuation model = solver.getModel(); // Ehelyett lekérni az actLits értékeit
+					final Set<Expr<BoolType>> newStatePreds = new HashSet<>();
+					final List<Expr<BoolType>> feedback = new LinkedList<>(); // Biztos nem kell
+					feedback.add(True());
+					for (int i = 0; i < preds.size(); ++i) { // Végigmész minden literálon
+						final ConstDecl<BoolType> lit = actLits.get(i);
+						final Expr<BoolType> pred = preds.get(i);
+						final Optional<LitExpr<BoolType>> eval = model.eval(lit); // Lekéred az értékét
+						if (eval.isPresent()) { // Ha nem undefined
+							if (eval.get().equals(True())) { // Ha true
+								newStatePreds.add(pred);
+								feedback.add(lit.getRef()); // Nem kell
+							} else { // Ha false
+								newStatePreds.add(prec.negate(pred));
+								feedback.add(Not(lit.getRef())); // Nem kell
+							}
+						}
+					}
+					states.add(PredState.of(newStatePreds)); // Ez marad
+					solver.add(Not(And(feedback)));
+				}
+			}
+
+			/////////////////////////////////////////////////
+
+			if (!split && states.size() > 1) {
+				final Expr<BoolType> pred = Or(states.stream().map(PredState::toExpr).collect(Collectors.toList()));
+				return Collections.singleton(PredState.of(pred));
+			} else {
+				return states;
+			}
+		}
+
+		private void generateActivationLiterals(final int n) {
+			while (actLits.size() < n) {
+				actLits.add(Decls.Const(litPrefix + actLits.size(), BoolExprs.Bool()));
+			}
+		}
+	}
+
 	private static final class BooleanAbstractor implements PredAbstractor {
 
 		private final Solver solver;
