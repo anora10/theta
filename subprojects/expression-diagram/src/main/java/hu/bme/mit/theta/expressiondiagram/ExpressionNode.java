@@ -82,7 +82,7 @@ public class ExpressionNode {
         }
     }
 
-    void getSatisfyingSubstitutions() {
+    /*void getSatisfyingSubstitutions() {
         if (expression == TrueExpr.getInstance()) {
             // end of a path reached
             Iterator<Cursor> it = cursorStack.iterator();
@@ -101,7 +101,7 @@ public class ExpressionNode {
             }
             if (!cursorStack.empty()) cursorStack.pop();
         }
-    }
+    }*/
 
     private Cursor makeCursor() {
         return new Cursor(this);
