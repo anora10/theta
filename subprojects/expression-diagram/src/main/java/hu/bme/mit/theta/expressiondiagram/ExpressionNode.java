@@ -11,6 +11,7 @@ import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.Type;
 import hu.bme.mit.theta.core.type.anytype.RefExpr;
 import hu.bme.mit.theta.core.type.booltype.BoolLitExpr;
+import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.core.utils.ExprSimplifier;
 import hu.bme.mit.theta.solver.Solver;
@@ -60,7 +61,8 @@ public class ExpressionNode {
     private ExpressionNode substitute (LitExpr<? extends Type> literal) {
         // if literal is null, expression goes one level below
         if (literal != null && expression!=null)System.out.println("    Substituting " + literal.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
-        if (!containsDecl) {
+        //if (!containsDecl) {
+        if (literal == null || !containsDecl) {
             return defaultNextNode();
         }
         // get variable to substitute
@@ -157,6 +159,14 @@ public class ExpressionNode {
             Valuation model = solver.getModel();
             litExpr = model.toMap().get(decl);
             if (litExpr != null) solver.add(Neq(decl.getRef(), litExpr));
+            else {
+                // The solver said that the decl may be both true or false.
+                // We choose it false, but later it will be checked whether true is ok.
+                litExpr = FalseExpr.getInstance();
+                solver.add(Neq(decl.getRef(), litExpr));
+            }
+
+
             // not inspected assignment found, create new node accordingly
             newNode = node.substitute(litExpr);
             if (newNode != null && newNode.variableSubstitution.getDecl() != null) {
@@ -190,7 +200,7 @@ public class ExpressionNode {
         expr.getOps().forEach(op -> collectDecls(op, collectTo));
     }
 
-    private static Set<Decl<?>> getDecls(final Expr<?> expr) {
+    static Set<Decl<?>> getDecls(final Expr<?> expr) {
         final Set<Decl<?>> decls = new HashSet<>();
         collectDecls(expr, decls);
         return decls;

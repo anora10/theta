@@ -12,6 +12,7 @@ import java.util.Iterator;
 import static hu.bme.mit.theta.core.decl.Decls.Const;
 import static hu.bme.mit.theta.core.type.booltype.BoolExprs.*;
 import static hu.bme.mit.theta.core.type.inttype.IntExprs.Int;
+import static hu.bme.mit.theta.core.type.inttype.IntExprs.Neq;
 
 
 public final class ExpressionDiagramTest {
@@ -72,6 +73,69 @@ public final class ExpressionDiagramTest {
 
         System.out.println("--------------------------------------");
         ValuationIterator valuationIterator = new ValuationIterator(node);
+        valuationIterator.getSatisfyingSubstitutions();
+    }
+
+    @Test
+    public void testBoolean_3() {
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        final ConstDecl<BoolType> cb = Const("b", Bool());
+        final ConstDecl<BoolType> cc = Const("c", Bool());
+        final ConstDecl<BoolType> cd = Const("d", Bool());
+        final ConstDecl<BoolType> ce = Const("e", Bool());
+        VariableSubstitution.decls.add(ca);
+        VariableSubstitution.decls.add(cb);
+        VariableSubstitution.decls.add(cc);
+        VariableSubstitution.decls.add(cd);
+        VariableSubstitution.decls.add(ce);
+        VariableSubstitution vsnull = new VariableSubstitution(null, null);
+        VariableSubstitution vse = new VariableSubstitution(vsnull,ce);
+        VariableSubstitution vsd = new VariableSubstitution(vse,cd);
+        VariableSubstitution vsc = new VariableSubstitution(vsd,cc);
+        VariableSubstitution vsb = new VariableSubstitution(vsc,cb);
+        VariableSubstitution vsa = new VariableSubstitution(vsb,ca);
+
+        // (a v b v c v !d v !e)
+        Expr expr = Or(Or(Or(ca.getRef(), cb.getRef()), cc.getRef()) , Or(Not(cd.getRef()), Not(ce.getRef())));
+        ExpressionNode node = new ExpressionNode(vsa);
+        node.setExpression(expr);
+        node.calculateSatisfyingSubstitutions();
+
+        System.out.println("--------------------------------------");
+        node.DFS(1);
+
+        System.out.println("--------------------------------------");
+        ValuationIterator valuationIterator = new ValuationIterator(node);
+        valuationIterator.getSatisfyingSubstitutions();
+    }
+
+    @Test
+    public void testBoolean_4() {
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        final ConstDecl<BoolType> cb = Const("b", Bool());
+        final ConstDecl<BoolType> cc = Const("c", Bool());
+        final ConstDecl<BoolType> cd = Const("d", Bool());
+        VariableSubstitution.decls.add(ca);
+        VariableSubstitution.decls.add(cb);
+        VariableSubstitution.decls.add(cc);
+        VariableSubstitution.decls.add(cd);
+        VariableSubstitution vsnull = new VariableSubstitution(null, null);
+        VariableSubstitution vsd = new VariableSubstitution(vsnull,cd);
+        VariableSubstitution vsc = new VariableSubstitution(vsd,cc);
+        VariableSubstitution vsb = new VariableSubstitution(vsc,cb);
+        VariableSubstitution vsa = new VariableSubstitution(vsb,ca);
+
+        // (a v b) ^(c v !d)
+        Expr expr = And( Or(ca.getRef(), cb.getRef()), Or(cc.getRef(), Not(cd.getRef())) );
+        ExpressionNode node = new ExpressionNode(vsa);
+        node.setExpression(expr);
+        node.calculateSatisfyingSubstitutions();
+
+        System.out.println("--------------------------------------");
+        node.DFS(1);
+
+        System.out.println("--------------------------------------");
+        ValuationIterator valuationIterator = new ValuationIterator(node, 2);
         valuationIterator.getSatisfyingSubstitutions();
     }
 
