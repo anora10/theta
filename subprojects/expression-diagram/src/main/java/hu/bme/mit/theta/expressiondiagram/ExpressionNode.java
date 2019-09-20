@@ -26,7 +26,6 @@ public class ExpressionNode {
     Expr expression;
     private boolean isFinal = false;
     private boolean containsDecl = false;
-    private boolean hasNext = false;
     HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
     private VariableSubstitution variableSubstitution;
     private static Stack<Cursor> cursorStack = new Stack<>();
@@ -59,9 +58,9 @@ public class ExpressionNode {
     }
 
     private ExpressionNode substitute (LitExpr<? extends Type> literal) {
-        // if literal is null, expression goes one level below
         if (literal != null && expression!=null)System.out.println("    Substituting " + literal.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
         //if (!containsDecl) {
+        // if literal is null, or decl is not in the expression, expression goes one level below
         if (literal == null || !containsDecl) {
             return defaultNextNode();
         }
@@ -84,31 +83,9 @@ public class ExpressionNode {
         }
     }
 
-    /*void getSatisfyingSubstitutions() {
-        if (expression == TrueExpr.getInstance()) {
-            // end of a path reached
-            Iterator<Cursor> it = cursorStack.iterator();
-            while (it.hasNext()) {
-                Cursor cursor = it.next();
-                System.out.print(cursor.getLiteral() + " " + cursor.getNode().expression + "\t");
-            }
-            System.out.print("\n");
-            //cursorStack.pop();
-        }
-        else {
-            Cursor myCursor = makeCursor();
-            cursorStack.add(myCursor);
-            while (myCursor.moveNext() && myCursor != null) {
-                 myCursor.getNode().getSatisfyingSubstitutions();
-            }
-            if (!cursorStack.empty()) cursorStack.pop();
-        }
-    }*/
-
     private Cursor makeCursor() {
         return new Cursor(this);
     }
-
 
     class Cursor {
         private ExpressionNode node, newNode;
@@ -139,21 +116,20 @@ public class ExpressionNode {
             // litExpr will be the calculated value
             // if node is final, there is no next to move to
             if (cursor != null && cursor.moveNext()) {
+                // cached result found
                 newNode = cursor.value();
                 litExpr = cursor.key();
                 if (litExpr != null && litExpr != defaultLitExpr) solver.add(Neq(decl.getRef(), litExpr));
                 //System.out.println("    From cache: " + litExpr.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
-                hasNext = true;
                 return true;
             }
             cursor = null;
-            if (node.isFinal) return false;
+            if (node.isFinal || decl == null) return false;
             SolverStatus status = solver.check();
             if(status.isUnsat()) {
                 // no more satisfying assignments
                 node.isFinal = true;
                 //System.out.println("        Finished checking " + node.expression.toString());
-                hasNext = false;
                 return false;
             }
             Valuation model = solver.getModel();
@@ -166,16 +142,13 @@ public class ExpressionNode {
                 solver.add(Neq(decl.getRef(), litExpr));
             }
 
-
             // not inspected assignment found, create new node accordingly
             newNode = node.substitute(litExpr);
-            if (newNode != null && newNode.variableSubstitution.getDecl() != null) {
-                //newNode.getSatisfyingSubstitutions();
-                hasNext = true;
+            //if (newNode != null && newNode.variableSubstitution.getDecl() != null) {
+            if (newNode != null) {
                 return true;
             }
             node.isFinal = true;
-            hasNext = false;
             return false;
         }
     }
