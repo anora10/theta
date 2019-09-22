@@ -22,14 +22,7 @@ import static hu.bme.mit.theta.core.type.booltype.BoolExprs.Not;
 import static hu.bme.mit.theta.core.type.booltype.BoolExprs.Or;
 import static hu.bme.mit.theta.core.type.booltype.BoolExprs.True;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import hu.bme.mit.theta.core.decl.ConstDecl;
@@ -37,10 +30,12 @@ import hu.bme.mit.theta.core.decl.Decls;
 import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
-import hu.bme.mit.theta.core.type.booltype.BoolExprs;
-import hu.bme.mit.theta.core.type.booltype.BoolType;
+import hu.bme.mit.theta.core.type.booltype.*;
 import hu.bme.mit.theta.core.utils.PathUtils;
 import hu.bme.mit.theta.core.utils.VarIndexing;
+import hu.bme.mit.theta.expressiondiagram.ExpressionNode;
+import hu.bme.mit.theta.expressiondiagram.ValuationIterator;
+import hu.bme.mit.theta.expressiondiagram.VariableSubstitution;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.utils.WithPushPop;
 
@@ -133,36 +128,39 @@ public class PredAbstractors {
 			try (WithPushPop wp = new WithPushPop(solver)) {
 
 				/// Ami itt a solver.add-on belül van, azt kell összeÉSelni
-				solver.add(PathUtils.unfold(expr, exprIndexing));
+				Expr nodeExpr = PathUtils.unfold(expr, exprIndexing);
 				for (int i = 0; i < preds.size(); ++i) {
-					solver.add(Iff(actLits.get(i).getRef(), PathUtils.unfold(preds.get(i), precIndexing)));
+					nodeExpr = And(Iff(actLits.get(i).getRef(), PathUtils.unfold(preds.get(i), precIndexing)), nodeExpr);
 				}
 				/// Ezen a ponton van egy kifejezésed, amiben van mindenféle változó, de ebből
 				/// az actList-beli változók értékei kellenek majd
+				VariableSubstitution vs = ExpressionNode.createDecls(actLits);
+				ExpressionNode node = new ExpressionNode(vs);
+				node.setExpression(nodeExpr);
+				node.calculateSatisfyingSubstitutions();
 
 				// Itt legenerálni az összes megoldást (actLits-re)
-
-				while (solver.check().isSat()) { // Itt kell iterálni az összes megoldáson
-					final Valuation model = solver.getModel(); // Ehelyett lekérni az actLits értékeit
+				/**ugye preds.size() a kiszámolandó változók száma?**/
+				ValuationIterator valuationIterator = new ValuationIterator(node, preds.size());
+				while (valuationIterator.hasNext()) {
 					final Set<Expr<BoolType>> newStatePreds = new HashSet<>();
-					final List<Expr<BoolType>> feedback = new LinkedList<>(); // Biztos nem kell
-					feedback.add(True());
-					for (int i = 0; i < preds.size(); ++i) { // Végigmész minden literálon
-						final ConstDecl<BoolType> lit = actLits.get(i);
-						final Expr<BoolType> pred = preds.get(i);
-						final Optional<LitExpr<BoolType>> eval = model.eval(lit); // Lekéred az értékét
-						if (eval.isPresent()) { // Ha nem undefined
-							if (eval.get().equals(True())) { // Ha true
+					Stack<ValuationIterator.Pair> solutionStack = valuationIterator.next();
+					if (solutionStack != null) {
+						Iterator<ValuationIterator.Pair> it = solutionStack.iterator();
+						int predsInd = 0;
+						while(it.hasNext()) {
+							ValuationIterator.Pair pair = it.next();
+							final Expr<BoolType> pred = preds.get(predsInd++);
+							// pair.getValue() is the value of actLits[predsInd]
+							if (pair.getValue().equals(TrueExpr.getInstance())) { // Ha true
 								newStatePreds.add(pred);
-								feedback.add(lit.getRef()); // Nem kell
-							} else { // Ha false
+							}
+							else if (pair.getValue().equals(FalseExpr.getInstance())) { // Ha false
 								newStatePreds.add(prec.negate(pred));
-								feedback.add(Not(lit.getRef())); // Nem kell
 							}
 						}
+						states.add(PredState.of(newStatePreds));
 					}
-					states.add(PredState.of(newStatePreds)); // Ez marad
-					solver.add(Not(And(feedback)));
 				}
 			}
 

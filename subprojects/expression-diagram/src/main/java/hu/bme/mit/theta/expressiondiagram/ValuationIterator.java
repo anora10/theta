@@ -7,28 +7,30 @@ import java.util.Iterator;
 import java.util.Stack;
 //import hu.bme.mit.theta.solver.Stack;
 
-class ValuationIterator {
-    Stack<Pair> stack = new Stack<>();
-    private int maxStackSize = -1;
-    ValuationIterator(ExpressionNode node, int d) {
+public class ValuationIterator {
+    private Stack<Pair> stack = new Stack<>();
+    private int maxStackSize;
+    public ValuationIterator(ExpressionNode node, int d) {
         // d is the number of decls we are interested in
         stack.add(new Pair(node, null));
         assert (d >= 0);
         maxStackSize = d+1;
     }
 
+    /* not working
     ValuationIterator(ExpressionNode node) {
         stack.add(new Pair(node, null));
         //maxStackSize = stack.peek().node.expression.getArity();
         // the number of decls to calculate +1
         maxStackSize = ExpressionNode.getDecls(node.expression).size() +1;
     }
+     */
 
-    boolean hasNext() {
+    public boolean hasNext() {
         return !stack.empty();
     }
 
-    Stack<Pair> next() {
+    public Stack<Pair> next() {
         if (stack.size() == 1) {
             // first valuation, no backtrack needed
             while(true) {
@@ -79,13 +81,15 @@ class ValuationIterator {
         return null;
     }
 
-    class Pair {
-        ExpressionNode node = null;
-        Expr value = null;
+    public class Pair {
+        ExpressionNode node;
+        Expr value;
         Pair(ExpressionNode node, Expr value) {
             this.node = node;
             this.value = value;
         }
+
+        public Expr getValue() {return value;}
     }
 
     public void getSatisfyingSubstitutions () {

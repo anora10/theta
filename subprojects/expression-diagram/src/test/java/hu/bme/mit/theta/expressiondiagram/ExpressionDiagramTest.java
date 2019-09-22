@@ -4,6 +4,10 @@ import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
+
+import java.net.StandardSocketOptions;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import hu.bme.mit.theta.core.type.inttype.IntType;
@@ -102,7 +106,7 @@ public final class ExpressionDiagramTest {
         node.DFS(1);
 
         System.out.println("--------------------------------------");
-        ValuationIterator valuationIterator = new ValuationIterator(node);
+        ValuationIterator valuationIterator = new ValuationIterator(node, 3);
         valuationIterator.getSatisfyingSubstitutions();
     }
 
@@ -135,7 +139,7 @@ public final class ExpressionDiagramTest {
         node.DFS(1);
 
         System.out.println("--------------------------------------");
-        ValuationIterator valuationIterator = new ValuationIterator(node);
+        ValuationIterator valuationIterator = new ValuationIterator(node, 5);
         valuationIterator.getSatisfyingSubstitutions();
     }
 
@@ -221,17 +225,27 @@ public final class ExpressionDiagramTest {
 
     @Test
     public void testBoolean_7() {
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+
         final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
         final ConstDecl<IntType> cd = Const("d", Int());
+        actLits.add(ca);
+        actLits.add(cb);
+
+        /*
         VariableSubstitution.decls.add(ca);
+        VariableSubstitution.decls.add(cb);
         VariableSubstitution vsnull = new VariableSubstitution(null, null);
         VariableSubstitution vsb = new VariableSubstitution(vsnull,cb);
         VariableSubstitution vsa = new VariableSubstitution(vsb,ca);
+        */
+
+        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
 
         // (!a v d<=10) ^ (b v d>10)
         Expr expr = And( Or(Not(ca.getRef()), Leq(cd.getRef(), Int(0))), Or(cb.getRef(), Gt(cd.getRef(), Int(0))) );
-        ExpressionNode node = new ExpressionNode(vsa);
+        ExpressionNode node = new ExpressionNode(vs);
         node.setExpression(expr);
         node.calculateSatisfyingSubstitutions();
 
@@ -239,7 +253,7 @@ public final class ExpressionDiagramTest {
         node.DFS(1);
 
         System.out.println("--------------------------------------");
-        ValuationIterator valuationIterator = new ValuationIterator(node, 1);
+        ValuationIterator valuationIterator = new ValuationIterator(node, 2);
         valuationIterator.getSatisfyingSubstitutions();
     }
 

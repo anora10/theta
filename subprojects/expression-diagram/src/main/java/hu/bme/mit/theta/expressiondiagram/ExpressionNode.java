@@ -1,8 +1,10 @@
 package hu.bme.mit.theta.expressiondiagram;
 
+import com.google.errorprone.annotations.Var;
 import com.koloboke.collect.map.ObjObjCursor;
 import com.koloboke.collect.map.hash.HashObjObjMap;
 import com.koloboke.collect.map.hash.HashObjObjMaps;
+import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.ImmutableValuation;
 import hu.bme.mit.theta.core.model.Valuation;
@@ -11,6 +13,7 @@ import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.Type;
 import hu.bme.mit.theta.core.type.anytype.RefExpr;
 import hu.bme.mit.theta.core.type.booltype.BoolLitExpr;
+import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.core.utils.ExprSimplifier;
@@ -30,11 +33,11 @@ public class ExpressionNode {
     private VariableSubstitution variableSubstitution;
     private static Stack<Cursor> cursorStack = new Stack<>();
 
-    ExpressionNode(VariableSubstitution vs) {
+    public ExpressionNode(VariableSubstitution vs) {
         variableSubstitution = vs;
     }
 
-    void setExpression (Expr e) {
+    public void setExpression(Expr e) {
         expression = e;
         if (variableSubstitution.getDecl() == null) return;
         Set<Decl<?>> vars = getDecls(e);
@@ -44,7 +47,7 @@ public class ExpressionNode {
         System.out.println("Expression " + e.toString() + ", substituting " + variableSubstitution.getDecl().toString());
     }
 
-    DefaultLitExpr defaultLitExpr = new DefaultLitExpr();
+    private DefaultLitExpr defaultLitExpr = new DefaultLitExpr();
     private ExpressionNode defaultNextNode() {
         ExpressionNode def = new ExpressionNode(variableSubstitution.next);
         if (def.variableSubstitution == null) return null;
@@ -75,7 +78,7 @@ public class ExpressionNode {
         return newNode;
     }
 
-    void calculateSatisfyingSubstitutions() {
+    public void calculateSatisfyingSubstitutions() {
         if (isFinal) return;
         Cursor myCursor = makeCursor();
         while (myCursor.moveNext()) {
@@ -173,11 +176,29 @@ public class ExpressionNode {
         expr.getOps().forEach(op -> collectDecls(op, collectTo));
     }
 
-    static Set<Decl<?>> getDecls(final Expr<?> expr) {
+    private static Set<Decl<?>> getDecls(final Expr<?> expr) {
         final Set<Decl<?>> decls = new HashSet<>();
         collectDecls(expr, decls);
         return decls;
     }
 
+    public static VariableSubstitution createDecls (List<ConstDecl<BoolType>> declList) {
+        /*final ConstDecl<BoolType> ca = Const("a", Bool());
+        final ConstDecl<BoolType> cb = Const("b", Bool());
+        final ConstDecl<IntType> cd = Const("d", Int());
+        VariableSubstitution.decls.add(ca);
+        VariableSubstitution vsnull = new VariableSubstitution(null, null);
+        VariableSubstitution vsb = new VariableSubstitution(vsnull,cb);
+        VariableSubstitution vsa = new VariableSubstitution(vsb,ca);*/
+        VariableSubstitution.decls.clear();
+        VariableSubstitution.decls.addAll(declList);
+        Collections.reverse(declList);
+        VariableSubstitution oldVS = new VariableSubstitution(null, null);
+        for (ConstDecl<BoolType> cd : declList) {
+            VariableSubstitution newVS = new VariableSubstitution(oldVS, cd);
+            oldVS = newVS;
+        }
+        return oldVS;
+    }
 
 }
