@@ -220,6 +220,30 @@ public final class ExpressionDiagramTest {
     }
 
     @Test
+    public void testBoolean_7() {
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        final ConstDecl<BoolType> cb = Const("b", Bool());
+        final ConstDecl<IntType> cd = Const("d", Int());
+        VariableSubstitution.decls.add(ca);
+        VariableSubstitution vsnull = new VariableSubstitution(null, null);
+        VariableSubstitution vsb = new VariableSubstitution(vsnull,cb);
+        VariableSubstitution vsa = new VariableSubstitution(vsb,ca);
+
+        // (!a v d<=10) ^ (b v d>10)
+        Expr expr = And( Or(Not(ca.getRef()), Leq(cd.getRef(), Int(0))), Or(cb.getRef(), Gt(cd.getRef(), Int(0))) );
+        ExpressionNode node = new ExpressionNode(vsa);
+        node.setExpression(expr);
+        node.calculateSatisfyingSubstitutions();
+
+        System.out.println("--------------------------------------");
+        node.DFS(1);
+
+        System.out.println("--------------------------------------");
+        ValuationIterator valuationIterator = new ValuationIterator(node, 1);
+        valuationIterator.getSatisfyingSubstitutions();
+    }
+
+    @Test
     public void testInteger() {
 
     }
