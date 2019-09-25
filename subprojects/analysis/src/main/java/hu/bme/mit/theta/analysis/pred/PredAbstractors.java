@@ -73,6 +73,16 @@ public class PredAbstractors {
 	}
 
 	/**
+	 * Get the strategy that uses Boolean BDD abstraction.
+	 *
+	 * @param solver
+	 * @return
+	 */
+	public static PredAbstractor booleanBddAbstractor(final Solver solver) {
+		return new BooleanBddAbstractor(solver, false);
+	}
+
+	/**
 	 * Get the strategy that uses Boolean abstraction (and keeps the formula as
 	 * a whole).
 	 *
