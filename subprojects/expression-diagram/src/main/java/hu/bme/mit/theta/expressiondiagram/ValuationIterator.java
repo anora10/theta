@@ -34,11 +34,17 @@ public class ValuationIterator {
         if (stack.size() == 1) {
             // first valuation, no backtrack needed
             while(true) {
-                Pair pair = stack.peek();
-                Expr expr = (Expr) pair.node.nextExpression.keySet().toArray()[0];
-                ExpressionNode newNode = pair.node.nextExpression.get(expr);
-                stack.add(new Pair(newNode, expr));
-                if (newNode.expression.equals(TrueExpr.getInstance()) || stack.size() == maxStackSize) return  stack;
+                try {
+                    Pair pair = stack.peek();
+                    Expr expr = (Expr) pair.node.nextExpression.keySet().toArray()[0];
+                    ExpressionNode newNode = pair.node.nextExpression.get(expr);
+                    stack.add(new Pair(newNode, expr));
+                    if (newNode.expression.equals(TrueExpr.getInstance()) || stack.size() == maxStackSize) return stack;
+                } catch (Exception e) {
+                    // this branch is executed if false expression occurs
+                    stack.clear();
+                    return null;
+                }
             }
         }
         Pair oldPair = stack.pop();

@@ -26,6 +26,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import hu.bme.mit.theta.core.decl.ConstDecl;
+import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.decl.Decls;
 import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
@@ -144,6 +145,7 @@ public class PredAbstractors {
 				}
 				/// Ezen a ponton van egy kifejezésed, amiben van mindenféle változó, de ebből
 				/// az actList-beli változók értékei kellenek majd
+
 				VariableSubstitution vs = ExpressionNode.createDecls(actLits);
 				ExpressionNode node = new ExpressionNode(vs);
 				node.setExpression(nodeExpr);

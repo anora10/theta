@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.inttype.IntType;
 import org.junit.Test;
 
@@ -254,6 +255,51 @@ public final class ExpressionDiagramTest {
 
         System.out.println("--------------------------------------");
         ValuationIterator valuationIterator = new ValuationIterator(node, 2);
+        valuationIterator.getSatisfyingSubstitutions();
+    }
+
+    @Test
+    public void testBoolean_true() {
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        actLits.add(ca);
+
+        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
+
+        // (!a v a)
+        Expr expr = Or(Not(ca.getRef()), ca.getRef());
+        //Expr expr = False();
+        ExpressionNode node = new ExpressionNode(vs);
+        node.setExpression(expr);
+        node.calculateSatisfyingSubstitutions();
+
+        System.out.println("--------------------------------------");
+        node.DFS(1);
+
+        System.out.println("--------------------------------------");
+        ValuationIterator valuationIterator = new ValuationIterator(node, 0);
+        valuationIterator.getSatisfyingSubstitutions();
+    }
+
+    @Test
+    public void testBoolean_counter() {
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final ConstDecl<IntType> ca = Const("a", Int());
+
+        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
+
+        // (a>=5 ^ a<=5)
+        Expr expr = And(Geq(ca.getRef(), Int(5)), Leq(ca.getRef(), Int(5)));
+        //Expr expr = False();
+        ExpressionNode node = new ExpressionNode(vs);
+        node.setExpression(expr);
+        node.calculateSatisfyingSubstitutions();
+
+        System.out.println("--------------------------------------");
+        node.DFS(1);
+
+        System.out.println("--------------------------------------");
+        ValuationIterator valuationIterator = new ValuationIterator(node, 1);
         valuationIterator.getSatisfyingSubstitutions();
     }
 
