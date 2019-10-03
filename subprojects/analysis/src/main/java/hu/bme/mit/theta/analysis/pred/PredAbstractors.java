@@ -152,8 +152,8 @@ public class PredAbstractors {
 				node.calculateSatisfyingSubstitutions();
 
 				// Itt legenerálni az összes megoldást (actLits-re)
-				/**ugye preds.size() a kiszámolandó változók száma?**/
-				ValuationIterator valuationIterator = new ValuationIterator(node, preds.size());
+				/**ugye actLits.size() a kiszámolandó változók száma?**/
+				ValuationIterator valuationIterator = new ValuationIterator(node, actLits.size());
 				while (valuationIterator.hasNext()) {
 					final Set<Expr<BoolType>> newStatePreds = new HashSet<>();
 					Stack<ValuationIterator.Pair> solutionStack = valuationIterator.next();
@@ -162,6 +162,7 @@ public class PredAbstractors {
 						int predsInd = 0;
 						while(it.hasNext()) {
 							ValuationIterator.Pair pair = it.next();
+							if (pair == null || pair.getValue() == null) continue;
 							final Expr<BoolType> pred = preds.get(predsInd++);
 							// pair.getValue() is the value of actLits[predsInd]
 							if (pair.getValue().equals(TrueExpr.getInstance())) { // Ha true
@@ -171,8 +172,8 @@ public class PredAbstractors {
 								newStatePreds.add(prec.negate(pred));
 							}
 						}
-						states.add(PredState.of(newStatePreds));
 					}
+					states.add(PredState.of(newStatePreds));
 				}
 			}
 

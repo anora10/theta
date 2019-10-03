@@ -96,6 +96,9 @@ public class ValuationIterator {
         }
 
         public Expr getValue() {return value;}
+        public Expr getExpression() {return node.expression;}
+
+
     }
 
     public void getSatisfyingSubstitutions () {

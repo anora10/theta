@@ -44,7 +44,7 @@ public class ExpressionNode {
         if (vars.contains(variableSubstitution.getDecl())) {
             containsDecl= true;
         }
-        System.out.println("Expression " + e.toString() + ", substituting " + variableSubstitution.getDecl().toString());
+        //System.out.println("Expression " + e.toString() + ", substituting " + variableSubstitution.getDecl().toString());
     }
 
     private DefaultLitExpr defaultLitExpr = new DefaultLitExpr();
@@ -61,7 +61,6 @@ public class ExpressionNode {
     }
 
     private ExpressionNode substitute (LitExpr<? extends Type> literal) {
-        if (literal != null && expression!=null)System.out.println("    Substituting " + literal.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
         //if (!containsDecl) {
         // if literal is null, or decl is not in the expression, expression goes one level below
         if (literal == null || !containsDecl) {
@@ -82,6 +81,7 @@ public class ExpressionNode {
         if (isFinal) return;
         Cursor myCursor = makeCursor();
         while (myCursor.moveNext()) {
+
             myCursor.getNode().calculateSatisfyingSubstitutions();
         }
     }
