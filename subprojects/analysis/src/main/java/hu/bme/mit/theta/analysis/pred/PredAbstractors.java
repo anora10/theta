@@ -136,12 +136,15 @@ public class PredAbstractors {
 			final List<PredState> states = new LinkedList<>();
 
 			////////////////////////////////////////////////////////////
-			try (WithPushPop wp = new WithPushPop(solver)) {
+			/**ez itt mi?**/
+			//try (WithPushPop wp = new WithPushPop(solver)) {
 
 				/// Ami itt a solver.add-on belül van, azt kell összeÉSelni
 				Expr nodeExpr = PathUtils.unfold(expr, exprIndexing);
+
 				for (int i = 0; i < preds.size(); ++i) {
 					nodeExpr = And(Iff(actLits.get(i).getRef(), PathUtils.unfold(preds.get(i), precIndexing)), nodeExpr);
+
 				}
 				/// Ezen a ponton van egy kifejezésed, amiben van mindenféle változó, de ebből
 				/// az actList-beli változók értékei kellenek majd
@@ -162,7 +165,10 @@ public class PredAbstractors {
 						int predsInd = 0;
 						while(it.hasNext()) {
 							ValuationIterator.Pair pair = it.next();
-							if (pair == null || pair.getValue() == null) continue;
+							if (pair == null || pair.getValue() == null) {
+								//if (pair != null) predsInd++;
+								continue;
+							}
 							final Expr<BoolType> pred = preds.get(predsInd++);
 							// pair.getValue() is the value of actLits[predsInd]
 							if (pair.getValue().equals(TrueExpr.getInstance())) { // Ha true
@@ -173,12 +179,11 @@ public class PredAbstractors {
 							}
 						}
 					}
-					states.add(PredState.of(newStatePreds));
+					if(!newStatePreds.isEmpty() || preds.isEmpty())states.add(PredState.of(newStatePreds));
 				}
-			}
 
+			//}
 			/////////////////////////////////////////////////
-
 			if (!split && states.size() > 1) {
 				final Expr<BoolType> pred = Or(states.stream().map(PredState::toExpr).collect(Collectors.toList()));
 				return Collections.singleton(PredState.of(pred));
@@ -228,6 +233,7 @@ public class PredAbstractors {
 				solver.add(PathUtils.unfold(expr, exprIndexing));
 				for (int i = 0; i < preds.size(); ++i) {
 					solver.add(Iff(actLits.get(i).getRef(), PathUtils.unfold(preds.get(i), precIndexing)));
+
 				}
 				while (solver.check().isSat()) {
 					final Valuation model = solver.getModel();
