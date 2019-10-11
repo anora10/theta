@@ -136,8 +136,6 @@ public class PredAbstractors {
 			final List<PredState> states = new LinkedList<>();
 
 			////////////////////////////////////////////////////////////
-			/**ez itt mi?**/
-			//try (WithPushPop wp = new WithPushPop(solver)) {
 
 				/// Ami itt a solver.add-on belül van, azt kell összeÉSelni
 				Expr nodeExpr = PathUtils.unfold(expr, exprIndexing);
@@ -166,7 +164,6 @@ public class PredAbstractors {
 						while(it.hasNext()) {
 							ValuationIterator.Pair pair = it.next();
 							if (pair == null || pair.getValue() == null) {
-								//if (pair != null) predsInd++;
 								continue;
 							}
 							final Expr<BoolType> pred = preds.get(predsInd++);
@@ -181,8 +178,6 @@ public class PredAbstractors {
 					}
 					if(!newStatePreds.isEmpty() || preds.isEmpty())states.add(PredState.of(newStatePreds));
 				}
-
-			//}
 			/////////////////////////////////////////////////
 			if (!split && states.size() > 1) {
 				final Expr<BoolType> pred = Or(states.stream().map(PredState::toExpr).collect(Collectors.toList()));

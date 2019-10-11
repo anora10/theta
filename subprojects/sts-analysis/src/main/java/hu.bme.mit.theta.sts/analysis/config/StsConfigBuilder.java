@@ -68,7 +68,7 @@ import hu.bme.mit.theta.sts.analysis.initprec.StsPropInitPrec;
 public final class StsConfigBuilder {
 
 	public enum Domain {
-		EXPL, PRED_BOOL, PRED_CART, PRED_SPLIT
+		EXPL, PRED_BOOL, PRED_BOOL_BDD, PRED_CART, PRED_SPLIT
 	}
 
 	;
@@ -211,11 +211,14 @@ public final class StsConfigBuilder {
 			final ExplPrec prec = initPrec.builder.createExpl(sts);
 			return StsConfig.create(checker, prec);
 
-		} else if (domain == Domain.PRED_BOOL || domain == Domain.PRED_CART || domain == Domain.PRED_SPLIT) {
+		} else if (domain == Domain.PRED_BOOL || domain == Domain.PRED_BOOL_BDD || domain == Domain.PRED_CART || domain == Domain.PRED_SPLIT) {
 			PredAbstractor predAbstractor = null;
 			switch (domain) {
 				case PRED_BOOL:
 					predAbstractor = PredAbstractors.booleanAbstractor(solver);
+					break;
+				case PRED_BOOL_BDD:
+					predAbstractor = PredAbstractors.booleanBddAbstractor(solver);
 					break;
 				case PRED_SPLIT:
 					predAbstractor = PredAbstractors.booleanSplitAbstractor(solver);
