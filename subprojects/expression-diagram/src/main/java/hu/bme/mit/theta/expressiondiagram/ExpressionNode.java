@@ -33,10 +33,20 @@ public class ExpressionNode {
     private VariableSubstitution variableSubstitution;
     private static Stack<Cursor> cursorStack = new Stack<>();
 
+    /**
+     * Constructor for ExpressionNode, sequence of variable subtitution is given
+     *
+     * @param vs contains the variable subtitution order
+     */
     public ExpressionNode(VariableSubstitution vs) {
         variableSubstitution = vs;
     }
 
+    /**
+     * Set expression of Node, and check whether it contains the next literal which will be substituted
+     *
+     * @param e
+     */
     public void setExpression(Expr e) {
         expression = e;
         if (variableSubstitution.getDecl() == null) return;
@@ -47,7 +57,11 @@ public class ExpressionNode {
         //System.out.println("Expression " + e.toString() + ", substituting " + variableSubstitution.getDecl().toString());
     }
 
-    private DefaultLitExpr defaultLitExpr = new DefaultLitExpr();
+    /**
+     * Default LitExpr is used when true and false substitution gives the same result
+     *
+     * @return default ExpressionNode
+     */
     private ExpressionNode defaultNextNode() {
         ExpressionNode def = new ExpressionNode(variableSubstitution.next);
         if (def.variableSubstitution == null) return null;
@@ -56,10 +70,16 @@ public class ExpressionNode {
         // the following two lines may be replaced with a default next node
         /*nextExpression.put(BoolLitExpr.of(true),def);
         nextExpression.put(BoolLitExpr.of(false),def);*/
-        nextExpression.put(defaultLitExpr, def);
+        nextExpression.put(new DefaultLitExpr(), def);
         return def;
     }
 
+    /**
+     * Substitute literal in the expression of the node, or if variable to substitute is not present, return default next node
+     *
+     * @param literal substitution value
+     * @return node with resulting expression
+     */
     private ExpressionNode substitute (LitExpr<? extends Type> literal) {
         //if (!containsDecl) {
         // if literal is null, or decl is not in the expression, expression goes one level below
@@ -77,6 +97,10 @@ public class ExpressionNode {
         return newNode;
     }
 
+    /**
+     * Calculate satisfying substitutions for the expression recursively
+     *
+     */
     public void calculateSatisfyingSubstitutions() {
         if (isFinal) return;
         Cursor myCursor = makeCursor();
@@ -86,6 +110,11 @@ public class ExpressionNode {
         }
     }
 
+    /**
+     * Return a Cursor instance
+     *
+     * @return cursor instance
+     */
     private Cursor makeCursor() {
         return new Cursor(this);
     }
@@ -97,6 +126,11 @@ public class ExpressionNode {
         private Decl decl;
         private ObjObjCursor<LitExpr<? extends Type>, ExpressionNode> cursor = nextExpression.cursor();
 
+        /**
+         * Constructor for cursor that searces for satisfying substitutions using a DFS method
+         *
+         * @param n node
+         */
         Cursor(ExpressionNode n) {
             node = n;
             solver = Z3SolverFactory.getInstace().createSolver();
@@ -105,31 +139,44 @@ public class ExpressionNode {
             // TODO: ne legyen ennyi solver
         }
 
+        /**
+         * Return lastly calculated node
+         *
+         * @return node
+         */
         ExpressionNode getNode() {
-            // return lastly calculated node
             return newNode;
         }
 
+        /**
+         * Return lastly calculated value
+         *
+         * @return value
+         */
         LitExpr<? extends Type> getLiteral() {
-            // return lastly calculated value
             return litExpr;
         }
 
+        /**
+         * Search for next satisfying substitution
+         * litExpr will be the calculated value
+         * if node is final, there is no next to move to
+         *
+         * @return false, if no more satisfying assignments can be found
+         */
         boolean moveNext() { // gives false, if no more satisfying assignments can be found
-            // litExpr will be the calculated value
-            // if node is final, there is no next to move to
             if (cursor != null && cursor.moveNext()) {
                 // cached result found
                 newNode = cursor.value();
                 litExpr = cursor.key();
-                if (litExpr != null && litExpr != defaultLitExpr) solver.add(Neq(decl.getRef(), litExpr));
+                if (litExpr != null && litExpr != new DefaultLitExpr()) solver.add(Neq(decl.getRef(), litExpr));
                 //System.out.println("    From cache: " + litExpr.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
                 return true;
             }
             cursor = null;
             if (node.isFinal || decl == null) return false;
             SolverStatus status = solver.check();
-            if(status.isUnsat()) {
+            if (status.isUnsat()) {
                 // no more satisfying assignments
                 node.isFinal = true;
                 //System.out.println("        Finished checking " + node.expression.toString());
@@ -156,6 +203,10 @@ public class ExpressionNode {
         }
     }
 
+    /**
+     * DFS for testing
+     *
+     */
     void DFS(int tabnum) {
         String s = String.format("%1$"+tabnum+"s", "");
         System.out.println("### " + s + expression.toString());
@@ -166,6 +217,12 @@ public class ExpressionNode {
         }
     }
 
+    /**
+     * Collect decls occurring in expression
+     *
+     * @param expr
+     * @param collectTo
+     */
     private static void collectDecls(final Expr<?> expr, final Collection<Decl<?>> collectTo) {
         if (expr instanceof RefExpr) {
             final RefExpr<?> refExpr = (RefExpr<?>) expr;
@@ -176,12 +233,23 @@ public class ExpressionNode {
         expr.getOps().forEach(op -> collectDecls(op, collectTo));
     }
 
+    /**
+     * Get decls from an expression
+     *
+     * @param expr
+     * @return set of decls
+     */
     private static Set<Decl<?>> getDecls(final Expr<?> expr) {
         final Set<Decl<?>> decls = new HashSet<>();
         collectDecls(expr, decls);
         return decls;
     }
 
+    /**
+     * Create substitution order for decls
+     *
+     * @return VariableSubstitution, that will be needed in constructor of ExpressionNode
+     */
     public static VariableSubstitution createDecls (List<ConstDecl<BoolType>> declList) {
         /*final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());

@@ -13,11 +13,23 @@ public class VariableSubstitution {
     static ArrayList<Decl<? extends Type>> decls = new ArrayList<>();
     VariableSubstitution next = null;
 
+    /**
+     * Constructor, VS stores which decl is the next to be substituted
+     *
+     * @param d is to be substituted
+     * @param nextvs is the following VS
+     */
     VariableSubstitution (VariableSubstitution nextvs, Decl d) {
         next = nextvs;
         decl = d;
     }
 
+    /**
+     * Checks whether expression exists on the given level, if not, adds it to the unique table
+     *
+     * @param expression
+     * @return the found or newly added node
+     */
     ExpressionNode checkIn(Expr expression) {
         // is the after substitution resulting expression in the map?
         ExpressionNode node = uniqueTable.get(expression);
@@ -32,11 +44,21 @@ public class VariableSubstitution {
         return node;
     }
 
-    // which Variable is to substitute?
+    /**
+     * Return the decl which is to substitute
+     *
+     * @return decl
+     */
     Decl<? extends Type> getDecl() {
         return decl;
     }
 
+    /**
+     * Return next decl
+     *
+     * @param d actual decl
+     * @return next decl
+     */
     Decl getNextDecl(Decl d) {
         //for (int i = 0; i < decls.size()-1; i++) {
         //    if (decls.get(i) == d) return decls.get(i+1);

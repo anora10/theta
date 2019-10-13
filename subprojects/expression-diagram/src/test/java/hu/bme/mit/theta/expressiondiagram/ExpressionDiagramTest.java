@@ -303,8 +303,4 @@ public final class ExpressionDiagramTest {
         valuationIterator.getSatisfyingSubstitutions();
     }
 
-    @Test
-    public void testInteger() {
-
-    }
 }

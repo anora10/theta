@@ -10,6 +10,13 @@ import java.util.Stack;
 public class ValuationIterator {
     private Stack<Pair> stack = new Stack<>();
     private int maxStackSize;
+
+    /**
+     * Constructor
+     *
+     * @param node containing the expression examined
+     * @param d the number of decls to substitute
+     */
     public ValuationIterator(ExpressionNode node, int d) {
         // d is the number of decls we are interested in
         stack.add(new Pair(node, null));
@@ -17,19 +24,20 @@ public class ValuationIterator {
         maxStackSize = d+1;
     }
 
-    /* not working
-    ValuationIterator(ExpressionNode node) {
-        stack.add(new Pair(node, null));
-        //maxStackSize = stack.peek().node.expression.getArity();
-        // the number of decls to calculate +1
-        maxStackSize = ExpressionNode.getDecls(node.expression).size() +1;
-    }
+    /**
+     * Checks whether there is a next element to iterate on
+     *
+     * @return
      */
-
     public boolean hasNext() {
         return !stack.empty();
     }
 
+    /**
+     * Finds the next valuation and gives it back in the form of a stack
+     *
+     * @return
+     */
     public Stack<Pair> next() {
         if (stack.size() == 1) {
             // first valuation, no backtrack needed
@@ -87,6 +95,7 @@ public class ValuationIterator {
         return null;
     }
 
+
     public class Pair {
         ExpressionNode node;
         Expr value;
@@ -101,6 +110,11 @@ public class ValuationIterator {
 
     }
 
+    /**
+     * Iterates on all satisfying substitutions (they are already calculated, it does not search for new ones)
+     *
+     * @return
+     */
     public void getSatisfyingSubstitutions () {
         while (this.hasNext()) {
             Stack<ValuationIterator.Pair> solutionStack = this.next();
