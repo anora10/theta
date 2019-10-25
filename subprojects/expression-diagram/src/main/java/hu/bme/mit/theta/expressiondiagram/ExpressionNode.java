@@ -104,10 +104,12 @@ public class ExpressionNode {
     public void calculateSatisfyingSubstitutions() {
         if (isFinal) return;
         Cursor myCursor = makeCursor();
+        solver.push();
         while (myCursor.moveNext()) {
-
             myCursor.getNode().calculateSatisfyingSubstitutions();
+            solver.add(Neq(myCursor.decl.getRef(), myCursor.getLiteral()));
         }
+        solver.pop();
     }
 
     /**
@@ -119,11 +121,23 @@ public class ExpressionNode {
         return new Cursor(this);
     }
 
+    private static Solver solver;
+
+    /**
+     * Initiate solver with expression and push
+     *
+     * @param e expression
+     */
+    public static void initiateSolver(Expr e) {
+        solver = Z3SolverFactory.getInstace().createSolver();
+        solver.add(e);
+        solver.push();
+    }
+
     class Cursor {
         private ExpressionNode node, newNode;
-        private Solver solver;
         private LitExpr litExpr;
-        private Decl decl;
+        public Decl decl;
         private ObjObjCursor<LitExpr<? extends Type>, ExpressionNode> cursor = nextExpression.cursor();
 
         /**
@@ -133,8 +147,6 @@ public class ExpressionNode {
          */
         Cursor(ExpressionNode n) {
             node = n;
-            solver = Z3SolverFactory.getInstace().createSolver();
-            solver.add(n.expression);
             decl = node.variableSubstitution.getDecl();
             // TODO: ne legyen ennyi solver
         }
@@ -165,11 +177,12 @@ public class ExpressionNode {
          * @return false, if no more satisfying assignments can be found
          */
         boolean moveNext() { // gives false, if no more satisfying assignments can be found
-            if (cursor != null && cursor.moveNext()) {
+            //System.out.println("        moveNExt Expression " + node.expression.toString());
+            if (cursor != null && cursor.moveNext()) { // it is not a recursive call!
                 // cached result found
                 newNode = cursor.value();
                 litExpr = cursor.key();
-                if (litExpr != null && litExpr != new DefaultLitExpr()) solver.add(Neq(decl.getRef(), litExpr));
+                if (litExpr != null && litExpr != new DefaultLitExpr()) {}
                 //System.out.println("    From cache: " + litExpr.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
                 return true;
             }
@@ -184,17 +197,16 @@ public class ExpressionNode {
             }
             Valuation model = solver.getModel();
             litExpr = model.toMap().get(decl);
-            if (litExpr != null) solver.add(Neq(decl.getRef(), litExpr));
+            if (litExpr != null) {}
             else {
                 // The solver said that the decl may be both true or false.
                 // We choose it false, but later it will be checked whether true is ok.
                 litExpr = FalseExpr.getInstance();
-                solver.add(Neq(decl.getRef(), litExpr));
+                //solver.add(Neq(decl.getRef(), litExpr));
             }
 
             // not inspected assignment found, create new node accordingly
             newNode = node.substitute(litExpr);
-            //if (newNode != null && newNode.variableSubstitution.getDecl() != null) {
             if (newNode != null) {
                 return true;
             }

@@ -150,15 +150,15 @@ public class PredAbstractors {
 				VariableSubstitution vs = ExpressionNode.createDecls(actLits);
 				ExpressionNode node = new ExpressionNode(vs);
 				node.setExpression(nodeExpr);
+				node.initiateSolver(nodeExpr);
 				node.calculateSatisfyingSubstitutions();
 
 				// Itt legenerálni az összes megoldást (actLits-re)
-				/**ugye actLits.size() a kiszámolandó változók száma?**/
 				ValuationIterator valuationIterator = new ValuationIterator(node, actLits.size());
 				while (valuationIterator.hasNext()) {
 					final Set<Expr<BoolType>> newStatePreds = new HashSet<>();
 					Stack<ValuationIterator.Pair> solutionStack = valuationIterator.next();
-					if (solutionStack != null) {
+					if (solutionStack != null && !solutionStack.lastElement().getExpression().equals(FalseExpr.getInstance())) {
 						Iterator<ValuationIterator.Pair> it = solutionStack.iterator();
 						int predsInd = 0;
 						while(it.hasNext()) {

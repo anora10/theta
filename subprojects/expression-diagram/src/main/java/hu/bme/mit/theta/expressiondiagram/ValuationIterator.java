@@ -1,6 +1,7 @@
 package hu.bme.mit.theta.expressiondiagram;
 
 import hu.bme.mit.theta.core.type.Expr;
+import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 
 import java.util.Iterator;
@@ -119,6 +120,7 @@ public class ValuationIterator {
         while (this.hasNext()) {
             Stack<ValuationIterator.Pair> solutionStack = this.next();
             if (solutionStack == null) break;
+            if (solutionStack.lastElement().getExpression().equals(FalseExpr.getInstance())) continue; // evalution to false
             Iterator<Pair> it = solutionStack.iterator();
             while(it.hasNext()) {
                 ValuationIterator.Pair pair = it.next();

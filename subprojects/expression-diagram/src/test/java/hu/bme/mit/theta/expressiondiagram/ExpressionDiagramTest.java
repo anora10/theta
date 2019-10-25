@@ -69,13 +69,14 @@ public final class ExpressionDiagramTest {
         Expr expr = And(Or(ca.getRef(), Not(cb.getRef())), Or(cb.getRef(), cc.getRef()));
         ExpressionNode node = new ExpressionNode(vsa);
         node.setExpression(expr);
+        node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
         node.DFS(1);
 
         System.out.println("--------------------------------------");
         //node.getSatisfyingSubstitutions();
-        ValuationIterator valuationIterator = new ValuationIterator(node, 2);
+        ValuationIterator valuationIterator = new ValuationIterator(node, 3);
         valuationIterator.getSatisfyingSubstitutions();
 
         // TODO ne legyen ennyi solver
@@ -134,6 +135,7 @@ public final class ExpressionDiagramTest {
         Expr expr = Or(Or(Or(ca.getRef(), cb.getRef()), cc.getRef()) , Or(Not(cd.getRef()), Not(ce.getRef())));
         ExpressionNode node = new ExpressionNode(vsa);
         node.setExpression(expr);
+        node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
         System.out.println("--------------------------------------");
@@ -164,13 +166,14 @@ public final class ExpressionDiagramTest {
         Expr expr = And( Or(ca.getRef(), cb.getRef()), Or(cc.getRef(), Not(cd.getRef())) );
         ExpressionNode node = new ExpressionNode(vsa);
         node.setExpression(expr);
+        node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
         System.out.println("--------------------------------------");
         node.DFS(1);
 
         System.out.println("--------------------------------------");
-        ValuationIterator valuationIterator = new ValuationIterator(node, 2);
+        ValuationIterator valuationIterator = new ValuationIterator(node, 4);
         valuationIterator.getSatisfyingSubstitutions();
     }
 
@@ -192,6 +195,7 @@ public final class ExpressionDiagramTest {
         Expr expr = And( Or(ca.getRef(), cb.getRef()), Or(cc.getRef(), Geq(cd.getRef(), Int(10))) );
         ExpressionNode node = new ExpressionNode(vsa);
         node.setExpression(expr);
+        node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
         System.out.println("--------------------------------------");
@@ -271,6 +275,33 @@ public final class ExpressionDiagramTest {
         //Expr expr = False();
         ExpressionNode node = new ExpressionNode(vs);
         node.setExpression(expr);
+        node.initiateSolver(expr);
+        node.calculateSatisfyingSubstitutions();
+
+        System.out.println("--------------------------------------");
+        node.DFS(1);
+
+        System.out.println("--------------------------------------");
+        ValuationIterator valuationIterator = new ValuationIterator(node, 0);
+        valuationIterator.getSatisfyingSubstitutions();
+    }
+
+    @Test
+    public void testBoolean_or() {
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        final ConstDecl<BoolType> cb = Const("b", Bool());
+        actLits.add(ca);
+        actLits.add(cb);
+
+        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
+
+        // (!a v b)
+        Expr expr = Or(Not(ca.getRef()), cb.getRef());
+        //Expr expr = False();
+        ExpressionNode node = new ExpressionNode(vs);
+        node.setExpression(expr);
+        node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
         System.out.println("--------------------------------------");
