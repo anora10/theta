@@ -28,6 +28,7 @@ import java.util.Optional;
 
 import com.google.common.collect.ImmutableList;
 import com.microsoft.z3.FuncDecl;
+import com.microsoft.z3.Native;
 import com.microsoft.z3.Status;
 
 import hu.bme.mit.theta.core.decl.ConstDecl;
@@ -141,7 +142,8 @@ final class Z3Solver implements Solver {
 
 	@Override
 	public void reset() {
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
+		z3Solver.reset();
 	}
 
 	@Override

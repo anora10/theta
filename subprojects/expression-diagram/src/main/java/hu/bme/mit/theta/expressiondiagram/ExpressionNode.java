@@ -123,7 +123,7 @@ public class ExpressionNode {
         return new Cursor(this);
     }
 
-    private static Solver solver;
+    private static Solver solver = Z3SolverFactory.getInstace().createSolver();
 
     /**
      * Initiate solver with expression and push
@@ -131,7 +131,7 @@ public class ExpressionNode {
      * @param e expression
      */
     public static void initiateSolver(Expr e) {
-        solver = Z3SolverFactory.getInstace().createSolver();
+        solver.reset();
         solver.add(e);
         solver.push();
     }

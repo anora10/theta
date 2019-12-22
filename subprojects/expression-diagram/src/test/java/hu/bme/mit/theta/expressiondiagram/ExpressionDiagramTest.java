@@ -41,6 +41,7 @@ public final class ExpressionDiagramTest {
         Expr expr = And(Or(ca.getRef(), Not(cb.getRef())), Or(cb.getRef(), cc.getRef()));
         ExpressionNode node = new ExpressionNode(vsa);
         node.setExpression(expr);
+
         node.calculateSatisfyingSubstitutions();
 
         node.DFS(1);
@@ -153,11 +154,6 @@ public final class ExpressionDiagramTest {
         ValuationIterator valuationIterator = new ValuationIterator(node, 5);
         valuationIterator.getSatisfyingSubstitutions();
 
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test

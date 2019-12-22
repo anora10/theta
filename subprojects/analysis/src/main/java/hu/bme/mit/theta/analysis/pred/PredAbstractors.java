@@ -185,6 +185,8 @@ public class PredAbstractors {
 			} else {
 				return states;
 			}
+
+
 		}
 
 		private void generateActivationLiterals(final int n) {
