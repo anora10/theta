@@ -17,6 +17,9 @@ package hu.bme.mit.theta.analysis.algorithm.cegar;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.base.Stopwatch;
@@ -62,6 +65,16 @@ public final class CegarChecker<S extends State, A extends Action, P extends Pre
 
 	@Override
 	public SafetyResult<S, A> check(final P initPrec) {
+		System.out.println("Read line");
+		InputStreamReader in = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(in);
+		try {
+			String a = br.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		/////////////////////////////////////////////
+
 		logger.write(Level.INFO, "Configuration: %s%n", this);
 		final Stopwatch stopwatch = Stopwatch.createStarted();
 		long abstractorTime = 0;

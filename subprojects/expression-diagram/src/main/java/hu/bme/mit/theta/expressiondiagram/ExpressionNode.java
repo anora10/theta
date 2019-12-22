@@ -32,6 +32,7 @@ public class ExpressionNode {
     HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
     private VariableSubstitution variableSubstitution;
     private static Stack<Cursor> cursorStack = new Stack<>();
+    private static Map<Decl<?>, LitExpr<?>> modelMap = null;
 
     /**
      * Constructor for ExpressionNode, sequence of variable subtitution is given
@@ -54,6 +55,7 @@ public class ExpressionNode {
         if (vars.contains(variableSubstitution.getDecl())) {
             containsDecl= true;
         }
+        if (expression.equals(TrueExpr.getInstance())) isFinal = true;
         //System.out.println("Expression " + e.toString() + ", substituting " + variableSubstitution.getDecl().toString());
     }
 
@@ -169,6 +171,45 @@ public class ExpressionNode {
             return litExpr;
         }
 
+        void getCachedResult() {
+            newNode = cursor.value();
+            litExpr = cursor.key();
+            if (litExpr != null && litExpr != new DefaultLitExpr()) {}
+        }
+
+        boolean getNewResult() {
+            SolverStatus status = solver.check();
+            if (status.isUnsat()) {
+                // no more satisfying assignments
+                node.isFinal = true;
+                return false;
+            }
+            Valuation model = solver.getModel();
+            /// save model as queue
+            modelMap = model.toMap();
+            boolean result = saveSolverSolution();
+            return  result;
+        }
+
+        boolean saveSolverSolution() {
+            litExpr = modelMap.get(decl);
+            if (litExpr != null) {}
+            else {
+                // The solver said that the decl may be both true or false.
+                // We choose it false, but later it will be checked whether true is ok.
+                litExpr = FalseExpr.getInstance();
+                //solver.add(Neq(decl.getRef(), litExpr));
+            }
+
+            // not inspected assignment found, create new node accordingly
+            newNode = node.substitute(litExpr);
+            if (newNode != null && !newNode.isFinal) {
+                newNode.makeCursor().saveSolverSolution();
+            }
+            if (newNode == null) return false;
+            return true;
+        }
+
         /**
          * Search for next satisfying substitution
          * litExpr will be the calculated value
@@ -180,38 +221,14 @@ public class ExpressionNode {
             //System.out.println("        moveNExt Expression " + node.expression.toString());
             if (cursor != null && cursor.moveNext()) { // it is not a recursive call!
                 // cached result found
-                newNode = cursor.value();
-                litExpr = cursor.key();
-                if (litExpr != null && litExpr != new DefaultLitExpr()) {}
+                getCachedResult();
                 //System.out.println("    From cache: " + litExpr.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
                 return true;
             }
             cursor = null;
             if (node.isFinal || decl == null) return false;
-            SolverStatus status = solver.check();
-            if (status.isUnsat()) {
-                // no more satisfying assignments
-                node.isFinal = true;
-                //System.out.println("        Finished checking " + node.expression.toString());
-                return false;
-            }
-            Valuation model = solver.getModel();
-            litExpr = model.toMap().get(decl);
-            if (litExpr != null) {}
-            else {
-                // The solver said that the decl may be both true or false.
-                // We choose it false, but later it will be checked whether true is ok.
-                litExpr = FalseExpr.getInstance();
-                //solver.add(Neq(decl.getRef(), litExpr));
-            }
-
-            // not inspected assignment found, create new node accordingly
-            newNode = node.substitute(litExpr);
-            if (newNode != null) {
-                return true;
-            }
-            node.isFinal = true;
-            return false;
+            boolean result = getNewResult();
+            return result;
         }
     }
 
@@ -221,7 +238,7 @@ public class ExpressionNode {
      */
     void DFS(int tabnum) {
         String s = String.format("%1$"+tabnum+"s", "");
-        System.out.println("### " + s + expression.toString());
+        System.out.println("%%%" + s + expression.toString());
         tabnum++;
         long i = 0;
         for (Expr key : nextExpression.keySet()) {

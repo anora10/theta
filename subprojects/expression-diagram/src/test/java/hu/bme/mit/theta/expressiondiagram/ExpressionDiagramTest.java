@@ -1,20 +1,21 @@
 package hu.bme.mit.theta.expressiondiagram;
 
 import hu.bme.mit.theta.core.decl.ConstDecl;
+import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
+import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
 
+import java.io.IOException;
 import java.net.StandardSocketOptions;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.inttype.IntType;
+import hu.bme.mit.theta.solver.Solver;
+import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 import org.junit.Test;
-
-import java.util.Iterator;
 
 import static hu.bme.mit.theta.core.decl.Decls.Const;
 import static hu.bme.mit.theta.core.type.booltype.BoolExprs.*;
@@ -57,22 +58,24 @@ public final class ExpressionDiagramTest {
 
     @Test
     public void testBoolean_1() {
+
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
         final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
         final ConstDecl<BoolType> cc = Const("c", Bool());
-        VariableSubstitution.decls.add(ca);
-        VariableSubstitution.decls.add(cb);
-        VariableSubstitution vsnull = new VariableSubstitution(null, null);
-        VariableSubstitution vsb = new VariableSubstitution(vsnull,cb);
-        VariableSubstitution vsa = new VariableSubstitution(vsb,ca);
+        actLits.add(ca);
+        actLits.add(cb);
+        actLits.add(cc);
+        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
+
         // (a v !b) ^ (b v c)
         Expr expr = And(Or(ca.getRef(), Not(cb.getRef())), Or(cb.getRef(), cc.getRef()));
-        ExpressionNode node = new ExpressionNode(vsa);
+        ExpressionNode node = new ExpressionNode(vs);
         node.setExpression(expr);
         node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
-        node.DFS(1);
+        //node.DFS(1);
 
         System.out.println("--------------------------------------");
         //node.getSatisfyingSubstitutions();
@@ -87,21 +90,24 @@ public final class ExpressionDiagramTest {
 
     @Test
     public void testBoolean_2() {
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
         final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
         final ConstDecl<BoolType> cc = Const("c", Bool());
         VariableSubstitution.decls.add(ca);
         VariableSubstitution.decls.add(cb);
         VariableSubstitution.decls.add(cc);
-        VariableSubstitution vsnull = new VariableSubstitution(null, null);
-        VariableSubstitution vsc = new VariableSubstitution(vsnull,cc);
-        VariableSubstitution vsb = new VariableSubstitution(vsc,cb);
-        VariableSubstitution vsa = new VariableSubstitution(vsb,ca);
+        actLits.add(ca);
+        actLits.add(cb);
+        actLits.add(cc);
+
+        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
 
         // (a v c) ^ (!a v b)
         Expr expr = And(Or(ca.getRef(), cc.getRef()), Or(Not(ca.getRef()), cb.getRef()));
-        ExpressionNode node = new ExpressionNode(vsa);
+        ExpressionNode node = new ExpressionNode(vs);
         node.setExpression(expr);
+        node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
         System.out.println("--------------------------------------");
@@ -114,6 +120,7 @@ public final class ExpressionDiagramTest {
 
     @Test
     public void testBoolean_3() {
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
         final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
         final ConstDecl<BoolType> cc = Const("c", Bool());
@@ -124,16 +131,17 @@ public final class ExpressionDiagramTest {
         VariableSubstitution.decls.add(cc);
         VariableSubstitution.decls.add(cd);
         VariableSubstitution.decls.add(ce);
-        VariableSubstitution vsnull = new VariableSubstitution(null, null);
-        VariableSubstitution vse = new VariableSubstitution(vsnull,ce);
-        VariableSubstitution vsd = new VariableSubstitution(vse,cd);
-        VariableSubstitution vsc = new VariableSubstitution(vsd,cc);
-        VariableSubstitution vsb = new VariableSubstitution(vsc,cb);
-        VariableSubstitution vsa = new VariableSubstitution(vsb,ca);
+        actLits.add(ca);
+        actLits.add(cb);
+        actLits.add(cc);
+        actLits.add(cd);
+        actLits.add(ce);
+
+        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
 
         // (a v b v c v !d v !e)
         Expr expr = Or(Or(Or(ca.getRef(), cb.getRef()), cc.getRef()) , Or(Not(cd.getRef()), Not(ce.getRef())));
-        ExpressionNode node = new ExpressionNode(vsa);
+        ExpressionNode node = new ExpressionNode(vs);
         node.setExpression(expr);
         node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
@@ -144,6 +152,12 @@ public final class ExpressionDiagramTest {
         System.out.println("--------------------------------------");
         ValuationIterator valuationIterator = new ValuationIterator(node, 5);
         valuationIterator.getSatisfyingSubstitutions();
+
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -170,7 +184,7 @@ public final class ExpressionDiagramTest {
         node.calculateSatisfyingSubstitutions();
 
         System.out.println("--------------------------------------");
-        node.DFS(1);
+        //node.DFS(1);
 
         System.out.println("--------------------------------------");
         ValuationIterator valuationIterator = new ValuationIterator(node, 4);
@@ -218,6 +232,7 @@ public final class ExpressionDiagramTest {
         Expr expr = Or(ca.getRef(), Geq(cd.getRef(), Int(10)));
         ExpressionNode node = new ExpressionNode(vsa);
         node.setExpression(expr);
+        node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
         System.out.println("--------------------------------------");
@@ -252,6 +267,7 @@ public final class ExpressionDiagramTest {
         Expr expr = And( Or(Not(ca.getRef()), Leq(cd.getRef(), Int(0))), Or(cb.getRef(), Gt(cd.getRef(), Int(0))) );
         ExpressionNode node = new ExpressionNode(vs);
         node.setExpression(expr);
+        node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
         System.out.println("--------------------------------------");
@@ -282,12 +298,13 @@ public final class ExpressionDiagramTest {
         node.DFS(1);
 
         System.out.println("--------------------------------------");
-        ValuationIterator valuationIterator = new ValuationIterator(node, 0);
+        ValuationIterator valuationIterator = new ValuationIterator(node, 1);
         valuationIterator.getSatisfyingSubstitutions();
     }
 
     @Test
     public void testBoolean_or() {
+
         final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
         final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
@@ -324,6 +341,7 @@ public final class ExpressionDiagramTest {
         //Expr expr = False();
         ExpressionNode node = new ExpressionNode(vs);
         node.setExpression(expr);
+        node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
         System.out.println("--------------------------------------");
@@ -332,6 +350,27 @@ public final class ExpressionDiagramTest {
         System.out.println("--------------------------------------");
         ValuationIterator valuationIterator = new ValuationIterator(node, 1);
         valuationIterator.getSatisfyingSubstitutions();
+    }
+
+    @Test
+    public void proba() {
+
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        final ConstDecl<BoolType> cb = Const("b", Bool());
+        actLits.add(ca);
+        actLits.add(cb);
+
+        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
+
+        // (!a v b)
+        Expr expr = Or(Not(ca.getRef()), cb.getRef());
+        Solver solver = Z3SolverFactory.getInstace().createSolver();
+        solver.add(expr);
+        if (solver.check().isSat()) {
+            Map<Decl<?>, LitExpr<?>> modelMap = solver.getModel().toMap();
+            System.out.println(modelMap.toString());
+        }
     }
 
 }
