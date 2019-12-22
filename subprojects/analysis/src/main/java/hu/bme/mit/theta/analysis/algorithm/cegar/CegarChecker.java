@@ -65,14 +65,14 @@ public final class CegarChecker<S extends State, A extends Action, P extends Pre
 
 	@Override
 	public SafetyResult<S, A> check(final P initPrec) {
-		System.out.println("Read line");
+		/*System.out.println("Read line");
 		InputStreamReader in = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(in);
 		try {
 			String a = br.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		/////////////////////////////////////////////
 
 		logger.write(Level.INFO, "Configuration: %s%n", this);
