@@ -1,6 +1,5 @@
 package hu.bme.mit.theta.expressiondiagram;
 
-import com.google.errorprone.annotations.Var;
 import com.koloboke.collect.map.ObjObjCursor;
 import com.koloboke.collect.map.hash.HashObjObjMap;
 import com.koloboke.collect.map.hash.HashObjObjMaps;
@@ -12,7 +11,6 @@ import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.Type;
 import hu.bme.mit.theta.core.type.anytype.RefExpr;
-import hu.bme.mit.theta.core.type.booltype.BoolLitExpr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
@@ -27,12 +25,12 @@ import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Neq;
 
 public class ExpressionNode {
     Expr expression;
-    private boolean isFinal = false;
+    boolean isFinal = false;
     private boolean containsDecl = false;
     HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
-    private VariableSubstitution variableSubstitution;
-    private static Stack<Cursor> cursorStack = new Stack<>();
-    private static Map<Decl<?>, LitExpr<?>> modelMap = null;
+    VariableSubstitution variableSubstitution;
+    private static Stack<NodeCursor> cursorStack = new Stack<>();
+    static Map<Decl<?>, LitExpr<?>> modelMap = null;
 
     /**
      * Constructor for ExpressionNode, sequence of variable subtitution is given
@@ -82,7 +80,7 @@ public class ExpressionNode {
      * @param literal substitution value
      * @return node with resulting expression
      */
-    private ExpressionNode substitute (LitExpr<? extends Type> literal) {
+    ExpressionNode substitute(LitExpr<? extends Type> literal) {
         //if (!containsDecl) {
         // if literal is null, or decl is not in the expression, expression goes one level below
         if (literal == null || !containsDecl) {
@@ -105,11 +103,11 @@ public class ExpressionNode {
      */
     public void calculateSatisfyingSubstitutions() {
         if (isFinal) return;
-        Cursor myCursor = makeCursor();
+        NodeCursor myNodeCursor = makeCursor();
         solver.push();
-        while (myCursor.moveNext()) {
-            myCursor.getNode().calculateSatisfyingSubstitutions();
-            solver.add(Neq(myCursor.decl.getRef(), myCursor.getLiteral()));
+        while (myNodeCursor.moveNext()) {
+            myNodeCursor.getNode().calculateSatisfyingSubstitutions();
+            solver.add(Neq(myNodeCursor.decl.getRef(), myNodeCursor.getLiteral()));
         }
         solver.pop();
     }
@@ -119,11 +117,11 @@ public class ExpressionNode {
      *
      * @return cursor instance
      */
-    private Cursor makeCursor() {
-        return new Cursor(this);
+    NodeCursor makeCursor() {
+        return new NodeCursor(this);
     }
 
-    private static Solver solver = Z3SolverFactory.getInstace().createSolver();
+    static Solver solver = Z3SolverFactory.getInstace().createSolver();
 
     /**
      * Initiate solver with expression and push
@@ -136,101 +134,7 @@ public class ExpressionNode {
         solver.push();
     }
 
-    class Cursor {
-        private ExpressionNode node, newNode;
-        private LitExpr litExpr;
-        public Decl decl;
-        private ObjObjCursor<LitExpr<? extends Type>, ExpressionNode> cursor = nextExpression.cursor();
 
-        /**
-         * Constructor for cursor that searces for satisfying substitutions using a DFS method
-         *
-         * @param n node
-         */
-        Cursor(ExpressionNode n) {
-            node = n;
-            decl = node.variableSubstitution.getDecl();
-            // TODO: ne legyen ennyi solver
-        }
-
-        /**
-         * Return lastly calculated node
-         *
-         * @return node
-         */
-        ExpressionNode getNode() {
-            return newNode;
-        }
-
-        /**
-         * Return lastly calculated value
-         *
-         * @return value
-         */
-        LitExpr<? extends Type> getLiteral() {
-            return litExpr;
-        }
-
-        void getCachedResult() {
-            newNode = cursor.value();
-            litExpr = cursor.key();
-            if (litExpr != null && litExpr != new DefaultLitExpr()) {}
-        }
-
-        boolean getNewResult() {
-            SolverStatus status = solver.check();
-            if (status.isUnsat()) {
-                // no more satisfying assignments
-                node.isFinal = true;
-                return false;
-            }
-            Valuation model = solver.getModel();
-            /// save model as queue
-            modelMap = model.toMap();
-            boolean result = saveSolverSolution();
-            return  result;
-        }
-
-        boolean saveSolverSolution() {
-            litExpr = modelMap.get(decl);
-            if (litExpr != null) {}
-            else {
-                // The solver said that the decl may be both true or false.
-                // We choose it false, but later it will be checked whether true is ok.
-                litExpr = FalseExpr.getInstance();
-                //solver.add(Neq(decl.getRef(), litExpr));
-            }
-
-            // not inspected assignment found, create new node accordingly
-            newNode = node.substitute(litExpr);
-            if (newNode != null && !newNode.isFinal) {
-                newNode.makeCursor().saveSolverSolution();
-            }
-            if (newNode == null) return false;
-            return true;
-        }
-
-        /**
-         * Search for next satisfying substitution
-         * litExpr will be the calculated value
-         * if node is final, there is no next to move to
-         *
-         * @return false, if no more satisfying assignments can be found
-         */
-        boolean moveNext() { // gives false, if no more satisfying assignments can be found
-            //System.out.println("        moveNExt Expression " + node.expression.toString());
-            if (cursor != null && cursor.moveNext()) { // it is not a recursive call!
-                // cached result found
-                getCachedResult();
-                //System.out.println("    From cache: " + litExpr.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
-                return true;
-            }
-            cursor = null;
-            if (node.isFinal || decl == null) return false;
-            boolean result = getNewResult();
-            return result;
-        }
-    }
 
     /**
      * DFS for testing
