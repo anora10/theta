@@ -3,16 +3,27 @@ package hu.bme.mit.theta.expressiondiagram;
 import com.koloboke.collect.map.ObjObjCursor;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.Valuation;
+import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.Type;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
+import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.solver.SolverStatus;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
+import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Eq;
+import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Neq;
+
 class NodeCursor {
+    public static int megoldas = 0;
     private ExpressionNode node, newNode;
     private LitExpr litExpr;
     public Decl decl;
-    private ObjObjCursor<LitExpr<? extends Type>, ExpressionNode> mapCursor;
+    MapCursor mapCursor;
+    static HashMap<Decl, LitExpr<? extends Type>> solutionMap = new HashMap<>();
+    public static boolean changed = false;
 
 
     /**
@@ -23,7 +34,7 @@ class NodeCursor {
     NodeCursor(ExpressionNode n) {
         node = n;
         decl = node.variableSubstitution.getDecl();
-        mapCursor = node.nextExpression.cursor();
+        mapCursor = new MapCursor(node);
     }
 
     /**
@@ -47,7 +58,6 @@ class NodeCursor {
     void getCachedResult() {
         newNode = mapCursor.value();
         litExpr = mapCursor.key();
-        if (litExpr != null && litExpr != new DefaultLitExpr()) {}
     }
 
     boolean getNewResult() {
@@ -76,11 +86,25 @@ class NodeCursor {
 
         // not inspected assignment found, create new node accordingly
         newNode = node.substitute(litExpr);
+        if (newNode == null || newNode.expression.equals(FalseExpr.getInstance())) return false;
+        if (newNode.expression.equals(TrueExpr.getInstance())) return true;
         if (newNode != null && !newNode.isFinal) {
             newNode.makeCursor().saveSolverSolution();
         }
-        if (newNode == null) return false;
         return true;
+    }
+
+    private void doBeforeNewResult() {
+        for (Decl d : node.variableSubstitution.decls) {
+            if (d.equals(decl)) break;
+            ExpressionNode.solver.add(Eq(d.getRef(), solutionMap.get(d)));
+        }
+    }
+
+    private void putInMap() {
+        if (solutionMap.get(decl) != mapCursor.key())
+            changed = true;
+        solutionMap.put(decl, mapCursor.key());
     }
 
     /**
@@ -91,16 +115,121 @@ class NodeCursor {
      * @return false, if no more satisfying assignments can be found
      */
     boolean moveNext() { // gives false, if no more satisfying assignments can be found
-        //System.out.println("        moveNExt Expression " + node.expression.toString());
-        if (mapCursor != null && mapCursor.moveNext()) { // it is not a recursive call!
-            // cached result found
-            getCachedResult();
-            //System.out.println("    From cache: " + litExpr.toString() + " instead of " + variableSubstitution.getDecl().toString() + " into " + expression.toString());
-            return true;
+        if (node.expression.equals(TrueExpr.getInstance())) return true;
+        ExpressionNode nextNode = mapCursor.value();
+        if (!mapCursor.hasPrevious() && mapCursor.key()== null) // nodeexpression vizsgalatanak kezdeten vagyunk
+            ExpressionNode.solver.push();
+        if (nextNode != null) { // megprobal alatta keresni
+            if ( (changed || !nextNode.expression.equals(TrueExpr.getInstance())) && nextNode.nodeCursor.moveNext()) {
+                // van alatta még megoldás
+                return true;
+            }
+            // nincs alatta megoldas, a mapCursor tovabb fog lepni
+            ExpressionNode.solver.add(Neq(decl.getRef(), mapCursor.key()));
         }
-        mapCursor = null;
-        if (node.isFinal || decl == null) return false;
+        if (mapCursor.hasNext()) {
+            if (mapCursor.key() != null) {
+                ExpressionNode.solver.add(Neq(decl.getRef(), mapCursor.key()));
+            }
+            mapCursor.moveNext();
+            // resetall? elvileg nem kell
+            nextNode = mapCursor.value();
+            if (nextNode.nodeCursor.moveNext()) {
+                // a mapcursor lépett egyet, a mutatott Node első megoldását lementette a hívott moveNext
+                putInMap();
+                return true;
+            }
+            assert (0==1); // ide nem kéne jutni
+            return false;
+        }
+        // uj megoldas
+        doBeforeNewResult();
+        ExpressionNode.solver.push();
         boolean result = getNewResult();
-        return result;
+        ExpressionNode.solver.pop();
+        if (!result) {
+            node.isFinal = true;
+            ExpressionNode.solver.pop();
+            mapCursor.reset(); // hogy később ha ebbe a node-ba lépünk, újrakezdje
+            mapCursor.lastLitExpr = null; //ezt nagyon nem itt kéne
+            return false; // nincs több megoldás
+        }
+        // a getNewResult beepitette az uj megoldast, azt most kinyerjuk
+        if (mapCursor.key() != null) {
+            ExpressionNode.solver.add(Neq(decl.getRef(), mapCursor.key())); ///utana!
+        }
+        mapCursor.moveNext();
+        nextNode = mapCursor.value();
+        putInMap();
+        if (nextNode != null) {
+            if (nextNode.nodeCursor.moveNext()) {
+                return true;
+            }
+        }
+         assert (0==1); //ide se kéne jutni
+        return false;
+    }
+
+    class MapCursor {
+        //private ObjObjCursor<LitExpr<? extends Type>, ExpressionNode> ;
+        private Iterator<LitExpr<? extends Type>> it;
+        private boolean changed = false;
+        LitExpr lastLitExpr = null;
+        boolean hasPrev = false;
+        MapCursor(ExpressionNode n) {
+            it = n.nextExpression.keySet().iterator();
+        }
+
+        public boolean hasNext() {
+            if (changed) { // reset state-before-change
+                reset();
+                if (lastLitExpr != null) {
+                    while (it.hasNext() && !it.next().equals(lastLitExpr)) {}
+                }
+            }
+            if (it.hasNext()) return true;
+            return false;
+        }
+
+        public boolean moveNext() {
+            hasPrev = true;
+            if (changed) { // reset state-before-change
+                reset();
+                if (lastLitExpr != null) {
+                    while (it.hasNext() && !it.next().equals(lastLitExpr)) {}
+                }
+            }
+            if (it.hasNext())  {
+                lastLitExpr = it.next();
+                return true;
+            }
+            // vegigneztuk a map-et
+            reset();
+            lastLitExpr = null;
+            return false;
+        }
+
+        LitExpr key() {
+            return lastLitExpr;
+        }
+
+        ExpressionNode value() {
+            if (lastLitExpr == null) return null;
+            return node.nextExpression.get(lastLitExpr);
+        }
+
+        private void reset() {
+            it = node.nextExpression.keySet().iterator();
+            changed = false;
+            hasPrev = false;
+        }
+
+        public void setChanged(boolean changed) {
+            this.changed = changed;
+        }
+
+        public boolean hasPrevious() {
+            return hasPrev;
+        }
     }
 }

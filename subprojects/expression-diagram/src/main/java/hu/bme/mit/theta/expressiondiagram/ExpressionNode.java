@@ -1,22 +1,16 @@
 package hu.bme.mit.theta.expressiondiagram;
 
-import com.koloboke.collect.map.ObjObjCursor;
-import com.koloboke.collect.map.hash.HashObjObjMap;
-import com.koloboke.collect.map.hash.HashObjObjMaps;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.ImmutableValuation;
-import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.Type;
 import hu.bme.mit.theta.core.type.anytype.RefExpr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
-import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.core.utils.ExprSimplifier;
 import hu.bme.mit.theta.solver.Solver;
-import hu.bme.mit.theta.solver.SolverStatus;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
 import java.util.*;
@@ -27,18 +21,21 @@ public class ExpressionNode {
     Expr expression;
     boolean isFinal = false;
     private boolean containsDecl = false;
-    HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
+    LinkedHashMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = new LinkedHashMap();
     VariableSubstitution variableSubstitution;
     private static Stack<NodeCursor> cursorStack = new Stack<>();
     static Map<Decl<?>, LitExpr<?>> modelMap = null;
+    NodeCursor nodeCursor;
 
     /**
      * Constructor for ExpressionNode, sequence of variable subtitution is given
      *
      * @param vs contains the variable subtitution order
      */
-    public ExpressionNode(VariableSubstitution vs) {
+    public ExpressionNode(VariableSubstitution vs, Expr expr) {
         variableSubstitution = vs;
+        setExpression(expr);
+        nodeCursor =  makeCursor();
     }
 
     /**
@@ -63,15 +60,19 @@ public class ExpressionNode {
      * @return default ExpressionNode
      */
     private ExpressionNode defaultNextNode() {
-        ExpressionNode def = new ExpressionNode(variableSubstitution.next);
-        if (def.variableSubstitution == null) return null;
-        def.setExpression(expression);
+        if (variableSubstitution.next == null) return null;
+        ExpressionNode def = new ExpressionNode(variableSubstitution.next, expression);
         isFinal = true; // no more check needed, as variable is not present
         // the following two lines may be replaced with a default next node
         /*nextExpression.put(BoolLitExpr.of(true),def);
         nextExpression.put(BoolLitExpr.of(false),def);*/
         nextExpression.put(new DefaultLitExpr(), def);
+        setNextExprChanged();
         return def;
+    }
+
+    private void setNextExprChanged() {
+        nodeCursor.mapCursor.setChanged(true);
     }
 
     /**
@@ -94,6 +95,7 @@ public class ExpressionNode {
         Expr<? extends Type> resultingExpression = ExprSimplifier.simplify(expression, valuation);
         ExpressionNode newNode = variableSubstitution.checkIn(resultingExpression);
         nextExpression.put(literal, newNode);
+        setNextExprChanged();
         return newNode;
     }
 

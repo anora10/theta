@@ -39,9 +39,8 @@ public final class ExpressionDiagramTest {
         VariableSubstitution vsa = new VariableSubstitution(vsb,ca);
         // (a v !b) ^ (b v c)
         Expr expr = And(Or(ca.getRef(), Not(cb.getRef())), Or(cb.getRef(), cc.getRef()));
-        ExpressionNode node = new ExpressionNode(vsa);
-        node.setExpression(expr);
-
+        ExpressionNode node = new ExpressionNode(vsa, expr);
+        node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
         node.DFS(1);
@@ -71,8 +70,8 @@ public final class ExpressionDiagramTest {
 
         // (a v !b) ^ (b v c)
         Expr expr = And(Or(ca.getRef(), Not(cb.getRef())), Or(cb.getRef(), cc.getRef()));
-        ExpressionNode node = new ExpressionNode(vs);
-        node.setExpression(expr);
+        ExpressionNode node = new ExpressionNode(vs, expr);
+        //node.setExpression(expr);
         node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
@@ -106,8 +105,7 @@ public final class ExpressionDiagramTest {
 
         // (a v c) ^ (!a v b)
         Expr expr = And(Or(ca.getRef(), cc.getRef()), Or(Not(ca.getRef()), cb.getRef()));
-        ExpressionNode node = new ExpressionNode(vs);
-        node.setExpression(expr);
+        ExpressionNode node = new ExpressionNode(vs, expr);
         node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
@@ -142,8 +140,7 @@ public final class ExpressionDiagramTest {
 
         // (a v b v c v !d v !e)
         Expr expr = Or(Or(Or(ca.getRef(), cb.getRef()), cc.getRef()) , Or(Not(cd.getRef()), Not(ce.getRef())));
-        ExpressionNode node = new ExpressionNode(vs);
-        node.setExpression(expr);
+        ExpressionNode node = new ExpressionNode(vs, expr);
         node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
@@ -174,8 +171,7 @@ public final class ExpressionDiagramTest {
 
         // (a v b) ^(c v !d)
         Expr expr = And( Or(ca.getRef(), cb.getRef()), Or(cc.getRef(), Not(cd.getRef())) );
-        ExpressionNode node = new ExpressionNode(vsa);
-        node.setExpression(expr);
+        ExpressionNode node = new ExpressionNode(vsa, expr);
         node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
@@ -203,8 +199,7 @@ public final class ExpressionDiagramTest {
 
         // (a v b) ^ (c v d!=10)
         Expr expr = And( Or(ca.getRef(), cb.getRef()), Or(cc.getRef(), Geq(cd.getRef(), Int(10))) );
-        ExpressionNode node = new ExpressionNode(vsa);
-        node.setExpression(expr);
+        ExpressionNode node = new ExpressionNode(vsa,expr);
         node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
@@ -226,8 +221,7 @@ public final class ExpressionDiagramTest {
 
         // (a v d>=10)
         Expr expr = Or(ca.getRef(), Geq(cd.getRef(), Int(10)));
-        ExpressionNode node = new ExpressionNode(vsa);
-        node.setExpression(expr);
+        ExpressionNode node = new ExpressionNode(vsa, expr);
         node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
@@ -261,8 +255,7 @@ public final class ExpressionDiagramTest {
 
         // (!a v d<=10) ^ (b v d>10)
         Expr expr = And( Or(Not(ca.getRef()), Leq(cd.getRef(), Int(0))), Or(cb.getRef(), Gt(cd.getRef(), Int(0))) );
-        ExpressionNode node = new ExpressionNode(vs);
-        node.setExpression(expr);
+        ExpressionNode node = new ExpressionNode(vs, expr);
         node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
@@ -285,8 +278,7 @@ public final class ExpressionDiagramTest {
         // (!a v a)
         Expr expr = Or(Not(ca.getRef()), ca.getRef());
         //Expr expr = False();
-        ExpressionNode node = new ExpressionNode(vs);
-        node.setExpression(expr);
+        ExpressionNode node = new ExpressionNode(vs,expr);
         node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
@@ -312,8 +304,7 @@ public final class ExpressionDiagramTest {
         // (!a v b)
         Expr expr = Or(Not(ca.getRef()), cb.getRef());
         //Expr expr = False();
-        ExpressionNode node = new ExpressionNode(vs);
-        node.setExpression(expr);
+        ExpressionNode node = new ExpressionNode(vs, expr);
         node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
@@ -335,8 +326,7 @@ public final class ExpressionDiagramTest {
         // (a>=5 ^ a<=5)
         Expr expr = And(Geq(ca.getRef(), Int(5)), Leq(ca.getRef(), Int(5)));
         //Expr expr = False();
-        ExpressionNode node = new ExpressionNode(vs);
-        node.setExpression(expr);
+        ExpressionNode node = new ExpressionNode(vs, expr);
         node.initiateSolver(expr);
         node.calculateSatisfyingSubstitutions();
 
@@ -369,4 +359,146 @@ public final class ExpressionDiagramTest {
         }
     }
 
+    @Test
+    public void nodeCursorMoveNextTest_abc() {
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        final ConstDecl<BoolType> cb = Const("b", Bool());
+        final ConstDecl<BoolType> cc = Const("c", Bool());
+        actLits.add(ca);
+        actLits.add(cb);
+        actLits.add(cc);
+        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
+
+        // (a v !b) ^ (b v c)
+        Expr expr = And(Or(ca.getRef(), Not(cb.getRef())), Or(cb.getRef(), cc.getRef()));
+        ExpressionNode node = new ExpressionNode(vs, expr);
+        node.initiateSolver(expr);
+
+        for (int i = 0; i < 4; i++) {
+            NodeCursor.changed = false; //TODO tényleg válzotott?
+            boolean talalt = node.nodeCursor.moveNext();
+            if (talalt) System.out.println("Uj megoldas!");
+            else System.out.println("Nincs tobb megoldas...");
+            HashMap map = node.nodeCursor.solutionMap;
+
+            if (!map.isEmpty())
+                for (Object d : map.keySet()) {
+                    System.out.println(d.toString() + " " + map.get(d).toString());
+                }
+            else System.out.println("map was empty :(");
+            System.out.println("\n");
+            NodeCursor.megoldas++;
+        }
+    }
+
+    @Test
+    public void nodeCursorMoveNextTest_abcde() {
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        final ConstDecl<BoolType> cb = Const("b", Bool());
+        final ConstDecl<BoolType> cc = Const("c", Bool());
+        final ConstDecl<BoolType> cd = Const("d", Bool());
+        final ConstDecl<BoolType> ce = Const("e", Bool());
+        VariableSubstitution.decls.add(ca);
+        VariableSubstitution.decls.add(cb);
+        VariableSubstitution.decls.add(cc);
+        VariableSubstitution.decls.add(cd);
+        VariableSubstitution.decls.add(ce);
+        actLits.add(ca);
+        actLits.add(cb);
+        actLits.add(cc);
+        actLits.add(cd);
+        actLits.add(ce);
+
+        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
+
+        // (a v b v c v !d v !e)
+        Expr expr = Or(Or(Or(ca.getRef(), cb.getRef()), cc.getRef()) , Or(Not(cd.getRef()), Not(ce.getRef())));
+        ExpressionNode node = new ExpressionNode(vs, expr);
+        node.initiateSolver(expr);
+
+        for (int i = 0; i < 6; i++) {
+            NodeCursor.changed = false;
+            boolean talalt = node.nodeCursor.moveNext();
+            if (!talalt) System.out.println("VEGE!!!");
+            HashMap map = node.nodeCursor.solutionMap;
+
+            if (!map.isEmpty())
+                for (Object d : map.keySet()) {
+                    System.out.println(d.toString() + " " + map.get(d).toString());
+                }
+            else System.out.println("map was empty :(");
+            System.out.println("\n");
+        }
+
+    }
+
+    @Test
+    public void nodeCursorMoveNextTest_true() {
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        actLits.add(ca);
+
+        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
+
+        // (!a v a)
+        Expr expr = Or(Not(ca.getRef()), ca.getRef());
+        //Expr expr = False();
+        ExpressionNode node = new ExpressionNode(vs,expr);
+        node.initiateSolver(expr);
+
+        for (int i = 0; i < 4; i++) {
+            NodeCursor.changed = false; //TODO tényleg válzotott?
+            boolean talalt = node.nodeCursor.moveNext();
+            if (talalt) System.out.println("Uj megoldas!");
+            else System.out.println("Nincs tobb megoldas...");
+            HashMap map = node.nodeCursor.solutionMap;
+
+            if (!map.isEmpty())
+                for (Object d : map.keySet()) {
+                    System.out.println(d.toString() + " " + map.get(d).toString());
+                }
+            else System.out.println("map was empty :(");
+            System.out.println("\n");
+            NodeCursor.megoldas++;
+        }
+
+
+
+    }
+
+    @Test
+    public void nodeCursorMoveNextTest_withd() {
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        final ConstDecl<BoolType> cb = Const("b", Bool());
+        final ConstDecl<IntType> cd = Const("d", Int());
+        actLits.add(ca);
+        actLits.add(cb);
+
+        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
+
+        // (!a v d<=10) ^ (b v d>10)
+        Expr expr = And( Or(Not(ca.getRef()), Leq(cd.getRef(), Int(0))), Or(cb.getRef(), Gt(cd.getRef(), Int(0))) );
+        ExpressionNode node = new ExpressionNode(vs, expr);
+        node.initiateSolver(expr);
+
+        for (int i = 0; i < 4; i++) {
+            NodeCursor.changed = false; //TODO tényleg válzotott?
+            boolean talalt = node.nodeCursor.moveNext();
+            if (talalt) System.out.println("Uj megoldas!");
+            else System.out.println("Nincs tobb megoldas...");
+            HashMap map = node.nodeCursor.solutionMap;
+
+            if (!map.isEmpty())
+                for (Object d : map.keySet()) {
+                    System.out.println(d.toString() + " " + map.get(d).toString());
+                }
+            else System.out.println("map was empty :(");
+            System.out.println("\n");
+            NodeCursor.megoldas++;
+        }
+    }
 }

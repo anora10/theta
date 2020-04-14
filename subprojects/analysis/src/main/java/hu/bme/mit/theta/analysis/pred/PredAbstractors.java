@@ -148,8 +148,8 @@ public class PredAbstractors {
 				/// az actList-beli változók értékei kellenek majd
 
 				VariableSubstitution vs = ExpressionNode.createDecls(actLits);
-				ExpressionNode node = new ExpressionNode(vs);
-				node.setExpression(nodeExpr);
+				ExpressionNode node = new ExpressionNode(vs, nodeExpr);
+				//node.setExpression(nodeExpr);
 				node.initiateSolver(nodeExpr);
 				node.calculateSatisfyingSubstitutions();
 

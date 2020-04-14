@@ -38,8 +38,7 @@ public class VariableSubstitution {
             return node;
         }
         // else node must be added
-        node = new ExpressionNode(next);
-        node.setExpression(expression);
+        node = new ExpressionNode(next, expression);
         uniqueTable.addExpressionNode(expression, node);
         return node;
     }
