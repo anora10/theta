@@ -120,6 +120,10 @@ class NodeCursor {
      */
     boolean moveNext() { // gives false, if no more satisfying assignments can be found
         if (node.expression.equals(TrueExpr.getInstance())) return true;
+        if (decl == null){
+            if (changed) return true; // itt mar nem kell vizsgalodni
+            else return false; // mar voltunk itt, noha itt mar nem kene vizsgalodni
+        }
         ExpressionNode nextNode = mapCursor.value();
         if (!mapCursor.hasPrevious() && mapCursor.key()== null) // nodeexpression vizsgalatanak kezdeten vagyunk
             ExpressionNode.solver.push();
