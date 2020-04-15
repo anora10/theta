@@ -21,6 +21,8 @@ class NodeCursor {
     private ExpressionNode node, newNode;
     private LitExpr litExpr;
     public Decl decl;
+    public static Decl lastPutInMap;
+    public static Decl resultDecl;
     MapCursor mapCursor;
     static HashMap<Decl, LitExpr<? extends Type>> solutionMap = new HashMap<>();
     public static boolean changed = false;
@@ -109,6 +111,7 @@ class NodeCursor {
         if (solutionMap.get(decl) != mapCursor.key())
             changed = true;
         solutionMap.put(decl, mapCursor.key());
+        lastPutInMap = decl;
     }
 
     /**
@@ -119,9 +122,15 @@ class NodeCursor {
      * @return false, if no more satisfying assignments can be found
      */
     boolean moveNext() { // gives false, if no more satisfying assignments can be found
-        if (node.expression.equals(TrueExpr.getInstance())) return true;
+        if (node.expression.equals(TrueExpr.getInstance())) {
+            resultDecl = decl;
+            return true;
+        }
         if (decl == null){
-            if (changed) return true; // itt mar nem kell vizsgalodni
+            if (changed) {
+                resultDecl = decl;
+                return true; // itt mar nem kell vizsgalodni
+            }
             else return false; // mar voltunk itt, noha itt mar nem kene vizsgalodni
         }
         ExpressionNode nextNode = mapCursor.value();

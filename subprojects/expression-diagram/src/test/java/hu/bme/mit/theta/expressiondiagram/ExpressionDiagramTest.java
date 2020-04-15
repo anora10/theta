@@ -24,7 +24,8 @@ import static hu.bme.mit.theta.core.type.inttype.IntExprs.*;
 
 public final class ExpressionDiagramTest {
 
-
+    // old tests
+/* {
     @Test
     public void testBoolean() {
         final ConstDecl<BoolType> ca = Const("a", Bool());
@@ -234,40 +235,6 @@ public final class ExpressionDiagramTest {
     }
 
     @Test
-    public void testBoolean_7() {
-        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
-
-        final ConstDecl<BoolType> ca = Const("a", Bool());
-        final ConstDecl<BoolType> cb = Const("b", Bool());
-        final ConstDecl<IntType> cd = Const("d", Int());
-        actLits.add(ca);
-        actLits.add(cb);
-
-        /*
-        VariableSubstitution.decls.add(ca);
-        VariableSubstitution.decls.add(cb);
-        VariableSubstitution vsnull = new VariableSubstitution(null, null);
-        VariableSubstitution vsb = new VariableSubstitution(vsnull,cb);
-        VariableSubstitution vsa = new VariableSubstitution(vsb,ca);
-        */
-
-        VariableSubstitution vs = ExpressionNode.createDecls(actLits);
-
-        // (!a v d<=10) ^ (b v d>10)
-        Expr expr = And( Or(Not(ca.getRef()), Leq(cd.getRef(), Int(0))), Or(cb.getRef(), Gt(cd.getRef(), Int(0))) );
-        ExpressionNode node = new ExpressionNode(vs, expr);
-        node.initiateSolver(expr);
-        node.calculateSatisfyingSubstitutions();
-
-        System.out.println("--------------------------------------");
-        node.DFS(1);
-
-        System.out.println("--------------------------------------");
-        ValuationIterator valuationIterator = new ValuationIterator(node, 2);
-        valuationIterator.getSatisfyingSubstitutions();
-    }
-
-    @Test
     public void testBoolean_true() {
         final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
         final ConstDecl<BoolType> ca = Const("a", Bool());
@@ -358,7 +325,7 @@ public final class ExpressionDiagramTest {
             System.out.println(modelMap.toString());
         }
     }
-
+ }*/
     @Test
     public void nodeCursorMoveNextTest_abc() {
         final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
@@ -382,10 +349,14 @@ public final class ExpressionDiagramTest {
             else System.out.println("Nincs tobb megoldas...");
             HashMap map = node.nodeCursor.solutionMap;
 
-            if (!map.isEmpty())
-                for (Object d : map.keySet()) {
-                    System.out.println(d.toString() + " " + map.get(d).toString());
+            if (!map.isEmpty()) {
+                System.out.println("Last put in: "+ NodeCursor.lastPutInMap);
+                for (Decl d : VariableSubstitution.decls) {
+                    if (d.equals(NodeCursor.resultDecl)) break;
+                    if (map.containsKey(d))
+                        System.out.println(d.toString() + " " + map.get(d).toString());
                 }
+            }
             else System.out.println("map was empty :(");
             System.out.println("\n");
             NodeCursor.megoldas++;
@@ -425,8 +396,10 @@ public final class ExpressionDiagramTest {
             HashMap map = node.nodeCursor.solutionMap;
 
             if (!map.isEmpty())
-                for (Object d : map.keySet()) {
-                    System.out.println(d.toString() + " " + map.get(d).toString());
+                for (Decl d : VariableSubstitution.decls) {
+                    if (d.equals(NodeCursor.resultDecl)) break;
+                    if (map.containsKey(d))
+                        System.out.println(d.toString() + " " + map.get(d).toString());
                 }
             else System.out.println("map was empty :(");
             System.out.println("\n");
@@ -456,8 +429,10 @@ public final class ExpressionDiagramTest {
             HashMap map = node.nodeCursor.solutionMap;
 
             if (!map.isEmpty())
-                for (Object d : map.keySet()) {
-                    System.out.println(d.toString() + " " + map.get(d).toString());
+                for (Decl d : VariableSubstitution.decls) {
+                    if (d.equals(NodeCursor.resultDecl)) break;
+                    if (map.containsKey(d))
+                        System.out.println(d.toString() + " " + map.get(d).toString());
                 }
             else System.out.println("map was empty :(");
             System.out.println("\n");
@@ -493,8 +468,10 @@ public final class ExpressionDiagramTest {
             HashMap map = node.nodeCursor.solutionMap;
 
             if (!map.isEmpty())
-                for (Object d : map.keySet()) {
-                    System.out.println(d.toString() + " " + map.get(d).toString());
+                for (Decl d : VariableSubstitution.decls) {
+                    if (d.equals(NodeCursor.resultDecl)) break;
+                    if (map.containsKey(d))
+                        System.out.println(d.toString() + " " + map.get(d).toString());
                 }
             else System.out.println("map was empty :(");
             System.out.println("\n");
