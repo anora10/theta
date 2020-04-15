@@ -97,7 +97,11 @@ class NodeCursor {
     private void doBeforeNewResult() {
         for (Decl d : node.variableSubstitution.decls) {
             if (d.equals(decl)) break;
-            ExpressionNode.solver.add(Eq(d.getRef(), solutionMap.get(d)));
+            try {
+                ExpressionNode.solver.add(Eq(d.getRef(), solutionMap.get(d)));
+            } catch (Exception e) {
+                System.out.println("hiba");
+            }
         }
     }
 
@@ -139,14 +143,16 @@ class NodeCursor {
                 putInMap();
                 return true;
             }
+            if (nextNode.nodeCursor.decl == null)  // nem kell tovabb szamolni, nem true expression de valami kielegitheto
+                return true;
             assert (0==1); // ide nem kéne jutni
             return false;
         }
         // uj megoldas
-        doBeforeNewResult();
-        ExpressionNode.solver.push();
+        //doBeforeNewResult();
+        //ExpressionNode.solver.push();
         boolean result = getNewResult();
-        ExpressionNode.solver.pop();
+        //ExpressionNode.solver.pop();
         if (!result) {
             node.isFinal = true;
             ExpressionNode.solver.pop();

@@ -480,7 +480,7 @@ public final class ExpressionDiagramTest {
 
         VariableSubstitution vs = ExpressionNode.createDecls(actLits);
 
-        // (!a v d<=10) ^ (b v d>10)
+        // (!a v d<=0) ^ (b v d>0)
         Expr expr = And( Or(Not(ca.getRef()), Leq(cd.getRef(), Int(0))), Or(cb.getRef(), Gt(cd.getRef(), Int(0))) );
         ExpressionNode node = new ExpressionNode(vs, expr);
         node.initiateSolver(expr);
