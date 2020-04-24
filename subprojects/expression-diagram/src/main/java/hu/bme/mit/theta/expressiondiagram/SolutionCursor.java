@@ -1,7 +1,9 @@
 package hu.bme.mit.theta.expressiondiagram;
 
 import hu.bme.mit.theta.core.decl.Decl;
+import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
+import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 
 import java.util.HashMap;
@@ -64,6 +66,13 @@ public class SolutionCursor {
     }
 
     public boolean moveNext() {
+        if (node.variableSubstitution.next == null) {
+            // input expression contains no literals
+            boolean isSat = NodeCursor.solver.check().isSat();
+            NodeCursor.solver.add(FalseExpr.getInstance());
+            return isSat;
+        }
+
         if (! nodeCursors.containsKey(node.variableSubstitution))
             return findFirstPath(node, node.variableSubstitution);
         return findNextPath(node.variableSubstitution);

@@ -25,6 +25,7 @@ public class SolutionCursorTest {
     void makeSolutions(ExpressionNode node) {
         SolutionCursor solutionCursor = new SolutionCursor(node);
         while (solutionCursor.moveNext()) {
+            System.out.println("---megoldas---");
             HashMap<Decl, LitExpr> solutions = solutionCursor.getSolutionMap();
             for (Decl d: solutions.keySet()) {
                 System.out.println(d.toString() + " " + solutions.get(d).toString());
@@ -192,6 +193,38 @@ public class SolutionCursorTest {
         // (!a v a)
         Expr expr = And(Not(ca.getRef()), ca.getRef());
         //Expr expr = False();
+        ExpressionNode node = new ExpressionNode(vs0,expr);
+        NodeCursor.initiateSolver(expr);
+
+        //------------------------- end of init -------------------------
+
+        makeSolutions(node);
+    }
+
+    @Test // FalseExpr
+    public void test_false() {
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits);
+
+        // False
+        Expr expr = False();
+        ExpressionNode node = new ExpressionNode(vs0,expr);
+        NodeCursor.initiateSolver(expr);
+
+        //------------------------- end of init -------------------------
+
+        makeSolutions(node);
+    }
+
+    @Test // TrueExpr
+    public void test_true() {
+        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits);
+
+        // True
+        Expr expr = True();
         ExpressionNode node = new ExpressionNode(vs0,expr);
         NodeCursor.initiateSolver(expr);
 
