@@ -8,24 +8,38 @@ import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.Type;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
+import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.SolverStatus;
+import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
-import java.util.HashMap;
 import java.util.Iterator;
-
-import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Eq;
-import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Neq;
+import java.util.Map;
 
 class NodeCursor {
     public static int megoldas = 0;
-    private ExpressionNode node, newNode;
-    private LitExpr litExpr;
-    public Decl decl;
-    public static Decl lastPutInMap;
-    public static Decl resultDecl;
-    MapCursor mapCursor;
-    static HashMap<Decl, LitExpr<? extends Type>> solutionMap = new HashMap<>();
-    public static boolean changed = false;
+    ExpressionNode node;
+    private ExpressionNode newNode; // new Node
+    private LitExpr literal; // new Literal
+    ObjObjCursor<LitExpr<? extends Type>, ExpressionNode> mapCursor;
+    //public Decl decl;
+    //public static Decl lastPutInMap;
+    //public static Decl resultDecl;
+    //static HashMap<Decl, LitExpr<? extends Type>> solutionMap = new HashMap<>();
+    //public static boolean changed = false;
+
+    static Solver solver = Z3SolverFactory.getInstace().createSolver();
+    private static Map<Decl<?>, LitExpr<?>> modelMap = null;
+
+    /**
+     * Initiate solver with expression and push
+     *
+     * @param e expression
+     */
+    public static void initiateSolver(Expr e) {
+        solver.reset();
+        solver.add(e);
+        solver.push();
+    }
 
 
     /**
@@ -35,8 +49,7 @@ class NodeCursor {
      */
     NodeCursor(ExpressionNode n) {
         node = n;
-        decl = node.variableSubstitution.getDecl();
-        mapCursor = new MapCursor(node);
+        mapCursor = node.nextExpression.cursor();
     }
 
     /**
@@ -54,48 +67,77 @@ class NodeCursor {
      * @return value
      */
     LitExpr<? extends Type> getLiteral() {
-        return litExpr;
+        return literal;
     }
 
-    void getCachedResult() {
-        newNode = mapCursor.value();
-        litExpr = mapCursor.key();
+    /**
+     * Search for next satisfying substitution
+     * litExpr will be the calculated value
+     * if node is final, there is no next to move to
+     *
+     * @return false, if no more satisfying assignments can be found FOR DECL
+     */
+    boolean moveNext() { // gives false, if no more satisfying assignments can be found FOR DECL
+        /*if (mapCursor.equals(node.nextExpression.cursor())) {
+            // push at the beginning of node examination
+            solver.push();
+        }*/
+        if (mapCursor != null && mapCursor.moveNext()) {
+            // there are remaining unexploited results in map
+            newNode = mapCursor.value();
+            literal = mapCursor.key();
+            return true;
+        }
+        // calculate new result
+        mapCursor = null;
+        if (node.isFinal) {
+            // node revisited, no more solutions
+            //solver.pop();
+            return false;
+        }
+        // get next solution from solver,
+        // it also sets newNode and literal
+        boolean result = getSolverResult();
+        if (!result) {
+            //solver.pop();
+            node.isFinal = true;
+        }
+        return result;
     }
 
-    boolean getNewResult() {
-        SolverStatus status = node.solver.check();
+    boolean getSolverResult() {
+        SolverStatus status = solver.check();
         if (status.isUnsat()) {
             // no more satisfying assignments
             node.isFinal = true;
             return false;
         }
-        Valuation model = node.solver.getModel();
+        Valuation model = solver.getModel();
         /// save model as queue
-        node.modelMap = model.toMap();
-        boolean result = saveSolverSolution();
+        modelMap = model.toMap();
+        boolean result = saveSolverLiteral();
         return  result;
     }
 
-    boolean saveSolverSolution() {
-        litExpr = node.modelMap.get(decl);
-        if (litExpr != null) {}
-        else {
-            // The solver said that the decl may be both true or false.
+    private boolean saveSolverLiteral() {
+        Decl decl = node.variableSubstitution.getDecl();
+        literal = modelMap.get(decl);
+        if (literal == null) {
+            // The solver said that the value of decl does not count
             // We choose it false, but later it will be checked whether true is ok.
-            litExpr = FalseExpr.getInstance();
-            //solver.add(Neq(decl.getRef(), litExpr));
+            literal = FalseExpr.getInstance();
+            // literal = DefaultLitExpr.getInstance();
         }
-
         // not inspected assignment found, create new node accordingly
-        newNode = node.substitute(litExpr);
+        // TODO: substituteAll for caching solution
+        newNode = node.substitute(literal);
         if (newNode == null || newNode.expression.equals(FalseExpr.getInstance())) return false;
         if (newNode.expression.equals(TrueExpr.getInstance())) return true;
-        if (newNode != null && !newNode.isFinal) {
-            newNode.makeCursor().saveSolverSolution();
-        }
         return true;
     }
 
+
+/*
     private void doBeforeNewResult() {
         for (Decl d : node.variableSubstitution.decls) {
             if (d.equals(decl)) break;
@@ -113,6 +155,7 @@ class NodeCursor {
         solutionMap.put(decl, mapCursor.key());
         lastPutInMap = decl;
     }
+*/
 
     /**
      * Search for next satisfying substitution
@@ -121,7 +164,7 @@ class NodeCursor {
      *
      * @return false, if no more satisfying assignments can be found
      */
-    boolean moveNext() { // gives false, if no more satisfying assignments can be found
+    /*boolean moveNext() { // gives false, if no more satisfying assignments can be found
         if (node.expression.equals(TrueExpr.getInstance())) {
             resultDecl = decl;
             return true;
@@ -187,7 +230,7 @@ class NodeCursor {
         }
          assert (0==1); //ide se kéne jutni
         return false;
-    }
+    }*/
 
     class MapCursor {
         //private ObjObjCursor<LitExpr<? extends Type>, ExpressionNode> ;

@@ -38,7 +38,7 @@ public class VariableSubstitution {
             return node;
         }
         // else node must be added
-        node = new ExpressionNode(next, expression);
+        node = new ExpressionNode(this, expression);
         uniqueTable.addExpressionNode(expression, node);
         return node;
     }

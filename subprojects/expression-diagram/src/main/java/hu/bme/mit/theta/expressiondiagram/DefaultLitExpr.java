@@ -11,6 +11,12 @@ import java.util.List;
 
 public class DefaultLitExpr implements LitExpr {
 
+    private static final DefaultLitExpr INSTANCE = new DefaultLitExpr();
+
+    public static DefaultLitExpr getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public int getArity() {
         return 0;
@@ -40,4 +46,6 @@ public class DefaultLitExpr implements LitExpr {
     public String toString() {
         return "default";
     }
+
+
 }

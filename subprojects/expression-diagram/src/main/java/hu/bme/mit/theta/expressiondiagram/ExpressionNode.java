@@ -1,5 +1,7 @@
 package hu.bme.mit.theta.expressiondiagram;
 
+import com.koloboke.collect.map.hash.HashObjObjMap;
+import com.koloboke.collect.map.hash.HashObjObjMaps;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.ImmutableValuation;
@@ -8,6 +10,7 @@ import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.Type;
 import hu.bme.mit.theta.core.type.anytype.RefExpr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
+import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.core.utils.ExprSimplifier;
 import hu.bme.mit.theta.solver.Solver;
@@ -21,10 +24,12 @@ public class ExpressionNode {
     Expr expression;
     boolean isFinal = false;
     private boolean containsDecl = false;
-    LinkedHashMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = new LinkedHashMap();
+    HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> nextExpression = HashObjObjMaps.newUpdatableMap();
     VariableSubstitution variableSubstitution;
     private static Stack<NodeCursor> cursorStack = new Stack<>();
-    static Map<Decl<?>, LitExpr<?>> modelMap = null;
+
+
+    //TODO kivenni
     NodeCursor nodeCursor;
 
     /**
@@ -35,7 +40,6 @@ public class ExpressionNode {
     public ExpressionNode(VariableSubstitution vs, Expr expr) {
         variableSubstitution = vs;
         setExpression(expr);
-        nodeCursor =  makeCursor();
     }
 
     /**
@@ -43,14 +47,15 @@ public class ExpressionNode {
      *
      * @param e
      */
-    public void setExpression(Expr e) {
+    private void setExpression(Expr e) {
         expression = e;
-        if (variableSubstitution.getDecl() == null) return;
+        if (variableSubstitution == null || variableSubstitution.getDecl() == null) return;
         Set<Decl<?>> vars = getDecls(e);
         if (vars.contains(variableSubstitution.getDecl())) {
             containsDecl= true;
         }
-        if (expression.equals(TrueExpr.getInstance())) isFinal = true;
+        if ( expression.equals(TrueExpr.getInstance()) || expression.equals(FalseExpr.getInstance()) )
+            isFinal = true;
         //System.out.println("Expression " + e.toString() + ", substituting " + variableSubstitution.getDecl().toString());
     }
 
@@ -59,21 +64,39 @@ public class ExpressionNode {
      *
      * @return default ExpressionNode
      */
-    private ExpressionNode defaultNextNode() {
+    /*private ExpressionNode defaultNextNode() {
         if (variableSubstitution.next == null) return null;
         ExpressionNode def = new ExpressionNode(variableSubstitution.next, expression);
         isFinal = true; // no more check needed, as variable is not present
         // the following two lines may be replaced with a default next node
-        /*nextExpression.put(BoolLitExpr.of(true),def);
-        nextExpression.put(BoolLitExpr.of(false),def);*/
+        // nextExpression.put(BoolLitExpr.of(true),def);
+        // nextExpression.put(BoolLitExpr.of(false),def);
         nextExpression.put(new DefaultLitExpr(), def);
-        setNextExprChanged();
         return def;
-    }
+    }*/
 
-    private void setNextExprChanged() {
-        nodeCursor.mapCursor.setChanged(true);
-    }
+
+    /*ExpressionNode substituteDefault(LitExpr<? extends Type> literal) {
+        if(variableSubstitution.next == null){return null;}
+        ExpressionNode newNode;
+        if (literal == null || literal.equals(DefaultLitExpr.getInstance()) || !containsDecl) {
+            // literal value has no effect on resulting expression
+            newNode = variableSubstitution.next.checkIn(expression);
+            isFinal = true;
+        } else {
+            // get variable to substitute
+            if (nextExpression.containsKey(literal)) {
+                return nextExpression.get(literal);
+            }
+            Decl decl = variableSubstitution.getDecl();
+            ImmutableValuation valuation = ImmutableValuation.builder().put(decl, literal).build();
+            // resultingExpression: expression after substitution
+            Expr<? extends Type> resultingExpression = ExprSimplifier.simplify(expression, valuation);
+            newNode = variableSubstitution.next.checkIn(resultingExpression);
+        }
+        nextExpression.put(literal, newNode);
+        return newNode;
+    }*/
 
     /**
      * Substitute literal in the expression of the node, or if variable to substitute is not present, return default next node
@@ -81,21 +104,46 @@ public class ExpressionNode {
      * @param literal substitution value
      * @return node with resulting expression
      */
-    ExpressionNode substitute(LitExpr<? extends Type> literal) {
-        //if (!containsDecl) {
+    ExpressionNode substitute (LitExpr<? extends Type> literal) {
         // if literal is null, or decl is not in the expression, expression goes one level below
+        ExpressionNode newNode;
         if (literal == null || !containsDecl) {
-            return defaultNextNode();
+            // literal value has no effect on resulting expression
+            newNode = variableSubstitution.next.checkIn(expression);
+            isFinal = true;
+        } else {
+            // get variable to substitute
+            if (nextExpression.containsKey(literal))
+                return nextExpression.get(literal);
+            Decl decl = variableSubstitution.getDecl();
+            ImmutableValuation valuation = ImmutableValuation.builder().put(decl, literal).build();
+            // resultingExpression: expression after substitution
+            Expr<? extends Type> resultingExpression = ExprSimplifier.simplify(expression, valuation);
+            newNode = variableSubstitution.next.checkIn(resultingExpression);
         }
-        // get variable to substitute
-        if (nextExpression.containsKey(literal)) return nextExpression.get(literal);
-        Decl decl = variableSubstitution.getDecl();
-        ImmutableValuation valuation = ImmutableValuation.builder().put(decl, literal).build();
-        // resultingExpression: expression after substitution
-        Expr<? extends Type> resultingExpression = ExprSimplifier.simplify(expression, valuation);
-        ExpressionNode newNode = variableSubstitution.checkIn(resultingExpression);
         nextExpression.put(literal, newNode);
-        setNextExprChanged();
+        return newNode;
+    }
+
+    /**
+     * Substitute multiple literals in the expression of the node one by one, return node after first substitution
+     *
+     * @param literals map of substitution values
+     * @return node after first substitution
+     */
+    // TODO nem jo, a defaulttal kell szorakozni
+    ExpressionNode substituteAll(HashMap<Decl, LitExpr<? extends Type>> literals) {
+        if (variableSubstitution == null || variableSubstitution.getDecl() == null) return null;
+        if (expression.equals(TrueExpr.getInstance()) || expression.equals(FalseExpr.getInstance())) return null;
+        Decl decl = variableSubstitution.getDecl();
+        LitExpr litExpr;
+        if (literals.containsKey(decl)) {
+            litExpr = literals.get(decl);
+        } else {
+            litExpr = DefaultLitExpr.getInstance();
+        }
+        ExpressionNode newNode = substitute(litExpr);
+        newNode.substituteAll(literals);
         return newNode;
     }
 
@@ -103,7 +151,7 @@ public class ExpressionNode {
      * Calculate satisfying substitutions for the expression recursively
      *
      */
-    public void calculateSatisfyingSubstitutions() {
+    /*public void calculateSatisfyingSubstitutions() {
         if (isFinal) return;
         NodeCursor myNodeCursor = makeCursor();
         solver.push();
@@ -112,7 +160,7 @@ public class ExpressionNode {
             solver.add(Neq(myNodeCursor.decl.getRef(), myNodeCursor.getLiteral()));
         }
         solver.pop();
-    }
+    }*/
 
     /**
      * Return a Cursor instance
@@ -121,19 +169,6 @@ public class ExpressionNode {
      */
     NodeCursor makeCursor() {
         return new NodeCursor(this);
-    }
-
-    static Solver solver = Z3SolverFactory.getInstace().createSolver();
-
-    /**
-     * Initiate solver with expression and push
-     *
-     * @param e expression
-     */
-    public static void initiateSolver(Expr e) {
-        solver.reset();
-        solver.add(e);
-        solver.push();
     }
 
 

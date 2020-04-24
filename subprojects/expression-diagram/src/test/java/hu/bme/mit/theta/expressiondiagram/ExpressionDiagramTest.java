@@ -326,6 +326,8 @@ public final class ExpressionDiagramTest {
         }
     }
  }*/
+
+/* new tests
     @Test
     public void nodeCursorMoveNextTest_abc() {
         final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
@@ -478,4 +480,6 @@ public final class ExpressionDiagramTest {
             NodeCursor.megoldas++;
         }
     }
+
+ */
 }
