@@ -28,19 +28,16 @@ public class SolutionCursor {
         nodeCursors.put(vs, n.makeCursor());
         boolean found;
         do {
-            NodeCursor nodeCursor = nodeCursors.get(vs);
-            if (!nodeCursor.moveNext()) {
+            if (!nodeCursors.get(vs).moveNext()) {
                 NodeCursor.solver.pop();
                 return false;
             }
-            nodeCursors.put(vs, nodeCursor);
             found = findFirstPath(nodeCursors.get(vs).getNode(), vs.next);
         } while(!found);
         return true;
     }
 
     private boolean findNextPath(VariableSubstitution vs) {
-        // todo nodecursors nem kimenteni
         if (vs == null || vs.next == null || (nodeCursors.containsKey(vs) && nodeCursors.get(vs).node.expression.equals(TrueExpr.getInstance())) ) {
             NodeCursor.solver.pop();
             return false;
@@ -49,19 +46,15 @@ public class SolutionCursor {
             return true;
         boolean found;
         do {
-            NodeCursor nodeCursor = null;
             if (nodeCursors.containsKey(vs)) {
                 LitExpr literal = nodeCursors.get(vs).getLiteral();
                 NodeCursor.solver.add(Neq(vs.getDecl().getRef(),literal));
-                nodeCursor = nodeCursors.get(vs);
             }
-            if(!nodeCursors.containsKey(vs) || !nodeCursor.moveNext()) {
-                // TODO nodecursors frissitese?
+            if(!nodeCursors.containsKey(vs) || !nodeCursors.get(vs).moveNext()) {
                 NodeCursor.solver.pop();
                 return false;
             }
-            nodeCursors.put(vs,nodeCursor);
-            found = findFirstPath(nodeCursor.getNode(), vs.next);
+            found = findFirstPath(nodeCursors.get(vs).getNode(), vs.next);
         } while(!found);
         return true;
 

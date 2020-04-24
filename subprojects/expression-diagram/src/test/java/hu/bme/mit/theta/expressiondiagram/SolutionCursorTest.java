@@ -4,7 +4,6 @@ import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.type.inttype.IntType;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
