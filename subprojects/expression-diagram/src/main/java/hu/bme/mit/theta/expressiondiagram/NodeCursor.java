@@ -34,7 +34,6 @@ class NodeCursor {
         solver.push();
     }
 
-
     /**
      * Constructor for cursor that searces for satisfying substitutions using a DFS method
      *
@@ -64,9 +63,8 @@ class NodeCursor {
     }
 
     /**
-     * Search for next satisfying substitution
-     * litExpr will be the calculated value
-     * if node is final, there is no next to move to
+     * Checks if mapCursor can move forward,
+     * or adds new literal to nextExpression if possible
      *
      * @return false, if no more satisfying assignments can be found FOR DECL
      */
@@ -92,6 +90,11 @@ class NodeCursor {
         return result;
     }
 
+    /**
+     * Ask solver for new SAT assignment
+     *
+     * @return true, if solver found SAT assigment
+     */
     private boolean getSolverResult() {
         SolverStatus status = solver.check();
         if (status.isUnsat()) {
@@ -105,6 +108,11 @@ class NodeCursor {
         return saveSolverLiteral();
     }
 
+    /**
+     * Save literal value given by solver
+     *
+     * @return true if new solution literal saved
+     */
     private boolean saveSolverLiteral() {
         Decl decl = node.variableSubstitution.getDecl();
         literal = modelMap.get(decl);

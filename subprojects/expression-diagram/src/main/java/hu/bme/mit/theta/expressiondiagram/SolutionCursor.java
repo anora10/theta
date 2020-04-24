@@ -1,24 +1,32 @@
 package hu.bme.mit.theta.expressiondiagram;
 
 import hu.bme.mit.theta.core.decl.Decl;
-import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Neq;
 
 public class SolutionCursor {
-    HashMap<VariableSubstitution, NodeCursor> nodeCursors = new HashMap<>();
+    private HashMap<VariableSubstitution, NodeCursor> nodeCursors = new HashMap<>();
     private ExpressionNode node;
 
+    /**
+     * Constructor setting root node
+     */
     public SolutionCursor (ExpressionNode n) {
         node = n;
     }
 
+    /**
+     * Find first SAT route from given node
+     *
+     * @param n node
+     * @param vs VariableSubstitution of node
+     * @return false, if no satisfying assignments can be found
+     */
     private boolean findFirstPath(ExpressionNode n, VariableSubstitution vs) {
         NodeCursor.solver.push();
         if (vs == null || vs.next == null || n.expression.equals(TrueExpr.getInstance())) {
@@ -42,6 +50,12 @@ public class SolutionCursor {
         return true;
     }
 
+    /**
+     * Find (not first!) SAT route from given node
+     *
+     * @param vs VariableSubstitution of node
+     * @return false, if no more satisfying assignments can be found
+     */
     private boolean findNextPath(VariableSubstitution vs) {
         if (vs == null || vs.next == null || (nodeCursors.containsKey(vs) && nodeCursors.get(vs).node.expression.equals(TrueExpr.getInstance())) ) {
             NodeCursor.solver.pop();
@@ -65,6 +79,11 @@ public class SolutionCursor {
 
     }
 
+    /**
+     * Find next satisfying assignment
+     *
+     * @return false, if no more satisfying assignments can be found
+     */
     public boolean moveNext() {
         if (node.variableSubstitution.next == null) {
             // input expression contains no literals
@@ -79,6 +98,11 @@ public class SolutionCursor {
 
     }
 
+    /**
+     * Clear outdated cursor values when backtracking
+     *
+     * @param vs VariableSubstitution, after which the values most be cleared
+     */
     private void clearCursors(VariableSubstitution vs) {
         vs = vs.next;
         while (vs != null) {
@@ -87,6 +111,12 @@ public class SolutionCursor {
         }
     }
 
+    /**
+     * Get literal values for lastly calculated satisfying assignments
+     * It must be called after moveNext(), when it gave true!
+     *
+     * @return map containing variable-literal pairs
+     */
     public HashMap<Decl, LitExpr> getSolutionMap () {
         HashMap<Decl, LitExpr> solutionMap = new HashMap<>();
         for (VariableSubstitution vs: nodeCursors.keySet()) {

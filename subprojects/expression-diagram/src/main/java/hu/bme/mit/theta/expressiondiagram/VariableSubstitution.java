@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 
 public class VariableSubstitution {
-    UniqueTable uniqueTable = new UniqueTable();
-    Decl<? extends Type> decl = null;
+    private UniqueTable uniqueTable = new UniqueTable();
+    Decl<? extends Type> decl;
     static ArrayList<Decl<? extends Type>> decls = new ArrayList<>();
-    VariableSubstitution next = null;
+    VariableSubstitution next;
 
     /**
      * Constructor, VS stores which decl is the next to be substituted
@@ -27,7 +27,7 @@ public class VariableSubstitution {
     /**
      * Checks whether expression exists on the given level, if not, adds it to the unique table
      *
-     * @param expression
+     * @param expression expression to look up
      * @return the found or newly added node
      */
     ExpressionNode checkIn(Expr expression) {
@@ -50,19 +50,5 @@ public class VariableSubstitution {
      */
     Decl<? extends Type> getDecl() {
         return decl;
-    }
-
-    /**
-     * Return next decl
-     *
-     * @param d actual decl
-     * @return next decl
-     */
-    Decl getNextDecl(Decl d) {
-        //for (int i = 0; i < decls.size()-1; i++) {
-        //    if (decls.get(i) == d) return decls.get(i+1);
-        //}
-        if (next == null) return null;
-        return next.getDecl();
     }
 }
