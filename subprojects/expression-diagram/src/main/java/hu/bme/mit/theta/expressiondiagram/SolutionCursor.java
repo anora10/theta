@@ -4,23 +4,18 @@ import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Neq;
 
 public class SolutionCursor {
-    Map<VariableSubstitution, Integer> maxWidth;
     HashMap<VariableSubstitution, NodeCursor> nodeCursors = new HashMap<>();
-    ExpressionNode node;
+    private ExpressionNode node;
 
     public SolutionCursor (ExpressionNode n) {
         node = n;
     }
 
     private boolean findFirstPath(ExpressionNode n, VariableSubstitution vs) {
-        try {
-            //System.out.println("first " + vs.decl.toString()+" " + n.expression);
-        } catch (Exception e){}
         NodeCursor.solver.push();
         if (vs == null || vs.next == null || n.expression.equals(TrueExpr.getInstance())) {
             // TODO false?
@@ -28,7 +23,7 @@ public class SolutionCursor {
                 nodeCursors.put(vs, n.makeCursor());
             //return n.isSatisfiable();    //only for user input (either as root node or after substitution)
             clearCursors(vs);
-            return true; ///
+            return true;
         }
         nodeCursors.put(vs, n.makeCursor());
         boolean found;
@@ -36,19 +31,16 @@ public class SolutionCursor {
             NodeCursor nodeCursor = nodeCursors.get(vs);
             if (!nodeCursor.moveNext()) {
                 NodeCursor.solver.pop();
-                return false; ///
+                return false;
             }
             nodeCursors.put(vs, nodeCursor);
             found = findFirstPath(nodeCursors.get(vs).getNode(), vs.next);
         } while(!found);
-        return true; ///
+        return true;
     }
 
     private boolean findNextPath(VariableSubstitution vs) {
         // todo nodecursors nem kimenteni
-        try {
-            //System.out.println("next  " + vs.decl.toString());
-        } catch (Exception e) {}
         if (vs == null || vs.next == null || (nodeCursors.containsKey(vs) && nodeCursors.get(vs).node.expression.equals(TrueExpr.getInstance())) ) {
             NodeCursor.solver.pop();
             return false;
