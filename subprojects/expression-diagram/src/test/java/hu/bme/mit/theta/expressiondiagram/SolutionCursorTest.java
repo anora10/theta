@@ -20,9 +20,9 @@ import static hu.bme.mit.theta.core.type.inttype.IntExprs.Int;
 
 public class SolutionCursorTest {
 
-    ExpressionNode node;
+    private ExpressionNode node;
 
-    void makeSolutions(ExpressionNode node) {
+    private void makeSolutions(ExpressionNode node) {
         SolutionCursor solutionCursor = new SolutionCursor(node);
         while (solutionCursor.moveNext()) {
             System.out.println("---megoldas---");
@@ -50,7 +50,7 @@ public class SolutionCursorTest {
         actLits.add(cb);
         actLits.add(cc);
 
-        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits);
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
 
         // (a v !b) ^ (b v c)
         Expr expr = And(Or(ca.getRef(), Not(cb.getRef())), Or(cb.getRef(), cc.getRef()));
@@ -81,7 +81,7 @@ public class SolutionCursorTest {
         actLits.add(cd);
         actLits.add(ce);
 
-        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits);
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
 
         // (a v b v c v !d v !e)
         Expr expr = Or(Or(Or(ca.getRef(), cb.getRef()), cc.getRef()) , Or(Not(cd.getRef()), Not(ce.getRef())));
@@ -107,7 +107,7 @@ public class SolutionCursorTest {
         actLits.add(cb);
         actLits.add(cc);
 
-        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits);
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
 
         // (a v b v !c)
         Expr expr = Or(Or(ca.getRef(), cb.getRef()), Not(cc.getRef()));
@@ -129,7 +129,7 @@ public class SolutionCursorTest {
         actLits.add(ca);
         actLits.add(cb);
 
-        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits);
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
 
         // (a v b)
         Expr expr = Or(ca.getRef(), cb.getRef());
@@ -147,7 +147,7 @@ public class SolutionCursorTest {
         final ConstDecl<BoolType> ca = Const("a", Bool());
         actLits.add(ca);
 
-        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits);
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
 
         // (!a v a)
         Expr expr = Or(Not(ca.getRef()), ca.getRef());
@@ -170,7 +170,7 @@ public class SolutionCursorTest {
         actLits.add(ca);
         actLits.add(cb);
 
-        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits);
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
 
         // (!a v d<=0) ^ (b v d>0)
         Expr expr = And( Or(Not(ca.getRef()), Leq(cd.getRef(), Int(0))), Or(cb.getRef(), Gt(cd.getRef(), Int(0))) );
@@ -188,7 +188,7 @@ public class SolutionCursorTest {
         final ConstDecl<BoolType> ca = Const("a", Bool());
         actLits.add(ca);
 
-        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits);
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
 
         // (!a v a)
         Expr expr = And(Not(ca.getRef()), ca.getRef());
@@ -205,7 +205,7 @@ public class SolutionCursorTest {
     public void test_false() {
         final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
 
-        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits);
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
 
         // False
         Expr expr = False();
@@ -221,7 +221,7 @@ public class SolutionCursorTest {
     public void test_true() {
         final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
 
-        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits);
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
 
         // True
         Expr expr = True();

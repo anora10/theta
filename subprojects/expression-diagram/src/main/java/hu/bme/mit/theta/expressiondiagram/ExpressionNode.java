@@ -140,9 +140,11 @@ public class ExpressionNode {
     /**
      * Create substitution order for decls
      *
+     * @param declList list of decls
+     * @param reverse if true, decl order will be reversed
      * @return VariableSubstitution, that will be needed in constructor of ExpressionNode
      */
-    public static VariableSubstitution createDecls (List<ConstDecl<BoolType>> declList) {
+    public static VariableSubstitution createDecls (List<ConstDecl<BoolType>> declList, boolean reverse) {
         /*final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
         final ConstDecl<IntType> cd = Const("d", Int());
@@ -152,11 +154,11 @@ public class ExpressionNode {
         VariableSubstitution vsa = new VariableSubstitution(vsb,ca);*/
         VariableSubstitution.decls.clear();
         VariableSubstitution.decls.addAll(declList);
-        Collections.reverse(declList);
+
+         if (reverse) Collections.reverse(declList);
         VariableSubstitution oldVS = new VariableSubstitution(null, null);
         for (ConstDecl<BoolType> cd : declList) {
-            VariableSubstitution newVS = new VariableSubstitution(oldVS, cd);
-            oldVS = newVS;
+            oldVS = new VariableSubstitution(oldVS, cd);
         }
         return oldVS;
     }

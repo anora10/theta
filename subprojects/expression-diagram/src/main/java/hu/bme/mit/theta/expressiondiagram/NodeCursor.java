@@ -14,7 +14,7 @@ import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
 import java.util.Map;
 
-class NodeCursor {
+public class NodeCursor {
     ExpressionNode node;
     private ExpressionNode newNode; // new Node
     private LitExpr literal; // new Literal

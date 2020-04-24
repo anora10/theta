@@ -6,6 +6,7 @@ import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Neq;
 
@@ -118,7 +119,7 @@ public class SolutionCursor {
      * @return map containing variable-literal pairs
      */
     public HashMap<Decl, LitExpr> getSolutionMap () {
-        HashMap<Decl, LitExpr> solutionMap = new HashMap<>();
+        HashMap<Decl, LitExpr> solutionMap = new LinkedHashMap<>();
         for (VariableSubstitution vs: nodeCursors.keySet()) {
             if (nodeCursors.get(vs).getLiteral() != null) {
                 solutionMap.put(vs.decl, nodeCursors.get(vs).getLiteral());

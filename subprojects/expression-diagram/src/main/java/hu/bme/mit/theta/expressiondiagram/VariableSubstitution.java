@@ -51,4 +51,9 @@ public class VariableSubstitution {
     Decl<? extends Type> getDecl() {
         return decl;
     }
+
+    public static ArrayList<Decl<? extends Type>> getDecls() {
+        return decls;
+    }
+
 }

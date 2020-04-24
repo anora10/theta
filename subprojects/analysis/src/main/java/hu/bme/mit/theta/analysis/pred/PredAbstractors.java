@@ -16,15 +16,12 @@
 package hu.bme.mit.theta.analysis.pred;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static hu.bme.mit.theta.core.type.booltype.BoolExprs.And;
-import static hu.bme.mit.theta.core.type.booltype.BoolExprs.Iff;
-import static hu.bme.mit.theta.core.type.booltype.BoolExprs.Not;
-import static hu.bme.mit.theta.core.type.booltype.BoolExprs.Or;
-import static hu.bme.mit.theta.core.type.booltype.BoolExprs.True;
+import static hu.bme.mit.theta.core.type.booltype.BoolExprs.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.google.errorprone.annotations.Var;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.decl.Decls;
@@ -34,9 +31,7 @@ import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.*;
 import hu.bme.mit.theta.core.utils.PathUtils;
 import hu.bme.mit.theta.core.utils.VarIndexing;
-import hu.bme.mit.theta.expressiondiagram.ExpressionNode;
-import hu.bme.mit.theta.expressiondiagram.ValuationIterator;
-import hu.bme.mit.theta.expressiondiagram.VariableSubstitution;
+import hu.bme.mit.theta.expressiondiagram.*;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.utils.WithPushPop;
 
@@ -147,36 +142,30 @@ public class PredAbstractors {
 				/// Ezen a ponton van egy kifejezésed, amiben van mindenféle változó, de ebből
 				/// az actList-beli változók értékei kellenek majd
 
-				VariableSubstitution vs = ExpressionNode.createDecls(actLits);
+				VariableSubstitution vs = ExpressionNode.createDecls(actLits, false);
 				ExpressionNode node = new ExpressionNode(vs, nodeExpr);
-				//node.setExpression(nodeExpr);
-				node.initiateSolver(nodeExpr);
-				node.calculateSatisfyingSubstitutions();
+				NodeCursor.initiateSolver(nodeExpr);
+				//System.out.println("Node expression: " + node.expression.toString());
 
 				// Itt legenerálni az összes megoldást (actLits-re)
-				ValuationIterator valuationIterator = new ValuationIterator(node, actLits.size());
-				while (valuationIterator.hasNext()) {
+				SolutionCursor solutionCursor = new SolutionCursor(node);
+				while (solutionCursor.moveNext()) { // Itt végigiterálni az összes megoldáson
 					final Set<Expr<BoolType>> newStatePreds = new HashSet<>();
-					Stack<ValuationIterator.Pair> solutionStack = valuationIterator.next();
-					if (solutionStack != null && !solutionStack.lastElement().getExpression().equals(FalseExpr.getInstance())) {
-						Iterator<ValuationIterator.Pair> it = solutionStack.iterator();
-						int predsInd = 0;
-						while(it.hasNext()) {
-							ValuationIterator.Pair pair = it.next();
-							if (pair == null || pair.getValue() == null) {
-								continue;
-							}
-							final Expr<BoolType> pred = preds.get(predsInd++);
-							// pair.getValue() is the value of actLits[predsInd]
-							if (pair.getValue().equals(TrueExpr.getInstance())) { // Ha true
+					HashMap<Decl, LitExpr> solutions = solutionCursor.getSolutionMap();
+					for (int i = 0; i < preds.size(); ++i) {
+						final ConstDecl<BoolType> lit = actLits.get(i);
+						final Expr<BoolType> pred = preds.get(i);
+						if (solutions.containsKey(lit)) {
+							if (solutions.get(lit).equals(True())) { // Ha true
 								newStatePreds.add(pred);
-							}
-							else if (pair.getValue().equals(FalseExpr.getInstance())) { // Ha false
+								//System.out.println("TRUE");
+							} else if (solutions.get(lit).equals(False())) { // Ha false
 								newStatePreds.add(prec.negate(pred));
+								//System.out.println("FALSE");
 							}
 						}
 					}
-					if(!newStatePreds.isEmpty() || preds.isEmpty())states.add(PredState.of(newStatePreds));
+					if(!newStatePreds.isEmpty() || preds.isEmpty()) states.add(PredState.of(newStatePreds));
 				}
 			/////////////////////////////////////////////////
 			if (!split && states.size() > 1) {
@@ -228,9 +217,10 @@ public class PredAbstractors {
 			final List<PredState> states = new LinkedList<>();
 			try (WithPushPop wp = new WithPushPop(solver)) {
 				solver.add(PathUtils.unfold(expr, exprIndexing));
+				//System.out.println("Expression: "+ PathUtils.unfold(expr, exprIndexing) );
 				for (int i = 0; i < preds.size(); ++i) {
 					solver.add(Iff(actLits.get(i).getRef(), PathUtils.unfold(preds.get(i), precIndexing)));
-
+					//System.out.println(" ... "+ PathUtils.unfold(preds.get(i), precIndexing) );
 				}
 				while (solver.check().isSat()) {
 					final Valuation model = solver.getModel();
@@ -245,9 +235,11 @@ public class PredAbstractors {
 							if (eval.get().equals(True())) {
 								newStatePreds.add(pred);
 								feedback.add(lit.getRef());
+								//System.out.println("TRUE");
 							} else {
 								newStatePreds.add(prec.negate(pred));
 								feedback.add(Not(lit.getRef()));
+								//System.out.println("FALSE");
 							}
 						}
 					}
