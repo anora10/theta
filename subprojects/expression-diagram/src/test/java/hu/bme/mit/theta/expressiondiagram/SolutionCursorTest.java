@@ -1,12 +1,15 @@
 package hu.bme.mit.theta.expressiondiagram;
 
 import hu.bme.mit.theta.core.decl.ConstDecl;
+import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.type.Expr;
+import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.type.inttype.IntType;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static hu.bme.mit.theta.core.decl.Decls.Const;
@@ -18,6 +21,18 @@ import static hu.bme.mit.theta.core.type.inttype.IntExprs.Int;
 public class SolutionCursorTest {
 
     ExpressionNode node;
+
+    void makeSolutions(ExpressionNode node) {
+        SolutionCursor solutionCursor = new SolutionCursor(node);
+        while (solutionCursor.moveNext()) {
+            HashMap<Decl, LitExpr> solutions = solutionCursor.getSolutionMap();
+            for (Decl d: solutions.keySet()) {
+                System.out.println(d.toString() + " " + solutions.get(d).toString());
+            }
+            System.out.println("\n");
+        }
+        System.out.println("no more solutions");
+    }
 
 
     @Test // (a v !b) ^ (b v c)
@@ -43,16 +58,7 @@ public class SolutionCursorTest {
 
         //------------------------- end of init -------------------------
 
-        SolutionCursor solutionCursor = new SolutionCursor(node);
-        while (solutionCursor.moveNext()) {
-            for (VariableSubstitution vs: solutionCursor.nodeCursors.keySet()) {
-                try {
-                    System.out.println(vs.decl.toString() + " " + solutionCursor.nodeCursors.get(vs).getLiteral().toString());
-                } catch (Exception e) {}
-            }
-            System.out.println("\n");
-        }
-        System.out.println("no more solutions");
+        makeSolutions(node);
     }
 
     @Test // (a v b v c v !d v !e)
@@ -83,16 +89,8 @@ public class SolutionCursorTest {
 
         //------------------------- end of init -------------------------
 
-        SolutionCursor solutionCursor = new SolutionCursor(node);
-        while (solutionCursor.moveNext()) {
-            for (VariableSubstitution vs: solutionCursor.nodeCursors.keySet()) {
-                try {
-                    System.out.println(vs.decl.toString() + " " + solutionCursor.nodeCursors.get(vs).getLiteral().toString());
-                } catch (Exception e) {}
-            }
-            System.out.println("\n");
-        }
-        System.out.println("no more solutions");
+        makeSolutions(node);
+
     }
 
     @Test // (a v b v !c)
@@ -117,16 +115,7 @@ public class SolutionCursorTest {
 
         //------------------------- end of init -------------------------
 
-        SolutionCursor solutionCursor = new SolutionCursor(node);
-        while (solutionCursor.moveNext()) {
-            for (VariableSubstitution vs: solutionCursor.nodeCursors.keySet()) {
-                try {
-                    System.out.println(vs.decl.toString() + " " + solutionCursor.nodeCursors.get(vs).getLiteral().toString());
-                } catch (Exception e) {}
-            }
-            System.out.println("\n");
-        }
-        System.out.println("no more solutions");
+        makeSolutions(node);
     }
 
     @Test // (a v b)
@@ -148,16 +137,7 @@ public class SolutionCursorTest {
 
         //------------------------- end of init -------------------------
 
-        SolutionCursor solutionCursor = new SolutionCursor(node);
-        while (solutionCursor.moveNext()) {
-            for (VariableSubstitution vs: solutionCursor.nodeCursors.keySet()) {
-                try {
-                    System.out.println(vs.decl.toString() + " " + solutionCursor.nodeCursors.get(vs).getLiteral().toString());
-                } catch (Exception e) {}
-            }
-            System.out.println("\n");
-        }
-        System.out.println("no more solutions");
+        makeSolutions(node);
     }
 
     @Test // (!a v a)
@@ -176,16 +156,7 @@ public class SolutionCursorTest {
 
         //------------------------- end of init -------------------------
 
-        SolutionCursor solutionCursor = new SolutionCursor(node);
-        while (solutionCursor.moveNext()) {
-            for (VariableSubstitution vs: solutionCursor.nodeCursors.keySet()) {
-                try {
-                    System.out.println(vs.decl.toString() + " " + solutionCursor.nodeCursors.get(vs).getLiteral().toString());
-                } catch (Exception e) {}
-            }
-            System.out.println("\n");
-        }
-        System.out.println("no more solutions");
+        makeSolutions(node);
     }
 
     @Test // (!a v d<=0) ^ (b v d>0)
@@ -207,16 +178,7 @@ public class SolutionCursorTest {
 
         //------------------------- end of init -------------------------
 
-        SolutionCursor solutionCursor = new SolutionCursor(node);
-        while (solutionCursor.moveNext()) {
-            for (VariableSubstitution vs: solutionCursor.nodeCursors.keySet()) {
-                try {
-                    System.out.println(vs.decl.toString() + " " + solutionCursor.nodeCursors.get(vs).getLiteral().toString());
-                } catch (Exception e) {}
-            }
-            System.out.println("\n");
-        }
-        System.out.println("no more solutions");
+        makeSolutions(node);
     }
 
     @Test // (!a ^ a)  --- false ---
@@ -235,15 +197,6 @@ public class SolutionCursorTest {
 
         //------------------------- end of init -------------------------
 
-        SolutionCursor solutionCursor = new SolutionCursor(node);
-        while (solutionCursor.moveNext()) {
-            for (VariableSubstitution vs: solutionCursor.nodeCursors.keySet()) {
-                try {
-                    System.out.println(vs.decl.toString() + " " + solutionCursor.nodeCursors.get(vs).getLiteral().toString());
-                } catch (Exception e) {}
-            }
-            System.out.println("\n");
-        }
-        System.out.println("no more solutions");
+        makeSolutions(node);
     }
 }

@@ -1,9 +1,11 @@
 package hu.bme.mit.theta.expressiondiagram;
 
+import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Neq;
 
@@ -19,6 +21,7 @@ public class SolutionCursor {
         NodeCursor.solver.push();
         if (vs == null || vs.next == null || n.expression.equals(TrueExpr.getInstance())) {
             // TODO false?
+            // TODO literal-lal kezdeni valamit
             if (vs != null && vs.next != null)
                 nodeCursors.put(vs, n.makeCursor());
             //return n.isSatisfiable();    //only for user input (either as root node or after substitution)
@@ -73,6 +76,16 @@ public class SolutionCursor {
             nodeCursors.remove(vs);
             vs = vs.next;
         }
+    }
+
+    public HashMap<Decl, LitExpr> getSolutionMap () {
+        HashMap<Decl, LitExpr> solutionMap = new HashMap<>();
+        for (VariableSubstitution vs: nodeCursors.keySet()) {
+            if (nodeCursors.get(vs).getLiteral() != null) {
+                solutionMap.put(vs.decl, nodeCursors.get(vs).getLiteral());
+            }
+        }
+        return solutionMap;
     }
 
 }
