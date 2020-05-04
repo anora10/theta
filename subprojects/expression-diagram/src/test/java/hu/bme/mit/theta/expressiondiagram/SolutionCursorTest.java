@@ -8,13 +8,15 @@ import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.type.inttype.IntType;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import static hu.bme.mit.theta.core.decl.Decls.Const;
-import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Gt;
-import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Leq;
+import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.*;
 import static hu.bme.mit.theta.core.type.booltype.BoolExprs.*;
 import static hu.bme.mit.theta.core.type.inttype.IntExprs.Int;
 
@@ -38,7 +40,7 @@ public class SolutionCursorTest {
 
     @Test // (a v !b) ^ (b v c)
     public void test1() {
-        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
         final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
         final ConstDecl<BoolType> cc = Const("c", Bool());
@@ -64,7 +66,7 @@ public class SolutionCursorTest {
 
     @Test // (a v b v c v !d v !e)
     public void test2() {
-        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
         final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
         final ConstDecl<BoolType> cc = Const("c", Bool());
@@ -96,7 +98,7 @@ public class SolutionCursorTest {
 
     @Test // (a v b v !c)
     public void test3() {
-        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
         final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
         final ConstDecl<BoolType> cc = Const("c", Bool());
@@ -121,7 +123,7 @@ public class SolutionCursorTest {
 
     @Test // (a v b)
     public void test4() {
-        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
         final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
         VariableSubstitution.decls.add(ca);
@@ -143,7 +145,7 @@ public class SolutionCursorTest {
 
     @Test // (!a v a)
     public void test5() {
-        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
         final ConstDecl<BoolType> ca = Const("a", Bool());
         actLits.add(ca);
 
@@ -162,7 +164,7 @@ public class SolutionCursorTest {
 
     @Test // (!a v d<=0) ^ (b v d>0)
     public void test6() {
-        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
 
         final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
@@ -184,7 +186,7 @@ public class SolutionCursorTest {
 
     @Test // (!a ^ a)  --- false ---
     public void test7() {
-        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
         final ConstDecl<BoolType> ca = Const("a", Bool());
         actLits.add(ca);
 
@@ -203,7 +205,7 @@ public class SolutionCursorTest {
 
     @Test // FalseExpr
     public void test_false() {
-        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
 
         VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
 
@@ -219,13 +221,113 @@ public class SolutionCursorTest {
 
     @Test // TrueExpr
     public void test_true() {
-        final List<ConstDecl<BoolType>> actLits = new ArrayList<>();
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
 
         VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
 
         // True
         Expr expr = True();
         ExpressionNode node = new ExpressionNode(vs0,expr);
+        NodeCursor.initiateSolver(expr);
+
+        //------------------------- end of init -------------------------
+
+        makeSolutions(node);
+    }
+
+    @Test // (a ^ (0 < d <= 5))
+    public void test_int_1() {
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
+
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        final ConstDecl<IntType> cd = Const("d", Int());
+        actLits.add(ca);
+        actLits.add(cd);
+
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
+
+        // (a ^ (0 < d <= 5))
+        Expr expr = And( And( Gt(cd.getRef(), Int(0)), Leq(cd.getRef(), Int(5))), ca.getRef() );
+        ExpressionNode node = new ExpressionNode(vs0, expr);
+        NodeCursor.initiateSolver(expr);
+
+        //------------------------- end of init -------------------------
+
+        makeSolutions(node);
+    }
+
+    @Test // (a v !b) ^ (b v (0 < d <= 2))
+    public void test_int_2() {
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
+
+        final ConstDecl<IntType> cd = Const("d", Int());
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        final ConstDecl<BoolType> cb = Const("b", Bool());
+        actLits.add(cd);
+        actLits.add(ca);
+        actLits.add(cb);
+
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
+
+        // (a v !b) ^ (b v (0 < d <= 2))
+        Expr expr = And( Or (cb.getRef(), (And( Gt(cd.getRef(), Int(0)), Leq(cd.getRef(), Int(2))))),
+                         Or (ca.getRef(), Not(cb.getRef())));
+        ExpressionNode node = new ExpressionNode(vs0, expr);
+        NodeCursor.initiateSolver(expr);
+
+        //------------------------- end of init -------------------------
+
+        makeSolutions(node);
+    }
+
+    @Test // ((a^b) v (0 < d <= 2))
+    public void test_int_3() {
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
+
+        final ConstDecl<IntType> cd = Const("d", Int());
+        final ConstDecl<BoolType> ca = Const("a", Bool());
+        final ConstDecl<BoolType> cb = Const("b", Bool());
+        actLits.add(cd);
+        actLits.add(ca);
+        actLits.add(cb);
+
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
+
+        // ((a^b) v (0 < d <= 1))
+        Expr expr = Or (And(ca.getRef(),cb.getRef()), (And( Gt(cd.getRef(), Int(0)), Leq(cd.getRef(), Int(1)))));
+        ExpressionNode node = new ExpressionNode(vs0, expr);
+        NodeCursor.initiateSolver(expr);
+
+        //------------------------- end of init -------------------------
+
+        makeSolutions(node);
+    }
+
+    @Test //
+    public void test_int_peti() {
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
+
+        final ConstDecl<IntType> cx1 = Const("x1", Int());
+        final ConstDecl<IntType> cx2 = Const("x2", Int());
+        final ConstDecl<IntType> cy = Const("y", Int());
+        actLits.add(cx1);
+        actLits.add(cx2);
+        actLits.add(cy);
+
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
+
+        // y = 3x1 + 2x2
+        Expr e1 = Eq(cy.getRef(), Add(Mul(cx1.getRef(), Int(3)), Mul(cx2.getRef(), Int(2))));
+        // 2x1 + x2 <= 14
+        Expr e2 = Leq(Add(Mul(cx1.getRef(), Int(2)), Mul(cx2.getRef(), Int(1))) , Int(14));
+        // 0 <= x1 <= 5
+        Expr e3 = (And( Geq(cx1.getRef(), Int(0)), Leq(cx1.getRef(), Int(5))));
+        // 0 <= x2 <= 8
+        Expr e4 = (And( Geq(cx2.getRef(), Int(0)), Leq(cx2.getRef(), Int(8))));
+
+        Expr expr = And(e1,e2,e3,e4);
+
+        ExpressionNode node = new ExpressionNode(vs0, expr);
         NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------

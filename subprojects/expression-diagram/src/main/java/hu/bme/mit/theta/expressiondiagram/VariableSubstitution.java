@@ -12,6 +12,7 @@ public class VariableSubstitution {
     Decl<? extends Type> decl;
     static ArrayList<Decl<? extends Type>> decls = new ArrayList<>();
     VariableSubstitution next;
+    private final int maxsize;
 
     /**
      * Constructor, VS stores which decl is the next to be substituted
@@ -19,9 +20,14 @@ public class VariableSubstitution {
      * @param d is to be substituted
      * @param nextvs is the following VS
      */
-    VariableSubstitution (VariableSubstitution nextvs, Decl d) {
+    VariableSubstitution (VariableSubstitution nextvs, Decl<? extends Type> d) {
         next = nextvs;
         decl = d;
+        maxsize = 50;
+    }
+
+    int getMaxsize() {
+        return maxsize;
     }
 
     /**

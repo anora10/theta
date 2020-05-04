@@ -8,11 +8,14 @@ import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Eq;
 import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Neq;
 
 public class SolutionCursor {
     private HashMap<VariableSubstitution, NodeCursor> nodeCursors = new HashMap<>();
     private ExpressionNode node;
+    private LitExpr lastLiteral = null;
+    private Decl lastDecl = null;
 
     /**
      * Constructor setting root node
@@ -30,6 +33,7 @@ public class SolutionCursor {
      */
     private boolean findFirstPath(ExpressionNode n, VariableSubstitution vs) {
         NodeCursor.solver.push();
+        if (lastLiteral != null) NodeCursor.solver.add(Eq(lastDecl.getRef(), lastLiteral));
         if (vs == null || vs.next == null || n.expression.equals(TrueExpr.getInstance())) {
             // TODO false?
             // TODO literal-lal kezdeni valamit
@@ -46,6 +50,8 @@ public class SolutionCursor {
                 NodeCursor.solver.pop();
                 return false;
             }
+            lastDecl = vs.getDecl();
+            lastLiteral = nodeCursors.get(vs).getLiteral();
             found = findFirstPath(nodeCursors.get(vs).getNode(), vs.next);
         } while(!found);
         return true;
@@ -74,6 +80,8 @@ public class SolutionCursor {
                 NodeCursor.solver.pop();
                 return false;
             }
+            lastDecl = vs.getDecl();
+            lastLiteral = nodeCursors.get(vs).getLiteral();
             found = findFirstPath(nodeCursors.get(vs).getNode(), vs.next);
         } while(!found);
         return true;

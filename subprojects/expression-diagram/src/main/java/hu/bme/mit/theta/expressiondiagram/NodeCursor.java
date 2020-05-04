@@ -1,13 +1,18 @@
 package hu.bme.mit.theta.expressiondiagram;
 
 import com.koloboke.collect.map.ObjObjCursor;
+import com.microsoft.z3.BoolExpr;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.Type;
+import hu.bme.mit.theta.core.type.booltype.BoolLitExpr;
+import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
+import hu.bme.mit.theta.core.type.inttype.IntLitExpr;
+import hu.bme.mit.theta.core.type.inttype.IntType;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.SolverStatus;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
@@ -17,7 +22,7 @@ import java.util.Map;
 public class NodeCursor {
     ExpressionNode node;
     private ExpressionNode newNode; // new Node
-    private LitExpr literal; // new Literal
+    private LitExpr<? extends Type> literal; // new Literal
     private ObjObjCursor<LitExpr<? extends Type>, ExpressionNode> mapCursor;
 
     static Solver solver = Z3SolverFactory.getInstace().createSolver();
@@ -77,6 +82,8 @@ public class NodeCursor {
         }
         // calculate new result
         mapCursor = null;
+        if (node.nextExpression.size() == node.variableSubstitution.getMaxsize())
+            node.isFinal = true;
         if (node.isFinal) {
             // node revisited, no more solutions
             return false;
@@ -108,18 +115,29 @@ public class NodeCursor {
         return saveSolverLiteral();
     }
 
+    private LitExpr<? extends Type> getDefaultLitexpr(Decl<? extends Type> decl) {
+        if (decl.getType().toString().equals("Bool"))
+            return FalseExpr.getInstance();
+        if (decl.getType().toString().equals("Int"))
+            return IntLitExpr.of(0);
+        // only bool and int types are supported
+        assert (false);
+        return null;
+    }
+
+
     /**
      * Save literal value given by solver
      *
      * @return true if new solution literal saved
      */
     private boolean saveSolverLiteral() {
-        Decl decl = node.variableSubstitution.getDecl();
+        Decl<? extends Type> decl = node.variableSubstitution.getDecl();
         literal = modelMap.get(decl);
         if (literal == null) {
             // The solver said that the value of decl does not count
             // We choose it false, but later it will be checked whether true is ok.
-            literal = FalseExpr.getInstance();
+                literal = getDefaultLitexpr(decl);
             // literal = DefaultLitExpr.getInstance();
         }
         // not inspected assignment found, create new node accordingly

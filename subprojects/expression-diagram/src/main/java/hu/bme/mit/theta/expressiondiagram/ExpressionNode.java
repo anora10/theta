@@ -85,7 +85,7 @@ public class ExpressionNode {
      * @return node after first substitution
      */
     // TODO nem jo, a defaulttal kell szorakozni
-    ExpressionNode substituteAll(HashMap<Decl, LitExpr<? extends Type>> literals) {
+    private ExpressionNode substituteAll(HashMap<Decl, LitExpr<? extends Type>> literals) {
         if (variableSubstitution == null || variableSubstitution.getDecl() == null) return null;
         if (expression.equals(TrueExpr.getInstance()) || expression.equals(FalseExpr.getInstance())) return null;
         Decl decl = variableSubstitution.getDecl();
@@ -144,7 +144,7 @@ public class ExpressionNode {
      * @param reverse if true, decl order will be reversed
      * @return VariableSubstitution, that will be needed in constructor of ExpressionNode
      */
-    public static VariableSubstitution createDecls (List<ConstDecl<BoolType>> declList, boolean reverse) {
+    public static VariableSubstitution createDecls (List<ConstDecl<?>> declList, boolean reverse) {
         /*final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
         final ConstDecl<IntType> cd = Const("d", Int());
@@ -157,7 +157,7 @@ public class ExpressionNode {
 
          if (reverse) Collections.reverse(declList);
         VariableSubstitution oldVS = new VariableSubstitution(null, null);
-        for (ConstDecl<BoolType> cd : declList) {
+        for (ConstDecl<?> cd : declList) {
             oldVS = new VariableSubstitution(oldVS, cd);
         }
         return oldVS;
