@@ -9,10 +9,10 @@ import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.Type;
 import hu.bme.mit.theta.core.type.anytype.RefExpr;
-import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
-import hu.bme.mit.theta.core.utils.ExprSimplifier;
+import hu.bme.mit.theta.expressiondiagram.simplifier.BasicSimplifier;
+import hu.bme.mit.theta.expressiondiagram.simplifier.TrueSimplifier;
 
 import java.util.*;
 
@@ -71,7 +71,7 @@ public class ExpressionNode {
             Decl decl = variableSubstitution.getDecl();
             ImmutableValuation valuation = ImmutableValuation.builder().put(decl, literal).build();
             // resultingExpression: expression after substitution
-            Expr<? extends Type> resultingExpression = ExprSimplifier.simplify(expression, valuation);
+            Expr<? extends Type> resultingExpression = TrueSimplifier.simplify(expression, valuation);
             newNode = variableSubstitution.next.checkIn(resultingExpression);
         }
         nextExpression.put(literal, newNode);
@@ -84,7 +84,7 @@ public class ExpressionNode {
      * @param literals map of substitution values
      * @return node after first substitution
      */
-    // TODO nem jo, a defaulttal kell szorakozni
+    // TODO not working, default causes a problem
     private ExpressionNode substituteAll(HashMap<Decl, LitExpr<? extends Type>> literals) {
         if (variableSubstitution == null || variableSubstitution.getDecl() == null) return null;
         if (expression.equals(TrueExpr.getInstance()) || expression.equals(FalseExpr.getInstance())) return null;

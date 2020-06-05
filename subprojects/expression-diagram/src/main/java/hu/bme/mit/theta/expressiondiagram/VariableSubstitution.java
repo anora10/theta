@@ -23,7 +23,7 @@ public class VariableSubstitution {
     VariableSubstitution (VariableSubstitution nextvs, Decl<? extends Type> d) {
         next = nextvs;
         decl = d;
-        maxsize = 50;
+        maxsize = 5;
     }
 
     int getMaxsize() {

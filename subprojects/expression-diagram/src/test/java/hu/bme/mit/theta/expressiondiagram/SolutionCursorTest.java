@@ -8,9 +8,6 @@ import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.type.inttype.IntType;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -293,8 +290,8 @@ public class SolutionCursorTest {
 
         VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
 
-        // ((a^b) v (0 < d <= 1))
-        Expr expr = Or (And(ca.getRef(),cb.getRef()), (And( Gt(cd.getRef(), Int(0)), Leq(cd.getRef(), Int(1)))));
+        // ((a^b) v (0 < d <= 2))
+        Expr expr = Or (And(ca.getRef(),cb.getRef()), (And( Gt(cd.getRef(), Int(0)), Leq(cd.getRef(), Int(2)))));
         ExpressionNode node = new ExpressionNode(vs0, expr);
         NodeCursor.initiateSolver(expr);
 
@@ -303,7 +300,7 @@ public class SolutionCursorTest {
         makeSolutions(node);
     }
 
-    @Test //
+    @Test // 2020 ropi zh linprog feladata
     public void test_int_peti() {
         final List<ConstDecl<?>> actLits = new ArrayList<>();
 
