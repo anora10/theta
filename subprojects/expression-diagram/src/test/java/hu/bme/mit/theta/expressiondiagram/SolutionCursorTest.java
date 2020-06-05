@@ -300,6 +300,25 @@ public class SolutionCursorTest {
         makeSolutions(node);
     }
 
+    @Test // (d <= 3)
+    public void test_int_4() {
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
+
+        final ConstDecl<IntType> cd = Const("d", Int());
+        actLits.add(cd);
+
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
+
+        // (d <= 3)
+        Expr expr = Leq(cd.getRef(), Int(3));
+        ExpressionNode node = new ExpressionNode(vs0, expr);
+        NodeCursor.initiateSolver(expr);
+
+        //------------------------- end of init -------------------------
+
+        makeSolutions(node);
+    }
+
     @Test // 2020 ropi zh linprog feladata
     public void test_int_peti() {
         final List<ConstDecl<?>> actLits = new ArrayList<>();

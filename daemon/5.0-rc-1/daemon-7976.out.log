@@ -12364,3 +12364,1335 @@ BUILD SUCCESSFUL in 2s
 22:52:11.445 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
 22:52:11.445 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
 22:52:11.449 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:11.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6488854528}
+22:52:11.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6488854528}
+22:52:11.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:52:16.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6475161600}
+22:52:16.940 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6475161600}
+22:52:16.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:52:21.429 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:52:21.429 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:52:21.429 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:52:21.429 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:21.429 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:52:21.429 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:52:21.429 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:21.429 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:52:21.429 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:52:21.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:21.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6470000640}
+22:52:21.940 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6470000640}
+22:52:21.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:52:26.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6459236352}
+22:52:26.942 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6459236352}
+22:52:26.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:52:31.430 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:52:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:52:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:52:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:52:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:52:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:31.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:52:31.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:52:31.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:31.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6541070336}
+22:52:31.940 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6541070336}
+22:52:31.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:52:36.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6541574144}
+22:52:36.940 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6541574144}
+22:52:36.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:52:41.430 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:52:41.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:52:41.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:52:41.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:41.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:52:41.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:52:41.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:41.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:52:41.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:52:41.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:41.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6664372224}
+22:52:41.942 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6664372224}
+22:52:41.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:52:46.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6655561728}
+22:52:46.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6655561728}
+22:52:46.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:52:51.429 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:52:51.429 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:52:51.429 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:52:51.429 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:51.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:52:51.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:52:51.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:51.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:52:51.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:52:51.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:52:51.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6803378176}
+22:52:51.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6803378176}
+22:52:51.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:52:56.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6803476480}
+22:52:56.940 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6803476480}
+22:52:56.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:53:01.431 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:53:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:01.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:01.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:01.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:01.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:01.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6807388160}
+22:53:01.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6807388160}
+22:53:01.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:53:06.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6809518080}
+22:53:06.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6809518080}
+22:53:06.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:53:11.430 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:53:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:11.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:11.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:11.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:11.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6803681280}
+22:53:11.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6803681280}
+22:53:11.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:53:16.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6805295104}
+22:53:16.942 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6805295104}
+22:53:16.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:53:21.430 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:53:21.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:21.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:21.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:21.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6803808256}
+22:53:21.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6803808256}
+22:53:21.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:53:26.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6810284032}
+22:53:26.940 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6810284032}
+22:53:26.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:53:31.430 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:53:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:31.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:31.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:31.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:31.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6813892608}
+22:53:31.940 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6813892608}
+22:53:31.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:53:36.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6814990336}
+22:53:36.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6814990336}
+22:53:36.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:53:41.430 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:53:41.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:41.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:41.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:41.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:41.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:41.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:41.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:41.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:41.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:41.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6770454528}
+22:53:41.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6770454528}
+22:53:41.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:53:46.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6757900288}
+22:53:46.940 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6757900288}
+22:53:46.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:53:51.431 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:53:51.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:51.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:51.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:51.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:51.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:51.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:51.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:53:51.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:51.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:51.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6770491392}
+22:53:51.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6770491392}
+22:53:51.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:53:54.578 [DEBUG] [org.gradle.internal.remote.internal.inet.TcpIncomingConnector] Accepted connection from /127.0.0.1:51893 to /127.0.0.1:51482.
+22:53:54.581 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 962: received class org.gradle.launcher.daemon.protocol.Build
+22:53:54.581 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 962: Received non-IO message from client: Build{id=042f4347-5f8a-4c8d-a6ca-27f645161c14, currentDir=E:\Git\theta}
+22:53:54.582 [INFO] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Received command: Build{id=042f4347-5f8a-4c8d-a6ca-27f645161c14, currentDir=E:\Git\theta}.
+22:53:54.582 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Starting executing command: Build{id=042f4347-5f8a-4c8d-a6ca-27f645161c14, currentDir=E:\Git\theta} with connection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51893.
+22:53:54.583 [ERROR] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: started DaemonCommandExecution[command = Build{id=042f4347-5f8a-4c8d-a6ca-27f645161c14, currentDir=E:\Git\theta}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51893] after 7.0 minutes of idle
+22:53:54.583 [INFO] [org.gradle.launcher.daemon.server.DaemonRegistryUpdater] Marking the daemon as busy, address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:53:54.583 [DEBUG] [org.gradle.launcher.daemon.registry.PersistentDaemonRegistry] Marking busy by address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:53:54.583 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire exclusive lock on daemon addresses registry.
+22:53:54.584 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:54.585 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:54.585 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] resetting idle timer
+22:53:54.586 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+22:53:54.586 [INFO] [org.gradle.launcher.daemon.server.exec.StartBuildOrRespondWithBusy] Daemon is about to start building Build{id=042f4347-5f8a-4c8d-a6ca-27f645161c14, currentDir=E:\Git\theta}. Dispatching build started information...
+22:53:54.586 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 964: dispatching class org.gradle.launcher.daemon.protocol.BuildStarted
+22:53:54.587 [DEBUG] [org.gradle.launcher.daemon.server.exec.EstablishBuildEnvironment] Configuring env variables: {USERDOMAIN_ROAMINGPROFILE=DESKTOP, LOCALAPPDATA=C:\Users\Nori\AppData\Local, PROCESSOR_LEVEL=6, USERDOMAIN=DESKTOP, LOGONSERVER=\\DESKTOP, JAVA_HOME=C:\Program Files\Java\jdk-11.0.2, SESSIONNAME=Console, ALLUSERSPROFILE=C:\ProgramData, PROCESSOR_ARCHITECTURE=AMD64, PSModulePath=C:\Users\Nori\Documents\WindowsPowerShell\Modules;, SystemDrive=C:, OneDrive=C:\Users\almas\OneDrive, APPDATA=C:\Users\Nori\AppData\Roaming, USERNAME=Nori, ProgramFiles(x86)=C:\Program Files (x86), VBOX_MSI_INSTALL_PATH=C:\Program Files\Oracle\VirtualBox\, CommonProgramFiles=C:\Program Files\Common Files, Path=C:\Program Files\AdoptOpenJDK\jdk-11.0.6.10-hotspot\bin;C:\Program Files\Java\jdk-11.0.2\bin;C:\Program Files\Java\jdk1.8.0_231\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\PuTTY\;C:\Program Files\Git\cmd;E:\Git\theta\lib;C:\Users\Nori\AppData\Local\Microsoft\WindowsApps;C:\Users\Nori\AppData\Local\Microsoft\WindowsApps;C:\Users\Nori\AppData\Local\Programs\Microsoft VS Code\bin, PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC, DriverData=C:\Windows\System32\Drivers\DriverData, OS=Windows_NT, COMPOSE_CONVERT_WINDOWS_PATHS=true, OneDriveConsumer=C:\Users\almas\OneDrive, COMPUTERNAME=DESKTOP, PROCESSOR_REVISION=5e03, CommonProgramW6432=C:\Program Files\Common Files, ComSpec=C:\WINDOWS\system32\cmd.exe, ProgramData=C:\ProgramData, ProgramW6432=C:\Program Files, HOMEPATH=\Users\Nori, SystemRoot=C:\WINDOWS, TEMP=C:\Users\Nori\AppData\Local\Temp, PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 94 Stepping 3, GenuineIntel, USERPROFILE=C:\Users\Nori, HOMEDRIVE=C:, TMP=C:\Users\Nori\AppData\Local\Temp, ProgramFiles=C:\Program Files, CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files, PUBLIC=C:\Users\Public, NUMBER_OF_PROCESSORS=8, windir=C:\WINDOWS, =::=::\, IDEA_INITIAL_DIRECTORY=C:\WINDOWS\System32}
+22:53:54.588 [DEBUG] [org.gradle.launcher.daemon.server.exec.LogToClient] About to start relaying all logs to the client via the connection.
+22:53:54.588 [INFO] [org.gradle.launcher.daemon.server.exec.LogToClient] The client will now receive all logging from the daemon (pid: 7976). The daemon log file: E:\Git\theta\daemon\5.0-rc-1\daemon-7976.out.log
+22:53:54.589 [INFO] [org.gradle.launcher.daemon.server.exec.LogAndCheckHealth] Starting 20th build in daemon [uptime: 23 mins 24.091 secs, performance: 100%]
+22:53:54.589 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has started executing the build.
+22:53:54.589 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] Executing build with daemon context: DefaultDaemonContext[uid=f94b4bee-1c19-4089-aea6-686f919b632e,javaHome=E:\Install\JAva\openjdk-11.0.2_windows-x64_bin,daemonRegistryDir=E:\Git\theta\daemon,pid=7976,idleTimeout=10800000,priority=NORMAL,daemonOpts=--add-opens,java.base/java.util=ALL-UNNAMED,--add-opens,java.base/java.lang=ALL-UNNAMED,--add-opens,java.base/java.lang.invoke=ALL-UNNAMED,--add-opens,java.prefs/java.util.prefs=ALL-UNNAMED,-XX:MaxMetaspaceSize=256m,-XX:+HeapDumpOnOutOfMemoryError,-Xmx512m,-Dfile.encoding=windows-1252,-Duser.country=GB,-Duser.language=en,-Duser.variant]
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Note: E:\Git\theta\subprojects\expression-diagram\src\test\java\hu\bme\mit\theta\expressiondiagram\SolutionCursorTest.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+<ijLog><event type='reportLocation' testReport='E:\Git\theta\subprojects\expression-diagram\build\reports\tests\test\index.html' /></ijLog>
+
+<ijLog><event type='beforeSuite'><ijLogEol/>
+  <test id=':theta-expression-diagram:test' parentId=''><ijLogEol/>
+    <descriptor name='Gradle Test Run :theta-expression-diagram:test' className='' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='beforeSuite'><ijLogEol/>
+  <test id='20.1' parentId=':theta-expression-diagram:test'><ijLogEol/>
+    <descriptor name='Gradle Test Executor 20' className='' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='beforeSuite'><ijLogEol/>
+  <test id='20.2' parentId='20.1'><ijLogEol/>
+    <descriptor name='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='beforeTest'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAwDQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtMQ0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtMg0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtMw0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtNA0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[bm8gbW9yZSBzb2x1dGlvbnMNCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterTest'><ijLogEol/>
+  <test id='20.3' parentId='20.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390437583' endTime='1591390438273'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterSuite'><ijLogEol/>
+  <test id='20.2' parentId='20.1'><ijLogEol/>
+    <descriptor name='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390437449' endTime='1591390438273'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterSuite'><ijLogEol/>
+  <test id='20.1' parentId=':theta-expression-diagram:test'><ijLogEol/>
+    <descriptor name='Gradle Test Executor 20' className='' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390437434' endTime='1591390438273'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterSuite'><ijLogEol/>
+  <test id=':theta-expression-diagram:test' parentId=''><ijLogEol/>
+    <descriptor name='Gradle Test Run :theta-expression-diagram:test' className='' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390435817' endTime='1591390438378'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/5.0-rc-1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 3s
+13 actionable tasks: 4 executed, 9 up-to-date
+22:53:58.408 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has finished executing the build.
+22:53:58.410 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+22:53:58.411 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: finished waiting for DaemonCommandExecution[command = Build{id=042f4347-5f8a-4c8d-a6ca-27f645161c14, currentDir=E:\Git\theta}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51893]. Result org.gradle.launcher.daemon.server.DaemonStateCoordinator@53edc907 with state Busy
+22:53:58.411 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: completed DaemonCommandExecution[command = Build{id=042f4347-5f8a-4c8d-a6ca-27f645161c14, currentDir=E:\Git\theta}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51893]
+22:53:58.411 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] resetting idle timer
+22:53:58.411 [INFO] [org.gradle.launcher.daemon.server.DaemonRegistryUpdater] Marking the daemon as idle, address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:53:58.411 [DEBUG] [org.gradle.launcher.daemon.registry.PersistentDaemonRegistry] Marking busy by address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:53:58.412 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire exclusive lock on daemon addresses registry.
+22:53:58.412 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:53:58.413 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:53:58.414 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+22:53:58.414 [DEBUG] [org.gradle.launcher.daemon.server.exec.ReturnResult] Daemon is dispatching the build result: Success[value=org.gradle.tooling.internal.provider.BuildActionResult@5fab4b7a]
+22:53:58.414 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 961: dispatching class org.gradle.launcher.daemon.protocol.Success
+22:53:58.415 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Finishing executing command: Build{id=042f4347-5f8a-4c8d-a6ca-27f645161c14, currentDir=E:\Git\theta}
+22:53:58.416 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 962: received class org.gradle.launcher.daemon.protocol.CloseInput
+22:53:58.416 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 962: Received IO message from client: org.gradle.launcher.daemon.protocol.CloseInput@3c14a4b3
+22:53:58.416 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 962: received class org.gradle.launcher.daemon.protocol.Finished
+22:53:58.416 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 962: Received non-IO message from client: org.gradle.launcher.daemon.protocol.Finished@32d34d41
+22:53:58.416 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Received finished message: org.gradle.launcher.daemon.protocol.Finished@32d34d41
+22:53:58.416 [DEBUG] [org.gradle.internal.remote.internal.inet.SocketConnection] Discarding EOFException: java.io.EOFException
+22:53:58.416 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 961: stopping connection
+22:53:58.416 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 962: received null
+22:53:58.416 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 962: Received end-of-input from client.
+22:53:58.418 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 961: stopping connection
+22:54:01.430 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:54:01.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:54:01.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:01.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:54:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:01.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6702579712}
+22:54:01.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6702579712}
+22:54:01.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:54:06.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6675156992}
+22:54:06.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6675156992}
+22:54:06.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:54:11.430 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:54:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:54:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:54:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:11.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:11.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:54:11.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:11.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:11.939 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6568366080}
+22:54:11.939 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6568366080}
+22:54:11.939 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:54:15.981 [DEBUG] [org.gradle.internal.remote.internal.inet.TcpIncomingConnector] Accepted connection from /127.0.0.1:51906 to /127.0.0.1:51482.
+22:54:15.983 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 1016: received class org.gradle.launcher.daemon.protocol.Build
+22:54:15.983 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 1016: Received non-IO message from client: Build{id=24624246-a18f-45e8-80f7-5ba94e50a1ad, currentDir=E:\Git\theta}
+22:54:15.983 [INFO] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Received command: Build{id=24624246-a18f-45e8-80f7-5ba94e50a1ad, currentDir=E:\Git\theta}.
+22:54:15.983 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Starting executing command: Build{id=24624246-a18f-45e8-80f7-5ba94e50a1ad, currentDir=E:\Git\theta} with connection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51906.
+22:54:15.983 [ERROR] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: started DaemonCommandExecution[command = Build{id=24624246-a18f-45e8-80f7-5ba94e50a1ad, currentDir=E:\Git\theta}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51906] after 0.0 minutes of idle
+22:54:15.983 [INFO] [org.gradle.launcher.daemon.server.DaemonRegistryUpdater] Marking the daemon as busy, address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:54:15.983 [DEBUG] [org.gradle.launcher.daemon.registry.PersistentDaemonRegistry] Marking busy by address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:54:15.983 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire exclusive lock on daemon addresses registry.
+22:54:15.984 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:15.984 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:15.985 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] resetting idle timer
+22:54:15.985 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+22:54:15.985 [INFO] [org.gradle.launcher.daemon.server.exec.StartBuildOrRespondWithBusy] Daemon is about to start building Build{id=24624246-a18f-45e8-80f7-5ba94e50a1ad, currentDir=E:\Git\theta}. Dispatching build started information...
+22:54:15.985 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 964: dispatching class org.gradle.launcher.daemon.protocol.BuildStarted
+22:54:15.986 [DEBUG] [org.gradle.launcher.daemon.server.exec.EstablishBuildEnvironment] Configuring env variables: {USERDOMAIN_ROAMINGPROFILE=DESKTOP, LOCALAPPDATA=C:\Users\Nori\AppData\Local, PROCESSOR_LEVEL=6, USERDOMAIN=DESKTOP, LOGONSERVER=\\DESKTOP, JAVA_HOME=C:\Program Files\Java\jdk-11.0.2, SESSIONNAME=Console, ALLUSERSPROFILE=C:\ProgramData, PROCESSOR_ARCHITECTURE=AMD64, PSModulePath=C:\Users\Nori\Documents\WindowsPowerShell\Modules;, SystemDrive=C:, OneDrive=C:\Users\almas\OneDrive, APPDATA=C:\Users\Nori\AppData\Roaming, USERNAME=Nori, ProgramFiles(x86)=C:\Program Files (x86), VBOX_MSI_INSTALL_PATH=C:\Program Files\Oracle\VirtualBox\, CommonProgramFiles=C:\Program Files\Common Files, Path=C:\Program Files\AdoptOpenJDK\jdk-11.0.6.10-hotspot\bin;C:\Program Files\Java\jdk-11.0.2\bin;C:\Program Files\Java\jdk1.8.0_231\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\PuTTY\;C:\Program Files\Git\cmd;E:\Git\theta\lib;C:\Users\Nori\AppData\Local\Microsoft\WindowsApps;C:\Users\Nori\AppData\Local\Microsoft\WindowsApps;C:\Users\Nori\AppData\Local\Programs\Microsoft VS Code\bin, PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC, DriverData=C:\Windows\System32\Drivers\DriverData, OS=Windows_NT, COMPOSE_CONVERT_WINDOWS_PATHS=true, OneDriveConsumer=C:\Users\almas\OneDrive, COMPUTERNAME=DESKTOP, PROCESSOR_REVISION=5e03, CommonProgramW6432=C:\Program Files\Common Files, ComSpec=C:\WINDOWS\system32\cmd.exe, ProgramData=C:\ProgramData, ProgramW6432=C:\Program Files, HOMEPATH=\Users\Nori, SystemRoot=C:\WINDOWS, TEMP=C:\Users\Nori\AppData\Local\Temp, PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 94 Stepping 3, GenuineIntel, USERPROFILE=C:\Users\Nori, HOMEDRIVE=C:, TMP=C:\Users\Nori\AppData\Local\Temp, ProgramFiles=C:\Program Files, CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files, PUBLIC=C:\Users\Public, NUMBER_OF_PROCESSORS=8, windir=C:\WINDOWS, =::=::\, IDEA_INITIAL_DIRECTORY=C:\WINDOWS\System32}
+22:54:15.987 [DEBUG] [org.gradle.launcher.daemon.server.exec.LogToClient] About to start relaying all logs to the client via the connection.
+22:54:15.987 [INFO] [org.gradle.launcher.daemon.server.exec.LogToClient] The client will now receive all logging from the daemon (pid: 7976). The daemon log file: E:\Git\theta\daemon\5.0-rc-1\daemon-7976.out.log
+22:54:15.988 [INFO] [org.gradle.launcher.daemon.server.exec.LogAndCheckHealth] Starting 21st build in daemon [uptime: 23 mins 45.491 secs, performance: 100%]
+22:54:15.988 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has started executing the build.
+22:54:15.988 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] Executing build with daemon context: DefaultDaemonContext[uid=f94b4bee-1c19-4089-aea6-686f919b632e,javaHome=E:\Install\JAva\openjdk-11.0.2_windows-x64_bin,daemonRegistryDir=E:\Git\theta\daemon,pid=7976,idleTimeout=10800000,priority=NORMAL,daemonOpts=--add-opens,java.base/java.util=ALL-UNNAMED,--add-opens,java.base/java.lang=ALL-UNNAMED,--add-opens,java.base/java.lang.invoke=ALL-UNNAMED,--add-opens,java.prefs/java.util.prefs=ALL-UNNAMED,-XX:MaxMetaspaceSize=256m,-XX:+HeapDumpOnOutOfMemoryError,-Xmx512m,-Dfile.encoding=windows-1252,-Duser.country=GB,-Duser.language=en,-Duser.variant]
+Note: E:\Git\theta\subprojects\expression-diagram\src\test\java\hu\bme\mit\theta\expressiondiagram\SolutionCursorTest.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+<ijLog><event type='reportLocation' testReport='E:\Git\theta\subprojects\expression-diagram\build\reports\tests\test\index.html' /></ijLog>
+
+<ijLog><event type='beforeSuite'><ijLogEol/>
+  <test id=':theta-expression-diagram:test' parentId=''><ijLogEol/>
+    <descriptor name='Gradle Test Run :theta-expression-diagram:test' className='' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='beforeSuite'><ijLogEol/>
+  <test id='21.1' parentId=':theta-expression-diagram:test'><ijLogEol/>
+    <descriptor name='Gradle Test Executor 21' className='' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='beforeSuite'><ijLogEol/>
+  <test id='21.2' parentId='21.1'><ijLogEol/>
+    <descriptor name='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='beforeTest'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtMQ0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtMg0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtMw0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtNA0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtNQ0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[bm8gbW9yZSBzb2x1dGlvbnMNCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterTest'><ijLogEol/>
+  <test id='21.3' parentId='21.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390458614' endTime='1591390459330'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterSuite'><ijLogEol/>
+  <test id='21.2' parentId='21.1'><ijLogEol/>
+    <descriptor name='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390458481' endTime='1591390459331'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterSuite'><ijLogEol/>
+  <test id='21.1' parentId=':theta-expression-diagram:test'><ijLogEol/>
+    <descriptor name='Gradle Test Executor 21' className='' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390458461' endTime='1591390459331'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterSuite'><ijLogEol/>
+  <test id=':theta-expression-diagram:test' parentId=''><ijLogEol/>
+    <descriptor name='Gradle Test Run :theta-expression-diagram:test' className='' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390457000' endTime='1591390459466'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/5.0-rc-1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 3s
+13 actionable tasks: 3 executed, 10 up-to-date
+22:54:19.492 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has finished executing the build.
+22:54:19.503 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+22:54:19.504 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: finished waiting for DaemonCommandExecution[command = Build{id=24624246-a18f-45e8-80f7-5ba94e50a1ad, currentDir=E:\Git\theta}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51906]. Result org.gradle.launcher.daemon.server.DaemonStateCoordinator@53edc907 with state Busy
+22:54:19.504 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: completed DaemonCommandExecution[command = Build{id=24624246-a18f-45e8-80f7-5ba94e50a1ad, currentDir=E:\Git\theta}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51906]
+22:54:19.504 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] resetting idle timer
+22:54:19.504 [INFO] [org.gradle.launcher.daemon.server.DaemonRegistryUpdater] Marking the daemon as idle, address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:54:19.504 [DEBUG] [org.gradle.launcher.daemon.registry.PersistentDaemonRegistry] Marking busy by address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:54:19.505 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire exclusive lock on daemon addresses registry.
+22:54:19.505 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:19.506 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:19.506 [DEBUG] [org.gradle.launcher.daemon.server.exec.ReturnResult] Daemon is dispatching the build result: Success[value=org.gradle.tooling.internal.provider.BuildActionResult@7fa8cecc]
+22:54:19.506 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+22:54:19.506 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 961: dispatching class org.gradle.launcher.daemon.protocol.Success
+22:54:19.507 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Finishing executing command: Build{id=24624246-a18f-45e8-80f7-5ba94e50a1ad, currentDir=E:\Git\theta}
+22:54:19.507 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 1016: received class org.gradle.launcher.daemon.protocol.CloseInput
+22:54:19.507 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 1016: Received IO message from client: org.gradle.launcher.daemon.protocol.CloseInput@5ad9045b
+22:54:19.507 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 1016: received class org.gradle.launcher.daemon.protocol.Finished
+22:54:19.507 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 1016: Received non-IO message from client: org.gradle.launcher.daemon.protocol.Finished@541ef170
+22:54:19.507 [DEBUG] [org.gradle.internal.remote.internal.inet.SocketConnection] Discarding EOFException: java.io.EOFException
+22:54:19.507 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 1016: received null
+22:54:19.507 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 1016: Received end-of-input from client.
+22:54:19.507 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Received finished message: org.gradle.launcher.daemon.protocol.Finished@541ef170
+22:54:19.508 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 961: stopping connection
+22:54:19.508 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 961: stopping connection
+22:54:21.430 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:54:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:54:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:54:21.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:21.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:21.939 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6586314752}
+22:54:21.939 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6586314752}
+22:54:21.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:54:26.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6606147584}
+22:54:26.942 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6606147584}
+22:54:26.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:54:31.431 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:54:31.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:54:31.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:31.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:31.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:54:31.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:31.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:31.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:54:31.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:31.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:31.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6557630464}
+22:54:31.942 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6557630464}
+22:54:31.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:54:32.587 [DEBUG] [org.gradle.internal.remote.internal.inet.TcpIncomingConnector] Accepted connection from /127.0.0.1:51920 to /127.0.0.1:51482.
+22:54:32.589 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 1065: received class org.gradle.launcher.daemon.protocol.Build
+22:54:32.589 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 1065: Received non-IO message from client: Build{id=54368835-d27d-4daa-ad5d-ac10fc2cedbf, currentDir=E:\Git\theta}
+22:54:32.589 [INFO] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Received command: Build{id=54368835-d27d-4daa-ad5d-ac10fc2cedbf, currentDir=E:\Git\theta}.
+22:54:32.589 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Starting executing command: Build{id=54368835-d27d-4daa-ad5d-ac10fc2cedbf, currentDir=E:\Git\theta} with connection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51920.
+22:54:32.590 [ERROR] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: started DaemonCommandExecution[command = Build{id=54368835-d27d-4daa-ad5d-ac10fc2cedbf, currentDir=E:\Git\theta}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51920] after 0.0 minutes of idle
+22:54:32.590 [INFO] [org.gradle.launcher.daemon.server.DaemonRegistryUpdater] Marking the daemon as busy, address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:54:32.590 [DEBUG] [org.gradle.launcher.daemon.registry.PersistentDaemonRegistry] Marking busy by address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:54:32.590 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire exclusive lock on daemon addresses registry.
+22:54:32.591 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:32.592 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:32.592 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] resetting idle timer
+22:54:32.593 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+22:54:32.593 [INFO] [org.gradle.launcher.daemon.server.exec.StartBuildOrRespondWithBusy] Daemon is about to start building Build{id=54368835-d27d-4daa-ad5d-ac10fc2cedbf, currentDir=E:\Git\theta}. Dispatching build started information...
+22:54:32.593 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 964: dispatching class org.gradle.launcher.daemon.protocol.BuildStarted
+22:54:32.594 [DEBUG] [org.gradle.launcher.daemon.server.exec.EstablishBuildEnvironment] Configuring env variables: {USERDOMAIN_ROAMINGPROFILE=DESKTOP, LOCALAPPDATA=C:\Users\Nori\AppData\Local, PROCESSOR_LEVEL=6, USERDOMAIN=DESKTOP, LOGONSERVER=\\DESKTOP, JAVA_HOME=C:\Program Files\Java\jdk-11.0.2, SESSIONNAME=Console, ALLUSERSPROFILE=C:\ProgramData, PROCESSOR_ARCHITECTURE=AMD64, PSModulePath=C:\Users\Nori\Documents\WindowsPowerShell\Modules;, SystemDrive=C:, OneDrive=C:\Users\almas\OneDrive, APPDATA=C:\Users\Nori\AppData\Roaming, USERNAME=Nori, ProgramFiles(x86)=C:\Program Files (x86), VBOX_MSI_INSTALL_PATH=C:\Program Files\Oracle\VirtualBox\, CommonProgramFiles=C:\Program Files\Common Files, Path=C:\Program Files\AdoptOpenJDK\jdk-11.0.6.10-hotspot\bin;C:\Program Files\Java\jdk-11.0.2\bin;C:\Program Files\Java\jdk1.8.0_231\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\PuTTY\;C:\Program Files\Git\cmd;E:\Git\theta\lib;C:\Users\Nori\AppData\Local\Microsoft\WindowsApps;C:\Users\Nori\AppData\Local\Microsoft\WindowsApps;C:\Users\Nori\AppData\Local\Programs\Microsoft VS Code\bin, PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC, DriverData=C:\Windows\System32\Drivers\DriverData, OS=Windows_NT, COMPOSE_CONVERT_WINDOWS_PATHS=true, OneDriveConsumer=C:\Users\almas\OneDrive, COMPUTERNAME=DESKTOP, PROCESSOR_REVISION=5e03, CommonProgramW6432=C:\Program Files\Common Files, ComSpec=C:\WINDOWS\system32\cmd.exe, ProgramData=C:\ProgramData, ProgramW6432=C:\Program Files, HOMEPATH=\Users\Nori, SystemRoot=C:\WINDOWS, TEMP=C:\Users\Nori\AppData\Local\Temp, PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 94 Stepping 3, GenuineIntel, USERPROFILE=C:\Users\Nori, HOMEDRIVE=C:, TMP=C:\Users\Nori\AppData\Local\Temp, ProgramFiles=C:\Program Files, CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files, PUBLIC=C:\Users\Public, NUMBER_OF_PROCESSORS=8, windir=C:\WINDOWS, =::=::\, IDEA_INITIAL_DIRECTORY=C:\WINDOWS\System32}
+22:54:32.595 [DEBUG] [org.gradle.launcher.daemon.server.exec.LogToClient] About to start relaying all logs to the client via the connection.
+22:54:32.595 [INFO] [org.gradle.launcher.daemon.server.exec.LogToClient] The client will now receive all logging from the daemon (pid: 7976). The daemon log file: E:\Git\theta\daemon\5.0-rc-1\daemon-7976.out.log
+22:54:32.595 [INFO] [org.gradle.launcher.daemon.server.exec.LogAndCheckHealth] Starting 22nd build in daemon [uptime: 24 mins 2.097 secs, performance: 100%]
+22:54:32.595 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has started executing the build.
+22:54:32.595 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] Executing build with daemon context: DefaultDaemonContext[uid=f94b4bee-1c19-4089-aea6-686f919b632e,javaHome=E:\Install\JAva\openjdk-11.0.2_windows-x64_bin,daemonRegistryDir=E:\Git\theta\daemon,pid=7976,idleTimeout=10800000,priority=NORMAL,daemonOpts=--add-opens,java.base/java.util=ALL-UNNAMED,--add-opens,java.base/java.lang=ALL-UNNAMED,--add-opens,java.base/java.lang.invoke=ALL-UNNAMED,--add-opens,java.prefs/java.util.prefs=ALL-UNNAMED,-XX:MaxMetaspaceSize=256m,-XX:+HeapDumpOnOutOfMemoryError,-Xmx512m,-Dfile.encoding=windows-1252,-Duser.country=GB,-Duser.language=en,-Duser.variant]
+Note: E:\Git\theta\subprojects\expression-diagram\src\test\java\hu\bme\mit\theta\expressiondiagram\SolutionCursorTest.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+<ijLog><event type='reportLocation' testReport='E:\Git\theta\subprojects\expression-diagram\build\reports\tests\test\index.html' /></ijLog>
+
+<ijLog><event type='beforeSuite'><ijLogEol/>
+  <test id=':theta-expression-diagram:test' parentId=''><ijLogEol/>
+    <descriptor name='Gradle Test Run :theta-expression-diagram:test' className='' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='beforeSuite'><ijLogEol/>
+  <test id='22.1' parentId=':theta-expression-diagram:test'><ijLogEol/>
+    <descriptor name='Gradle Test Executor 22' className='' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='beforeSuite'><ijLogEol/>
+  <test id='22.2' parentId='22.1'><ijLogEol/>
+    <descriptor name='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='beforeTest'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAwDQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtMQ0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtMg0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtMw0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtNA0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[bm8gbW9yZSBzb2x1dGlvbnMNCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterTest'><ijLogEol/>
+  <test id='22.3' parentId='22.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390475129' endTime='1591390475966'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterSuite'><ijLogEol/>
+  <test id='22.2' parentId='22.1'><ijLogEol/>
+    <descriptor name='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390474978' endTime='1591390475966'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterSuite'><ijLogEol/>
+  <test id='22.1' parentId=':theta-expression-diagram:test'><ijLogEol/>
+    <descriptor name='Gradle Test Executor 22' className='' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390474962' endTime='1591390475967'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterSuite'><ijLogEol/>
+  <test id=':theta-expression-diagram:test' parentId=''><ijLogEol/>
+    <descriptor name='Gradle Test Run :theta-expression-diagram:test' className='' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390473404' endTime='1591390476085'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/5.0-rc-1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 3s
+13 actionable tasks: 3 executed, 10 up-to-date
+22:54:36.127 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has finished executing the build.
+22:54:36.130 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+22:54:36.131 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: finished waiting for DaemonCommandExecution[command = Build{id=54368835-d27d-4daa-ad5d-ac10fc2cedbf, currentDir=E:\Git\theta}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51920]. Result org.gradle.launcher.daemon.server.DaemonStateCoordinator@53edc907 with state Busy
+22:54:36.131 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: completed DaemonCommandExecution[command = Build{id=54368835-d27d-4daa-ad5d-ac10fc2cedbf, currentDir=E:\Git\theta}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51920]
+22:54:36.131 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] resetting idle timer
+22:54:36.131 [INFO] [org.gradle.launcher.daemon.server.DaemonRegistryUpdater] Marking the daemon as idle, address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:54:36.131 [DEBUG] [org.gradle.launcher.daemon.registry.PersistentDaemonRegistry] Marking busy by address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:54:36.132 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire exclusive lock on daemon addresses registry.
+22:54:36.133 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:36.134 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:36.134 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+22:54:36.134 [DEBUG] [org.gradle.launcher.daemon.server.exec.ReturnResult] Daemon is dispatching the build result: Success[value=org.gradle.tooling.internal.provider.BuildActionResult@1eb08d33]
+22:54:36.134 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 961: dispatching class org.gradle.launcher.daemon.protocol.Success
+22:54:36.135 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Finishing executing command: Build{id=54368835-d27d-4daa-ad5d-ac10fc2cedbf, currentDir=E:\Git\theta}
+22:54:36.135 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 1065: received class org.gradle.launcher.daemon.protocol.CloseInput
+22:54:36.135 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 1065: Received IO message from client: org.gradle.launcher.daemon.protocol.CloseInput@1d112f69
+22:54:36.135 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 1065: received class org.gradle.launcher.daemon.protocol.Finished
+22:54:36.135 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 1065: Received non-IO message from client: org.gradle.launcher.daemon.protocol.Finished@13d6d2bb
+22:54:36.135 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Received finished message: org.gradle.launcher.daemon.protocol.Finished@13d6d2bb
+22:54:36.135 [DEBUG] [org.gradle.internal.remote.internal.inet.SocketConnection] Discarding EOFException: java.io.EOFException
+22:54:36.135 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 961: stopping connection
+22:54:36.136 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 1065: received null
+22:54:36.136 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 1065: Received end-of-input from client.
+22:54:36.136 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 961: stopping connection
+22:54:36.967 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6577258496}
+22:54:36.967 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6577258496}
+22:54:36.967 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:54:41.431 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:54:41.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:54:41.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:41.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:41.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:54:41.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:41.432 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:41.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6657605632}
+22:54:41.940 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6657605632}
+22:54:41.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:54:46.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6656446464}
+22:54:46.940 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6656446464}
+22:54:46.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:54:51.169 [DEBUG] [org.gradle.internal.remote.internal.inet.TcpIncomingConnector] Accepted connection from /127.0.0.1:51936 to /127.0.0.1:51482.
+22:54:51.171 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 1114: received class org.gradle.launcher.daemon.protocol.Build
+22:54:51.171 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 1114: Received non-IO message from client: Build{id=23165537-1042-444a-9a63-7d26bc68148b, currentDir=E:\Git\theta}
+22:54:51.171 [INFO] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Received command: Build{id=23165537-1042-444a-9a63-7d26bc68148b, currentDir=E:\Git\theta}.
+22:54:51.171 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Starting executing command: Build{id=23165537-1042-444a-9a63-7d26bc68148b, currentDir=E:\Git\theta} with connection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51936.
+22:54:51.171 [ERROR] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: started DaemonCommandExecution[command = Build{id=23165537-1042-444a-9a63-7d26bc68148b, currentDir=E:\Git\theta}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51936] after 0.0 minutes of idle
+22:54:51.172 [INFO] [org.gradle.launcher.daemon.server.DaemonRegistryUpdater] Marking the daemon as busy, address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:54:51.172 [DEBUG] [org.gradle.launcher.daemon.registry.PersistentDaemonRegistry] Marking busy by address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:54:51.172 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire exclusive lock on daemon addresses registry.
+22:54:51.172 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:51.173 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:51.173 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] resetting idle timer
+22:54:51.173 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+22:54:51.173 [INFO] [org.gradle.launcher.daemon.server.exec.StartBuildOrRespondWithBusy] Daemon is about to start building Build{id=23165537-1042-444a-9a63-7d26bc68148b, currentDir=E:\Git\theta}. Dispatching build started information...
+22:54:51.173 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 964: dispatching class org.gradle.launcher.daemon.protocol.BuildStarted
+22:54:51.174 [DEBUG] [org.gradle.launcher.daemon.server.exec.EstablishBuildEnvironment] Configuring env variables: {USERDOMAIN_ROAMINGPROFILE=DESKTOP, LOCALAPPDATA=C:\Users\Nori\AppData\Local, PROCESSOR_LEVEL=6, USERDOMAIN=DESKTOP, LOGONSERVER=\\DESKTOP, JAVA_HOME=C:\Program Files\Java\jdk-11.0.2, SESSIONNAME=Console, ALLUSERSPROFILE=C:\ProgramData, PROCESSOR_ARCHITECTURE=AMD64, PSModulePath=C:\Users\Nori\Documents\WindowsPowerShell\Modules;, SystemDrive=C:, OneDrive=C:\Users\almas\OneDrive, APPDATA=C:\Users\Nori\AppData\Roaming, USERNAME=Nori, ProgramFiles(x86)=C:\Program Files (x86), VBOX_MSI_INSTALL_PATH=C:\Program Files\Oracle\VirtualBox\, CommonProgramFiles=C:\Program Files\Common Files, Path=C:\Program Files\AdoptOpenJDK\jdk-11.0.6.10-hotspot\bin;C:\Program Files\Java\jdk-11.0.2\bin;C:\Program Files\Java\jdk1.8.0_231\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\PuTTY\;C:\Program Files\Git\cmd;E:\Git\theta\lib;C:\Users\Nori\AppData\Local\Microsoft\WindowsApps;C:\Users\Nori\AppData\Local\Microsoft\WindowsApps;C:\Users\Nori\AppData\Local\Programs\Microsoft VS Code\bin, PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC, DriverData=C:\Windows\System32\Drivers\DriverData, OS=Windows_NT, COMPOSE_CONVERT_WINDOWS_PATHS=true, OneDriveConsumer=C:\Users\almas\OneDrive, COMPUTERNAME=DESKTOP, PROCESSOR_REVISION=5e03, CommonProgramW6432=C:\Program Files\Common Files, ComSpec=C:\WINDOWS\system32\cmd.exe, ProgramData=C:\ProgramData, ProgramW6432=C:\Program Files, HOMEPATH=\Users\Nori, SystemRoot=C:\WINDOWS, TEMP=C:\Users\Nori\AppData\Local\Temp, PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 94 Stepping 3, GenuineIntel, USERPROFILE=C:\Users\Nori, HOMEDRIVE=C:, TMP=C:\Users\Nori\AppData\Local\Temp, ProgramFiles=C:\Program Files, CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files, PUBLIC=C:\Users\Public, NUMBER_OF_PROCESSORS=8, windir=C:\WINDOWS, =::=::\, IDEA_INITIAL_DIRECTORY=C:\WINDOWS\System32}
+22:54:51.175 [DEBUG] [org.gradle.launcher.daemon.server.exec.LogToClient] About to start relaying all logs to the client via the connection.
+22:54:51.175 [INFO] [org.gradle.launcher.daemon.server.exec.LogToClient] The client will now receive all logging from the daemon (pid: 7976). The daemon log file: E:\Git\theta\daemon\5.0-rc-1\daemon-7976.out.log
+22:54:51.175 [INFO] [org.gradle.launcher.daemon.server.exec.LogAndCheckHealth] Starting 23rd build in daemon [uptime: 24 mins 20.677 secs, performance: 100%]
+22:54:51.175 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has started executing the build.
+22:54:51.176 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] Executing build with daemon context: DefaultDaemonContext[uid=f94b4bee-1c19-4089-aea6-686f919b632e,javaHome=E:\Install\JAva\openjdk-11.0.2_windows-x64_bin,daemonRegistryDir=E:\Git\theta\daemon,pid=7976,idleTimeout=10800000,priority=NORMAL,daemonOpts=--add-opens,java.base/java.util=ALL-UNNAMED,--add-opens,java.base/java.lang=ALL-UNNAMED,--add-opens,java.base/java.lang.invoke=ALL-UNNAMED,--add-opens,java.prefs/java.util.prefs=ALL-UNNAMED,-XX:MaxMetaspaceSize=256m,-XX:+HeapDumpOnOutOfMemoryError,-Xmx512m,-Dfile.encoding=windows-1252,-Duser.country=GB,-Duser.language=en,-Duser.variant]
+Note: E:\Git\theta\subprojects\expression-diagram\src\test\java\hu\bme\mit\theta\expressiondiagram\SolutionCursorTest.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+<ijLog><event type='reportLocation' testReport='E:\Git\theta\subprojects\expression-diagram\build\reports\tests\test\index.html' /></ijLog>
+
+<ijLog><event type='beforeSuite'><ijLogEol/>
+  <test id=':theta-expression-diagram:test' parentId=''><ijLogEol/>
+    <descriptor name='Gradle Test Run :theta-expression-diagram:test' className='' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='beforeSuite'><ijLogEol/>
+  <test id='23.1' parentId=':theta-expression-diagram:test'><ijLogEol/>
+    <descriptor name='Gradle Test Executor 23' className='' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='beforeSuite'><ijLogEol/>
+  <test id='23.2' parentId='23.1'><ijLogEol/>
+    <descriptor name='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='beforeTest'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAwDQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtMQ0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtMg0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtMw0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[LS0tbWVnb2xkYXMtLS0NCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[KENvbnN0IGQgSW50KSAtNA0K]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[Cg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[DQo=]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='onOutput'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <event destination='StdOut'><![CDATA[bm8gbW9yZSBzb2x1dGlvbnMNCg==]]></event><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterTest'><ijLogEol/>
+  <test id='23.3' parentId='23.2'><ijLogEol/>
+    <descriptor name='test_int_4' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390493553' endTime='1591390494309'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterSuite'><ijLogEol/>
+  <test id='23.2' parentId='23.1'><ijLogEol/>
+    <descriptor name='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' className='hu.bme.mit.theta.expressiondiagram.SolutionCursorTest' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390493413' endTime='1591390494310'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterSuite'><ijLogEol/>
+  <test id='23.1' parentId=':theta-expression-diagram:test'><ijLogEol/>
+    <descriptor name='Gradle Test Executor 23' className='' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390493396' endTime='1591390494310'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+<ijLog><event type='afterSuite'><ijLogEol/>
+  <test id=':theta-expression-diagram:test' parentId=''><ijLogEol/>
+    <descriptor name='Gradle Test Run :theta-expression-diagram:test' className='' /><ijLogEol/>
+    <result resultType='SUCCESS' startTime='1591390491953' endTime='1591390494411'><ijLogEol/>
+      <failureType>error</failureType><ijLogEol/>
+    </result><ijLogEol/>
+  </test><ijLogEol/>
+</event></ijLog>
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/5.0-rc-1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 3s
+13 actionable tasks: 3 executed, 10 up-to-date
+22:54:54.437 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has finished executing the build.
+22:54:54.439 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: finished waiting for DaemonCommandExecution[command = Build{id=23165537-1042-444a-9a63-7d26bc68148b, currentDir=E:\Git\theta}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51936]. Result org.gradle.launcher.daemon.server.DaemonStateCoordinator@53edc907 with state Busy
+22:54:54.439 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] Command execution: completed DaemonCommandExecution[command = Build{id=23165537-1042-444a-9a63-7d26bc68148b, currentDir=E:\Git\theta}, connection = DefaultDaemonConnection: socket connection from /127.0.0.1:51482 to /127.0.0.1:51936]
+22:54:54.439 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] resetting idle timer
+22:54:54.439 [INFO] [org.gradle.launcher.daemon.server.DaemonRegistryUpdater] Marking the daemon as idle, address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:54:54.439 [DEBUG] [org.gradle.launcher.daemon.registry.PersistentDaemonRegistry] Marking busy by address: [af3a7cfd-2e18-4d03-a5f8-cfb6363f9e28 port:51482, addresses:[/127.0.0.1, /0:0:0:0:0:0:0:1]]
+22:54:54.439 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire exclusive lock on daemon addresses registry.
+22:54:54.439 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:54:54.440 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:54:54.440 [DEBUG] [org.gradle.launcher.daemon.server.exec.ReturnResult] Daemon is dispatching the build result: Success[value=org.gradle.tooling.internal.provider.BuildActionResult@466aa7ca]
+22:54:54.440 [DEBUG] [org.gradle.launcher.daemon.server.DaemonStateCoordinator] daemon is running. Sleeping until state changes.
+22:54:54.440 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 961: dispatching class org.gradle.launcher.daemon.protocol.Success
+22:54:54.440 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Finishing executing command: Build{id=23165537-1042-444a-9a63-7d26bc68148b, currentDir=E:\Git\theta}
+22:54:54.441 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 1114: received class org.gradle.launcher.daemon.protocol.CloseInput
+22:54:54.441 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 1114: Received IO message from client: org.gradle.launcher.daemon.protocol.CloseInput@52e6c8e3
+22:54:54.441 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 1114: received class org.gradle.launcher.daemon.protocol.Finished
+22:54:54.441 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 1114: Received non-IO message from client: org.gradle.launcher.daemon.protocol.Finished@5c213ccf
+22:54:54.441 [DEBUG] [org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler] Received finished message: org.gradle.launcher.daemon.protocol.Finished@5c213ccf
+22:54:54.441 [DEBUG] [org.gradle.internal.remote.internal.inet.SocketConnection] Discarding EOFException: java.io.EOFException
+22:54:54.441 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 961: stopping connection
+22:54:54.441 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 1114: received null
+22:54:54.441 [DEBUG] [org.gradle.launcher.daemon.server.DefaultDaemonConnection] thread 1114: Received end-of-input from client.
+22:54:54.442 [DEBUG] [org.gradle.launcher.daemon.server.SynchronizedDispatchConnection] thread 961: stopping connection
+22:54:56.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6643118080}
+22:54:56.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6643118080}
+22:54:56.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:55:01.431 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:55:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:55:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:55:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:55:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:55:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:55:01.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:55:01.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6644449280}
+22:55:01.940 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6644449280}
+22:55:01.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:55:06.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6610292736}
+22:55:06.942 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6610292736}
+22:55:06.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:55:11.430 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:55:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:55:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:55:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:55:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:55:11.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:55:11.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:55:11.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:55:11.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:55:11.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:55:11.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6561169408}
+22:55:11.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6561169408}
+22:55:11.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:55:16.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6584721408}
+22:55:16.942 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6584721408}
+22:55:16.942 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:55:21.430 [DEBUG] [org.gradle.launcher.daemon.server.Daemon] DaemonExpirationPeriodicCheck running
+22:55:21.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:55:21.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:55:21.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:55:21.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:55:21.430 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:55:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:55:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Waiting to acquire shared lock on daemon addresses registry.
+22:55:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Lock acquired on daemon addresses registry.
+22:55:21.431 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on daemon addresses registry.
+22:55:21.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6595866624}
+22:55:21.940 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6595866624}
+22:55:21.940 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
+22:55:26.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting OS memory status event {Total: 17036800000, Free: 6731132928}
+22:55:26.941 [DEBUG] [org.gradle.launcher.daemon.server.health.LowMemoryDaemonExpirationStrategy] Received memory status update: {Total: 17036800000, Free: 6731132928}
+22:55:26.941 [DEBUG] [org.gradle.process.internal.health.memory.MemoryManager] Emitting JVM memory status event {Maximum: 536870912, Committed: 266338304}
