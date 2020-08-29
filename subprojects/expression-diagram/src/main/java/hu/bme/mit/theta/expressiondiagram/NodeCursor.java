@@ -17,6 +17,7 @@ import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.SolverStatus;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 public class NodeCursor {
@@ -25,7 +26,7 @@ public class NodeCursor {
     private LitExpr<? extends Type> literal; // new Literal
     private ObjObjCursor<LitExpr<? extends Type>, ExpressionNode> mapCursor;
 
-    static Solver solver = Z3SolverFactory.getInstace().createSolver();
+    static Solver solver = Z3SolverFactory.getInstance().createSolver();
     private static Map<Decl<?>, LitExpr<?>> modelMap = null;
 
     /**
@@ -119,7 +120,7 @@ public class NodeCursor {
         if (decl.getType().toString().equals("Bool"))
             return FalseExpr.getInstance();
         if (decl.getType().toString().equals("Int"))
-            return IntLitExpr.of(0);
+            return IntLitExpr.of(BigInteger.ZERO);
         // only bool and int types are supported
         assert (false);
         return null;

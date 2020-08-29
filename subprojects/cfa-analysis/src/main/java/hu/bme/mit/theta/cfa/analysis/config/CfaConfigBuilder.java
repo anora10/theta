@@ -284,7 +284,7 @@ public class CfaConfigBuilder {
 			}
 
 			return CfaConfig.create(checker, prec);
-			
+
 		} else if (domain == Domain.PRED_BOOL || domain == Domain.PRED_BOOL_BDD ||domain == Domain.PRED_CART || domain == Domain.PRED_SPLIT) {
 			PredAbstractor predAbstractor = null;
 

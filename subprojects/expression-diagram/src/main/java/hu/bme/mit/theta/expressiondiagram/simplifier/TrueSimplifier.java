@@ -17,7 +17,7 @@ import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
 public class TrueSimplifier implements BasicSimplifier {
 
-    private static Solver solver = Z3SolverFactory.getInstace().createSolver();
+    private static Solver solver = Z3SolverFactory.getInstance().createSolver();
 
     public static Expr<? extends Type> simplify(final Expr<? extends Type> expr, final Valuation valuation) {
         Expr resultingExpression = BasicSimplifier.simplify(expr, valuation);

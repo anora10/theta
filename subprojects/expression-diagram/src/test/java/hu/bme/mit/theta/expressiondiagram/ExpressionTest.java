@@ -35,7 +35,7 @@ public class ExpressionTest {
         final ConstDecl<BoolType> decl2 = Const("a", Bool());
         LitExpr<BoolType> lit = BoolLitExpr.of(false);
         ImmutableValuation val = ImmutableValuation.builder().put(decl1, lit).build();
-        SolverFactory solverFactory = Z3SolverFactory.getInstace();
+        SolverFactory solverFactory = Z3SolverFactory.getInstance();
         Solver solver = solverFactory.createSolver();
         solver.add(And(decl1.getRef(), True()));
         SolverStatus status = solver.check();

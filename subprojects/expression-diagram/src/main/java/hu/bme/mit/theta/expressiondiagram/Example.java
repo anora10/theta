@@ -17,6 +17,8 @@ import hu.bme.mit.theta.solver.SolverFactory;
 import hu.bme.mit.theta.solver.SolverStatus;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
+import java.math.BigInteger;
+
 public class Example {
     private Expr<? extends Type> expr;
     private Decl<? extends Type> decl;
@@ -28,8 +30,8 @@ public class Example {
         ImmutableValuation val = ImmutableValuation.builder().put(decl, lit).build();
         expr.getType();
 
-        lit = IntLitExpr.of(5);
-        SolverFactory solverFactory = Z3SolverFactory.getInstace();
+        lit = IntLitExpr.of(BigInteger.valueOf(5));
+        SolverFactory solverFactory = Z3SolverFactory.getInstance();
         Solver solver = solverFactory.createSolver();
         solver.add(val.toExpr());
         SolverStatus status = solver.check();

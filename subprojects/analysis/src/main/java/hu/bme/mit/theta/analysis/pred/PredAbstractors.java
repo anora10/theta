@@ -102,7 +102,7 @@ public class PredAbstractors {
 	private static final class BooleanBddAbstractor implements PredAbstractor {
 
 		private final Solver solver;
-		private final List<ConstDecl<BoolType>> actLits;
+		private final List<ConstDecl<?>> actLits;
 		private final String litPrefix;
 		private static int instanceCounter = 0;
 		private final boolean split;
@@ -136,7 +136,7 @@ public class PredAbstractors {
 				Expr nodeExpr = PathUtils.unfold(expr, exprIndexing);
 
 				for (int i = 0; i < preds.size(); ++i) {
-					nodeExpr = And(Iff(actLits.get(i).getRef(), PathUtils.unfold(preds.get(i), precIndexing)), nodeExpr);
+					nodeExpr = And(Iff((Expr<BoolType>) actLits.get(i).getRef(), PathUtils.unfold(preds.get(i), precIndexing)), nodeExpr);
 
 				}
 				/// Ezen a ponton van egy kifejezésed, amiben van mindenféle változó, de ebből
@@ -153,7 +153,7 @@ public class PredAbstractors {
 					final Set<Expr<BoolType>> newStatePreds = new HashSet<>();
 					HashMap<Decl, LitExpr> solutions = solutionCursor.getSolutionMap();
 					for (int i = 0; i < preds.size(); ++i) {
-						final ConstDecl<BoolType> lit = actLits.get(i);
+						final ConstDecl<BoolType> lit = (ConstDecl<BoolType>) actLits.get(i);
 						final Expr<BoolType> pred = preds.get(i);
 						if (solutions.containsKey(lit)) {
 							if (solutions.get(lit).equals(True())) { // Ha true
