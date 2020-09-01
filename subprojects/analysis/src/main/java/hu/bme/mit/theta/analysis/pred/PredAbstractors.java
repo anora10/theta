@@ -32,6 +32,8 @@ import hu.bme.mit.theta.core.type.booltype.*;
 import hu.bme.mit.theta.core.utils.PathUtils;
 import hu.bme.mit.theta.core.utils.VarIndexing;
 import hu.bme.mit.theta.expressiondiagram.*;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolver;
+import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolver;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.utils.WithPushPop;
 
@@ -106,6 +108,7 @@ public class PredAbstractors {
 		private final String litPrefix;
 		private static int instanceCounter = 0;
 		private final boolean split;
+		AllSatSolver allSatSolver = new BddAllSatSolver();
 
 		public BooleanBddAbstractor(final Solver solver, final boolean split) {
 			this.solver = checkNotNull(solver);
@@ -142,26 +145,20 @@ public class PredAbstractors {
 				/// Ezen a ponton van egy kifejezésed, amiben van mindenféle változó, de ebből
 				/// az actList-beli változók értékei kellenek majd
 
-				VariableSubstitution vs = ExpressionNode.createDecls(actLits, false);
-				ExpressionNode node = new ExpressionNode(vs, nodeExpr);
-				NodeCursor.initiateSolver(nodeExpr);
-				//System.out.println("Node expression: " + node.expression.toString());
+				allSatSolver.init(nodeExpr, actLits);
 
 				// Itt legenerálni az összes megoldást (actLits-re)
-				SolutionCursor solutionCursor = new SolutionCursor(node);
-				while (solutionCursor.moveNext()) { // Itt végigiterálni az összes megoldáson
+				while (allSatSolver.hasNextSolution()) { // Itt végigiterálni az összes megoldáson
 					final Set<Expr<BoolType>> newStatePreds = new HashSet<>();
-					HashMap<Decl, LitExpr> solutions = solutionCursor.getSolutionMap();
+					HashMap<Decl, LitExpr> solutions = allSatSolver.getNextSolution();
 					for (int i = 0; i < preds.size(); ++i) {
 						final ConstDecl<BoolType> lit = (ConstDecl<BoolType>) actLits.get(i);
 						final Expr<BoolType> pred = preds.get(i);
 						if (solutions.containsKey(lit)) {
 							if (solutions.get(lit).equals(True())) { // Ha true
 								newStatePreds.add(pred);
-								//System.out.println("TRUE");
 							} else if (solutions.get(lit).equals(False())) { // Ha false
 								newStatePreds.add(prec.negate(pred));
-								//System.out.println("FALSE");
 							}
 						}
 					}
