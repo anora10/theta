@@ -75,31 +75,31 @@ public final class ExprStates {
 																		  final Expr<BoolType> expr, final int exprIndex,
 																		  final Function<? super Valuation, ? extends S> valuationToState, final VarIndexing stateIndexing,
 																		  final int limit) {
-//		AllSatSolver allSatSolver = new BddAllSatSolver();
-//		allSatSolver.init(expr);
-//		final Collection<S> result = new ArrayList<>();
-//
-//		while (allSatSolver.hasNextSolution() && (limit == 0 || result.size() < limit)) {
-//			final Valuation model = allSatSolver.getNextSolutionValuation();
-//			final Valuation valuation = PathUtils.extractValuation(model, stateIndexing);
-//			final S state = valuationToState.apply(valuation);
-//			result.add(state);
-//		}
-//		return  result;
-
-		try (WithPushPop wpp = new WithPushPop(solver)) {
-			solver.add(PathUtils.unfold(expr, exprIndex));
-
-			final Collection<S> result = new ArrayList<>();
-			while (solver.check().isSat() && (limit == 0 || result.size() < limit)) {
-				final Valuation model = solver.getModel();
-				final Valuation valuation = PathUtils.extractValuation(model, stateIndexing);
-				final S state = valuationToState.apply(valuation);
-				result.add(state);
-				solver.add(Not(PathUtils.unfold(state.toExpr(), stateIndexing)));
-			}
-			return result;
+		AllSatSolver allSatSolver = new BddAllSatSolver();
+		allSatSolver.init(PathUtils.unfold(expr, exprIndex));
+		final Collection<S> result = new ArrayList<>();
+		while (allSatSolver.hasNextSolution() && (limit == 0 || result.size() < limit)) {
+			final Valuation model = allSatSolver.getNextSolutionValuation();
+			if (model == null) continue; // no more solutions
+			final Valuation valuation = PathUtils.extractValuation(model, stateIndexing);
+			final S state = valuationToState.apply(valuation);
+			result.add(state);
 		}
+		return  result;
+
+//		try (WithPushPop wpp = new WithPushPop(solver)) {
+//			solver.add(PathUtils.unfold(expr, exprIndex));
+//
+//			final Collection<S> result = new ArrayList<>();
+//			while (solver.check().isSat() && (limit == 0 || result.size() < limit)) {
+//				final Valuation model = solver.getModel();
+//				final Valuation valuation = PathUtils.extractValuation(model, stateIndexing);
+//				final S state = valuationToState.apply(valuation);
+//				result.add(state);
+//				solver.add(Not(PathUtils.unfold(state.toExpr(), stateIndexing)));
+//			}
+//			return result;
+//		}
 	}
 
 }

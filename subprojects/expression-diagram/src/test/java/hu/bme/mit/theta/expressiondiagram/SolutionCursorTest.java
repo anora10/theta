@@ -16,6 +16,7 @@ import static hu.bme.mit.theta.core.decl.Decls.Const;
 import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.*;
 import static hu.bme.mit.theta.core.type.booltype.BoolExprs.*;
 import static hu.bme.mit.theta.core.type.inttype.IntExprs.Int;
+import static hu.bme.mit.theta.core.type.inttype.IntExprs.Leq;
 
 public class SolutionCursorTest {
 
@@ -335,7 +336,7 @@ public class SolutionCursorTest {
         // y = 3x1 + 2x2
         Expr e1 = Eq(cy.getRef(), Add(Mul(cx1.getRef(), Int(3)), Mul(cx2.getRef(), Int(2))));
         // 2x1 + x2 <= 14
-        Expr e2 = Leq(Add(Mul(cx1.getRef(), Int(2)), Mul(cx2.getRef(), Int(1))) , Int(14));
+        Expr e2 = Leq((Expr<IntType>) Add(Mul(cx1.getRef(), Int(2)), Mul(cx2.getRef(), Int(1))), Int(14));
         // 0 <= x1 <= 5
         Expr e3 = (And( Geq(cx1.getRef(), Int(0)), Leq(cx1.getRef(), Int(5))));
         // 0 <= x2 <= 8
@@ -343,6 +344,25 @@ public class SolutionCursorTest {
 
         Expr expr = And(e1,e2,e3,e4);
 
+        ExpressionNode node = new ExpressionNode(vs0, expr);
+        NodeCursor.initiateSolver(expr);
+
+        //------------------------- end of init -------------------------
+
+        makeSolutions(node);
+    }
+
+    @Test // (d <= 3)
+    public void test_int_5() {
+        final List<ConstDecl<?>> actLits = new ArrayList<>();
+
+        final ConstDecl<IntType> x = Const("x", Int());
+        actLits.add(x);
+
+        VariableSubstitution vs0 = ExpressionNode.createDecls(actLits, true);
+
+        // (d <= 3)
+        Expr expr = And(Leq(Int(0), x.getRef()), Leq(x.getRef(), Int(5)));
         ExpressionNode node = new ExpressionNode(vs0, expr);
         NodeCursor.initiateSolver(expr);
 
