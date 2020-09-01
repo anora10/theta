@@ -55,7 +55,7 @@ public class SolutionCursorTest {
         // (a v !b) ^ (b v c)
         Expr expr = And(Or(ca.getRef(), Not(cb.getRef())), Or(cb.getRef(), cc.getRef()));
         node = new ExpressionNode(vs0, expr);
-        NodeCursor.initiateSolver(expr);
+        //NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -86,7 +86,7 @@ public class SolutionCursorTest {
         // (a v b v c v !d v !e)
         Expr expr = Or(Or(Or(ca.getRef(), cb.getRef()), cc.getRef()) , Or(Not(cd.getRef()), Not(ce.getRef())));
         ExpressionNode node = new ExpressionNode(vs0, expr);
-        NodeCursor.initiateSolver(expr);
+        //NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -112,7 +112,7 @@ public class SolutionCursorTest {
         // (a v b v !c)
         Expr expr = Or(Or(ca.getRef(), cb.getRef()), Not(cc.getRef()));
         ExpressionNode node = new ExpressionNode(vs0, expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -134,7 +134,7 @@ public class SolutionCursorTest {
         // (a v b)
         Expr expr = Or(ca.getRef(), cb.getRef());
         ExpressionNode node = new ExpressionNode(vs0, expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -153,7 +153,7 @@ public class SolutionCursorTest {
         Expr expr = Or(Not(ca.getRef()), ca.getRef());
         //Expr expr = False();
         ExpressionNode node = new ExpressionNode(vs0,expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -175,7 +175,7 @@ public class SolutionCursorTest {
         // (!a v d<=0) ^ (b v d>0)
         Expr expr = And( Or(Not(ca.getRef()), Leq(cd.getRef(), Int(0))), Or(cb.getRef(), Gt(cd.getRef(), Int(0))) );
         ExpressionNode node = new ExpressionNode(vs0, expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -194,7 +194,7 @@ public class SolutionCursorTest {
         Expr expr = And(Not(ca.getRef()), ca.getRef());
         //Expr expr = False();
         ExpressionNode node = new ExpressionNode(vs0,expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -210,7 +210,7 @@ public class SolutionCursorTest {
         // False
         Expr expr = False();
         ExpressionNode node = new ExpressionNode(vs0,expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -226,7 +226,7 @@ public class SolutionCursorTest {
         // True
         Expr expr = True();
         ExpressionNode node = new ExpressionNode(vs0,expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -247,7 +247,7 @@ public class SolutionCursorTest {
         // (a ^ (0 < d <= 5))
         Expr expr = And( And( Gt(cd.getRef(), Int(0)), Leq(cd.getRef(), Int(5))), ca.getRef() );
         ExpressionNode node = new ExpressionNode(vs0, expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -271,7 +271,7 @@ public class SolutionCursorTest {
         Expr expr = And( Or (cb.getRef(), (And( Gt(cd.getRef(), Int(0)), Leq(cd.getRef(), Int(2))))),
                          Or (ca.getRef(), Not(cb.getRef())));
         ExpressionNode node = new ExpressionNode(vs0, expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -294,7 +294,7 @@ public class SolutionCursorTest {
         // ((a^b) v (0 < d <= 2))
         Expr expr = Or (And(ca.getRef(),cb.getRef()), (And( Gt(cd.getRef(), Int(0)), Leq(cd.getRef(), Int(2)))));
         ExpressionNode node = new ExpressionNode(vs0, expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -313,7 +313,7 @@ public class SolutionCursorTest {
         // (d <= 3)
         Expr expr = Leq(cd.getRef(), Int(3));
         ExpressionNode node = new ExpressionNode(vs0, expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -345,7 +345,7 @@ public class SolutionCursorTest {
         Expr expr = And(e1,e2,e3,e4);
 
         ExpressionNode node = new ExpressionNode(vs0, expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 
@@ -364,7 +364,7 @@ public class SolutionCursorTest {
         // (d <= 3)
         Expr expr = And(Leq(Int(0), x.getRef()), Leq(x.getRef(), Int(5)));
         ExpressionNode node = new ExpressionNode(vs0, expr);
-        NodeCursor.initiateSolver(expr);
+//        NodeCursor.initiateSolver(expr);
 
         //------------------------- end of init -------------------------
 

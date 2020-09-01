@@ -3,9 +3,12 @@ package hu.bme.mit.theta.expressiondiagram;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.ImmutableValuation;
 import hu.bme.mit.theta.core.model.Valuation;
+import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
+import hu.bme.mit.theta.solver.Solver;
+import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -18,12 +21,25 @@ public class SolutionCursor {
     private ExpressionNode node;
     private LitExpr lastLiteral = null;
     private Decl lastDecl = null;
+    private Solver solver = Z3SolverFactory.getInstance().createSolver();
 
     /**
      * Constructor setting root node
      */
     public SolutionCursor (ExpressionNode n) {
         node = n;
+        initiateSolver(n.expression);
+    }
+
+    /**
+     * Initiate solver with expression and push
+     *
+     * @param e expression
+     */
+    private void initiateSolver(Expr e) {
+        solver.reset();
+        solver.add(e);
+        solver.push();
     }
 
     /**
@@ -34,22 +50,22 @@ public class SolutionCursor {
      * @return false, if no satisfying assignments can be found
      */
     private boolean findFirstPath(ExpressionNode n, VariableSubstitution vs) {
-        NodeCursor.solver.push();
-        if (lastLiteral != null) NodeCursor.solver.add(Eq(lastDecl.getRef(), lastLiteral));
+        solver.push();
+        if (lastLiteral != null) solver.add(Eq(lastDecl.getRef(), lastLiteral));
         if (vs == null || vs.next == null || n.expression.equals(TrueExpr.getInstance())) {
             // TODO false?
             // TODO literal-lal kezdeni valamit
             if (vs != null && vs.next != null)
-                nodeCursors.put(vs, n.makeCursor());
+                nodeCursors.put(vs, n.makeCursor(solver));
             //return n.isSatisfiable();    //only for user input (either as root node or after substitution)
             clearCursors(vs);
             return true;
         }
-        nodeCursors.put(vs, n.makeCursor());
+        nodeCursors.put(vs, n.makeCursor(solver));
         boolean found;
         do {
             if (!nodeCursors.get(vs).moveNext()) {
-                NodeCursor.solver.pop();
+                solver.pop();
                 return false;
             }
             lastDecl = vs.getDecl();
@@ -67,7 +83,7 @@ public class SolutionCursor {
      */
     private boolean findNextPath(VariableSubstitution vs) {
         if (vs == null || vs.next == null || (nodeCursors.containsKey(vs) && nodeCursors.get(vs).node.expression.equals(TrueExpr.getInstance())) ) {
-            NodeCursor.solver.pop();
+            solver.pop();
             return false;
         }
         if (findNextPath(vs.next))
@@ -76,10 +92,10 @@ public class SolutionCursor {
         do {
             if (nodeCursors.containsKey(vs)) {
                 LitExpr literal = nodeCursors.get(vs).getLiteral();
-                NodeCursor.solver.add(Neq(vs.getDecl().getRef(),literal));
+                solver.add(Neq(vs.getDecl().getRef(),literal));
             }
             if(!nodeCursors.containsKey(vs) || !nodeCursors.get(vs).moveNext()) {
-                NodeCursor.solver.pop();
+                solver.pop();
                 return false;
             }
             lastDecl = vs.getDecl();
@@ -98,8 +114,8 @@ public class SolutionCursor {
     public boolean moveNext() {
         if (node.variableSubstitution.next == null) {
             // input expression contains no literals
-            boolean isSat = NodeCursor.solver.check().isSat();
-            NodeCursor.solver.add(FalseExpr.getInstance());
+            boolean isSat = solver.check().isSat();
+            solver.add(FalseExpr.getInstance());
             return isSat;
         }
 

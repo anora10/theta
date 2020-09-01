@@ -12,6 +12,7 @@ import hu.bme.mit.theta.core.type.anytype.RefExpr;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.expressiondiagram.simplifier.TrueSimplifier;
+import hu.bme.mit.theta.solver.Solver;
 
 import java.util.*;
 
@@ -104,8 +105,8 @@ public class ExpressionNode {
      *
      * @return cursor instance
      */
-    NodeCursor makeCursor() {
-        return new NodeCursor(this);
+    NodeCursor makeCursor(Solver solver) {
+        return new NodeCursor(this, solver);
     }
 
     /**

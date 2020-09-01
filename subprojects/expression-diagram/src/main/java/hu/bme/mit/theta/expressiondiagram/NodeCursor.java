@@ -26,28 +26,18 @@ public class NodeCursor {
     private LitExpr<? extends Type> literal; // new Literal
     private ObjObjCursor<LitExpr<? extends Type>, ExpressionNode> mapCursor;
 
-    static Solver solver = Z3SolverFactory.getInstance().createSolver();
+    Solver solver;
     private static Map<Decl<?>, LitExpr<?>> modelMap = null;
-
-    /**
-     * Initiate solver with expression and push
-     *
-     * @param e expression
-     */
-    public static void initiateSolver(Expr e) {
-        solver.reset();
-        solver.add(e);
-        solver.push();
-    }
 
     /**
      * Constructor for cursor that searces for satisfying substitutions using a DFS method
      *
      * @param n node
      */
-    NodeCursor(ExpressionNode n) {
+    NodeCursor(ExpressionNode n, Solver solver) {
         node = n;
         mapCursor = node.nextExpression.cursor();
+        this.solver = solver;
     }
 
     /**
