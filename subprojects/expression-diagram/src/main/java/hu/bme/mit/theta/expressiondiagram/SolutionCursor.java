@@ -1,6 +1,8 @@
 package hu.bme.mit.theta.expressiondiagram;
 
 import hu.bme.mit.theta.core.decl.Decl;
+import hu.bme.mit.theta.core.model.ImmutableValuation;
+import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
@@ -134,6 +136,22 @@ public class SolutionCursor {
             }
         }
         return solutionMap;
+    }
+
+    /**
+     * Get literal values for lastly calculated satisfying assignments
+     * It must be called after moveNext(), when it gave true!
+     *
+     * @return map containing variable-literal pairs
+     */
+    public Valuation getSolutionValuation () {
+        ImmutableValuation.Builder builder = ImmutableValuation.builder();
+        for (VariableSubstitution vs: nodeCursors.keySet()) {
+            if (nodeCursors.get(vs).getLiteral() != null) {
+                builder.put(vs.decl, nodeCursors.get(vs).getLiteral());
+            }
+        }
+        return builder.build();
     }
 
 }

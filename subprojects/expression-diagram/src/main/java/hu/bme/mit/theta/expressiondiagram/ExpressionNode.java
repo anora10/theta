@@ -11,7 +11,6 @@ import hu.bme.mit.theta.core.type.Type;
 import hu.bme.mit.theta.core.type.anytype.RefExpr;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
-import hu.bme.mit.theta.expressiondiagram.simplifier.BasicSimplifier;
 import hu.bme.mit.theta.expressiondiagram.simplifier.TrueSimplifier;
 
 import java.util.*;
@@ -43,7 +42,7 @@ public class ExpressionNode {
     private void setExpression(Expr e) {
         expression = e;
         if (variableSubstitution == null || variableSubstitution.getDecl() == null) return;
-        Set<Decl<?>> vars = getDecls(e);
+        Set<? extends Decl> vars = getDecls(e);
         if (vars.contains(variableSubstitution.getDecl())) {
             containsDecl= true;
         }
@@ -131,9 +130,10 @@ public class ExpressionNode {
      * @param expr expression
      * @return set of decls
      */
-    private static Set<Decl<?>> getDecls(final Expr<?> expr) {
-        final Set<Decl<?>> decls = new HashSet<>();
-        collectDecls(expr, decls);
+    public static Set<? extends Decl> getDecls(final Expr<?> expr) {
+        final Set<? extends Decl> decls = new HashSet<>();
+        final Set<ConstDecl<?>> constDecls = new HashSet<>();
+        collectDecls(expr, (Collection<Decl<?>>) decls);
         return decls;
     }
 
@@ -144,7 +144,7 @@ public class ExpressionNode {
      * @param reverse if true, decl order will be reversed
      * @return VariableSubstitution, that will be needed in constructor of ExpressionNode
      */
-    public static VariableSubstitution createDecls (List<ConstDecl<?>> declList, boolean reverse) {
+    public static VariableSubstitution createDecls (List<? extends Decl> declList, boolean reverse) {
         /*final ConstDecl<BoolType> ca = Const("a", Bool());
         final ConstDecl<BoolType> cb = Const("b", Bool());
         final ConstDecl<IntType> cd = Const("d", Int());
@@ -153,11 +153,11 @@ public class ExpressionNode {
         VariableSubstitution vsb = new VariableSubstitution(vsnull,cb);
         VariableSubstitution vsa = new VariableSubstitution(vsb,ca);*/
         VariableSubstitution.decls.clear();
-        VariableSubstitution.decls.addAll(declList);
+        VariableSubstitution.decls.addAll((Collection<? extends Decl<? extends Type>>) declList);
 
          if (reverse) Collections.reverse(declList);
         VariableSubstitution oldVS = new VariableSubstitution(null, null);
-        for (ConstDecl<?> cd : declList) {
+        for (Decl cd : declList) {
             oldVS = new VariableSubstitution(oldVS, cd);
         }
         return oldVS;

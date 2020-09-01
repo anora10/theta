@@ -15,14 +15,17 @@
  */
 package hu.bme.mit.theta.analysis.expl;
 
+import static hu.bme.mit.theta.core.decl.Decls.Const;
 import static hu.bme.mit.theta.core.decl.Decls.Var;
-import static hu.bme.mit.theta.core.type.booltype.BoolExprs.And;
-import static hu.bme.mit.theta.core.type.booltype.BoolExprs.True;
+import static hu.bme.mit.theta.core.type.booltype.BoolExprs.*;
 import static hu.bme.mit.theta.core.type.inttype.IntExprs.Int;
 import static hu.bme.mit.theta.core.type.inttype.IntExprs.Leq;
 
 import java.util.Collection;
 
+import hu.bme.mit.theta.core.decl.ConstDecl;
+import hu.bme.mit.theta.core.decl.Decls;
+import hu.bme.mit.theta.core.type.booltype.BoolType;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -35,7 +38,7 @@ import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
 public class ExplInitFuncTest {
-	private final VarDecl<IntType> x = Var("x", Int());
+	private final VarDecl<IntType> x = Var("x",Int());
 	private final VarDecl<IntType> y = Var("y", Int());
 	private final Solver solver = Z3SolverFactory.getInstance().createSolver();
 
