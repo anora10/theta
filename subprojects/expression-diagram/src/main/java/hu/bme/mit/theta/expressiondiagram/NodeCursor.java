@@ -54,7 +54,7 @@ public class NodeCursor {
      *
      * @return value
      */
-    LitExpr<? extends Type> getLiteral() {
+    LitExpr getLiteral() {
         return literal;
     }
 

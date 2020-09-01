@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class VariableSubstitution {
     private UniqueTable uniqueTable = new UniqueTable();
-    Decl<? extends Type> decl;
+    Decl decl;
     static ArrayList<Decl<? extends Type>> decls = new ArrayList<>();
     VariableSubstitution next;
     private final int maxsize;
