@@ -12,7 +12,7 @@ public class VariableSubstitution {
     Decl decl;
     static ArrayList<Decl<? extends Type>> decls = new ArrayList<>();
     VariableSubstitution next;
-    private final int maxsize;
+    private int maxsize = Integer.MAX_VALUE;
 
     /**
      * Constructor, VS stores which decl is the next to be substituted
@@ -23,12 +23,23 @@ public class VariableSubstitution {
     VariableSubstitution (VariableSubstitution nextvs, Decl<? extends Type> d) {
         next = nextvs;
         decl = d;
-        maxsize = 100;
     }
 
+    /**
+     * Get max number of interesting variable values
+     *
+     * @return max size
+     */
     int getMaxsize() {
         return maxsize;
     }
+
+    /**
+     * Set max number of interesting variable values
+     *
+     * @param n is to be set
+     */
+    public void setMaxSize(int n) {maxsize = n;}
 
     /**
      * Checks whether expression exists on the given level, if not, adds it to the unique table
@@ -54,8 +65,12 @@ public class VariableSubstitution {
      *
      * @return decl
      */
-    Decl<? extends Type> getDecl() {
+    public Decl<? extends Type> getDecl() {
         return decl;
+    }
+
+    public VariableSubstitution getNext() {
+        return next;
     }
 
     public static ArrayList<Decl<? extends Type>> getDecls() {
