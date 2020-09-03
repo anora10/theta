@@ -36,6 +36,7 @@ import hu.bme.mit.theta.analysis.expl.ExplStmtAnalysis;
 import hu.bme.mit.theta.analysis.expl.ItpRefToExplPrec;
 import hu.bme.mit.theta.analysis.expl.VarsRefToExplPrec;
 import hu.bme.mit.theta.analysis.expr.ExprState;
+import hu.bme.mit.theta.analysis.expr.ExprStates;
 import hu.bme.mit.theta.analysis.expr.refinement.*;
 import hu.bme.mit.theta.analysis.pred.ExprSplitters;
 import hu.bme.mit.theta.analysis.pred.ExprSplitters.ExprSplitter;
@@ -58,6 +59,8 @@ import hu.bme.mit.theta.cfa.analysis.prec.LocalCfaPrec;
 import hu.bme.mit.theta.cfa.analysis.prec.LocalCfaPrecRefiner;
 import hu.bme.mit.theta.common.logging.Logger;
 import hu.bme.mit.theta.common.logging.NullLogger;
+import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
+import hu.bme.mit.theta.expressiondiagram.allsat.NaivAllSatSolverFactory;
 import hu.bme.mit.theta.solver.ItpSolver;
 import hu.bme.mit.theta.solver.SolverFactory;
 
@@ -290,10 +293,12 @@ public class CfaConfigBuilder {
 
 			switch (domain) {
 				case PRED_BOOL:
-					predAbstractor = PredAbstractors.booleanAbstractor(solver);
+					predAbstractor = PredAbstractors.booleanAbstractor(solver, NaivAllSatSolverFactory.getInstance());
+					ExprStates.allSatSolverFactory = NaivAllSatSolverFactory.getInstance();
 					break;
 				case PRED_BOOL_BDD:
-					predAbstractor = PredAbstractors.booleanBddAbstractor(solver);
+					predAbstractor = PredAbstractors.booleanAbstractor(solver, BddAllSatSolverFactory.getInstance());
+					ExprStates.allSatSolverFactory = BddAllSatSolverFactory.getInstance();
 					break;
 				case PRED_SPLIT:
 					predAbstractor = PredAbstractors.booleanSplitAbstractor(solver);

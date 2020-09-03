@@ -51,7 +51,7 @@ import hu.bme.mit.theta.sts.analysis.StsTraceConcretizer;
 import hu.bme.mit.theta.sts.dsl.StsDslManager;
 import hu.bme.mit.theta.sts.dsl.StsSpec;
 import hu.bme.mit.theta.sts.analysis.config.StsConfig;
-import hu.bme.mit.theta.sts.analysis.config.StsConfigBuilder;
+import hu.bme.mit.theta.sts.analysis.config .StsConfigBuilder;
 import hu.bme.mit.theta.sts.analysis.config.StsConfigBuilder.Domain;
 import hu.bme.mit.theta.sts.analysis.config.StsConfigBuilder.InitPrec;
 import hu.bme.mit.theta.sts.analysis.config.StsConfigBuilder.PredSplit;

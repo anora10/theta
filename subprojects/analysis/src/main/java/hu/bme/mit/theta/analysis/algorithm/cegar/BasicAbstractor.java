@@ -89,8 +89,12 @@ public final class BasicAbstractor<S extends State, A extends Action, P extends 
 		final Partition<ArgNode<S, A>, ?> reachedSet = Partition.of(n -> projection.apply(n.getState()));
 		waitlist.clear();
 
+
+
 		reachedSet.addAll(arg.getNodes());
 		waitlist.addAll(arg.getIncompleteNodes());
+
+
 
 		if (!stopCriterion.canStop(arg)) {
 			while (!waitlist.isEmpty()) {

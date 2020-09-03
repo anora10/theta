@@ -21,19 +21,21 @@ import static hu.bme.mit.theta.core.type.booltype.BoolExprs.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.google.errorprone.annotations.Var;
+import hu.bme.mit.theta.common.logging.ConsoleLogger;
+import hu.bme.mit.theta.common.logging.Logger;
+import hu.bme.mit.theta.common.logging.NullLogger;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.decl.Decls;
-import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.*;
 import hu.bme.mit.theta.core.utils.PathUtils;
 import hu.bme.mit.theta.core.utils.VarIndexing;
-import hu.bme.mit.theta.expressiondiagram.*;
 import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolver;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
 import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolver;
+import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.utils.WithPushPop;
 
@@ -77,7 +79,7 @@ public class PredAbstractors {
 	 * @return
 	 */
 	public static PredAbstractor booleanBddAbstractor(final Solver solver) {
-		return new BooleanBddAbstractor(solver, false);
+		return new BooleanAbstractor(solver, false);
 	}
 
 	/**
@@ -87,8 +89,10 @@ public class PredAbstractors {
 	 * @param solver
 	 * @return
 	 */
-	public static PredAbstractor booleanAbstractor(final Solver solver) {
-		return new BooleanAbstractor(solver, false);
+	public static PredAbstractor booleanAbstractor(final Solver solver, AllSatSolverFactory allSatSolverFactory) {
+		BooleanAbstractor abstractor = new BooleanAbstractor(solver, false);
+		abstractor.allSatSolverFactory = allSatSolverFactory;
+		return abstractor;
 	}
 
 	/**
@@ -101,16 +105,16 @@ public class PredAbstractors {
 		return new CartesianAbstractor(solver);
 	}
 
-	private static final class BooleanBddAbstractor implements PredAbstractor {
+	private static final class BooleanAbstractor implements PredAbstractor {
 
 		private final Solver solver;
 		private final List<ConstDecl<?>> actLits;
 		private final String litPrefix;
 		private static int instanceCounter = 0;
 		private final boolean split;
-		AllSatSolver allSatSolver = new BddAllSatSolver();
+		AllSatSolverFactory allSatSolverFactory = BddAllSatSolverFactory.getInstance(); // to let tests work
 
-		public BooleanBddAbstractor(final Solver solver, final boolean split) {
+		public BooleanAbstractor(final Solver solver, final boolean split) {
 			this.solver = checkNotNull(solver);
 			this.actLits = new ArrayList<>();
 			this.litPrefix = "__" + getClass().getSimpleName() + "_" + instanceCounter + "_";
@@ -140,11 +144,11 @@ public class PredAbstractors {
 
 				for (int i = 0; i < preds.size(); ++i) {
 					nodeExpr = And(Iff((Expr<BoolType>) actLits.get(i).getRef(), PathUtils.unfold(preds.get(i), precIndexing)), nodeExpr);
-
 				}
 				/// Ezen a ponton van egy kifejezésed, amiben van mindenféle változó, de ebből
 				/// az actList-beli változók értékei kellenek majd
 
+				AllSatSolver allSatSolver = allSatSolverFactory.createSolver();
 				allSatSolver.init(nodeExpr, actLits);
 
 				// Itt legenerálni az összes megoldást (actLits-re)
@@ -174,83 +178,6 @@ public class PredAbstractors {
 			}
 
 
-		}
-
-		private void generateActivationLiterals(final int n) {
-			while (actLits.size() < n) {
-				actLits.add(Decls.Const(litPrefix + actLits.size(), BoolExprs.Bool()));
-			}
-		}
-	}
-
-	private static final class BooleanAbstractor implements PredAbstractor {
-
-		private final Solver solver;
-		private final List<ConstDecl<BoolType>> actLits;
-		private final String litPrefix;
-		private static int instanceCounter = 0;
-		private final boolean split;
-
-		public BooleanAbstractor(final Solver solver, final boolean split) {
-			this.solver = checkNotNull(solver);
-			this.actLits = new ArrayList<>();
-			this.litPrefix = "__" + getClass().getSimpleName() + "_" + instanceCounter + "_";
-			instanceCounter++;
-			this.split = split;
-		}
-
-		@Override
-		public Collection<PredState> createStatesForExpr(final Expr<BoolType> expr, final VarIndexing exprIndexing,
-														 final PredPrec prec, final VarIndexing precIndexing) {
-			checkNotNull(expr);
-			checkNotNull(exprIndexing);
-			checkNotNull(prec);
-			checkNotNull(precIndexing);
-
-			final List<Expr<BoolType>> preds = new ArrayList<>(prec.getPreds());
-			generateActivationLiterals(preds.size());
-
-			assert actLits.size() >= preds.size();
-
-			final List<PredState> states = new LinkedList<>();
-			try (WithPushPop wp = new WithPushPop(solver)) {
-				solver.add(PathUtils.unfold(expr, exprIndexing));
-				//System.out.println("Expression: "+ PathUtils.unfold(expr, exprIndexing) );
-				for (int i = 0; i < preds.size(); ++i) {
-					solver.add(Iff(actLits.get(i).getRef(), PathUtils.unfold(preds.get(i), precIndexing)));
-					//System.out.println(" ... "+ PathUtils.unfold(preds.get(i), precIndexing) );
-				}
-				while (solver.check().isSat()) {
-					final Valuation model = solver.getModel();
-					final Set<Expr<BoolType>> newStatePreds = new HashSet<>();
-					final List<Expr<BoolType>> feedback = new LinkedList<>();
-					feedback.add(True());
-					for (int i = 0; i < preds.size(); ++i) {
-						final ConstDecl<BoolType> lit = actLits.get(i);
-						final Expr<BoolType> pred = preds.get(i);
-						final Optional<LitExpr<BoolType>> eval = model.eval(lit);
-						if (eval.isPresent()) {
-							if (eval.get().equals(True())) {
-								newStatePreds.add(pred);
-								feedback.add(lit.getRef());
-								//System.out.println("TRUE");
-							} else {
-								newStatePreds.add(prec.negate(pred));
-								feedback.add(Not(lit.getRef()));
-								//System.out.println("FALSE");
-							}
-						}
-					}
-					states.add(PredState.of(newStatePreds));
-					solver.add(Not(And(feedback)));
-				}
-			}
-			if (!split && states.size() > 1) {
-				final Expr<BoolType> pred = Or(states.stream().map(PredState::toExpr).collect(Collectors.toList()));
-				return Collections.singleton(PredState.of(pred));
-			} else {
-				return states;
-			}
 		}
 
 		private void generateActivationLiterals(final int n) {

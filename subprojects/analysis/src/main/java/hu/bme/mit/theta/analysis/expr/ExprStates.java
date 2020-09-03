@@ -29,7 +29,9 @@ import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.utils.PathUtils;
 import hu.bme.mit.theta.core.utils.VarIndexing;
 import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolver;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
 import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolver;
+import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.utils.WithPushPop;
 
@@ -37,6 +39,8 @@ import hu.bme.mit.theta.solver.utils.WithPushPop;
  * Utility for generating ExprStates.
  */
 public final class ExprStates {
+
+	public static AllSatSolverFactory allSatSolverFactory = BddAllSatSolverFactory.getInstance();
 
 	private ExprStates() {
 	}
@@ -73,7 +77,7 @@ public final class ExprStates {
 																		  final Expr<BoolType> expr, final int exprIndex,
 																		  final Function<? super Valuation, ? extends S> valuationToState, final VarIndexing stateIndexing,
 																		  final int limit) {
-		AllSatSolver allSatSolver = new BddAllSatSolver();
+		AllSatSolver allSatSolver = allSatSolverFactory.createSolver();
 		allSatSolver.init(PathUtils.unfold(expr, exprIndex));
 		final Collection<S> result = new ArrayList<>();
 		while (allSatSolver.hasNextSolution() && (limit == 0 || result.size() < limit)) {

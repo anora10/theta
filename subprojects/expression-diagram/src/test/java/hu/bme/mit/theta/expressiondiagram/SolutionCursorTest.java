@@ -6,6 +6,9 @@ import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.type.inttype.IntType;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolver;
+import hu.bme.mit.theta.expressiondiagram.allsat.NaivAllSatSolver;
+import hu.bme.mit.theta.expressiondiagram.allsat.NaivAllSatSolverFactory;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -369,5 +372,27 @@ public class SolutionCursorTest {
         //------------------------- end of init -------------------------
 
         makeSolutions(node);
+    }
+
+    @Test // (d <= 3)
+    public void test_int_6_naiv() {
+        final ConstDecl<IntType> x = Const("x", Int());
+        // (d <= 3)
+        Expr expr = And(Leq(Int(0), x.getRef()), Leq(x.getRef(), Int(5)));
+        //Expr expr = True();
+        AllSatSolver naivAllSatSolver = NaivAllSatSolverFactory.getInstance().createSolver();
+        naivAllSatSolver.init(expr);
+
+        while (naivAllSatSolver.hasNextSolution()) {
+            HashMap<Decl, LitExpr> solutions = naivAllSatSolver.getNextSolution();
+            if (solutions == null) continue;
+            System.out.println("---megoldas---");
+            for (Decl d: solutions.keySet()) {
+                System.out.println(d.toString() + " " + solutions.get(d).toString());
+            }
+            System.out.println("\n");
+        }
+        System.out.println("no more solutions");
+
     }
 }
