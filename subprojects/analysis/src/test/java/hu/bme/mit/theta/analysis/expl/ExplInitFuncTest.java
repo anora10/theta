@@ -26,6 +26,8 @@ import java.util.Collection;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decls;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
+import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -41,18 +43,19 @@ public class ExplInitFuncTest {
 	private final VarDecl<IntType> x = Var("x",Int());
 	private final VarDecl<IntType> y = Var("y", Int());
 	private final Solver solver = Z3SolverFactory.getInstance().createSolver();
+	private final AllSatSolverFactory factory = BddAllSatSolverFactory.getInstance();
 
 	@Test
 	public void test1() {
 		final ExplPrec prec = ExplPrec.of(ImmutableList.of(x));
-		final ExplInitFunc initFunc = ExplInitFunc.create(solver, True());
+		final ExplInitFunc initFunc = ExplInitFunc.create(factory, True());
 		Assert.assertEquals(1, initFunc.getInitStates(prec).size());
 	}
 
 	@Test
 	public void test2() {
 		final ExplPrec prec = ExplPrec.of(ImmutableList.of(x, y));
-		final ExplInitFunc initFunc = ExplInitFunc.create(solver,
+		final ExplInitFunc initFunc = ExplInitFunc.create(factory,
 				And(Leq(Int(0), x.getRef()), Leq(x.getRef(), Int(5))));
 		Assert.assertEquals(6, initFunc.getInitStates(prec).size());
 	}
@@ -60,7 +63,7 @@ public class ExplInitFuncTest {
 	@Test
 	public void test3() {
 		final ExplPrec prec = ExplPrec.of(ImmutableList.of(x, y));
-		final ExplInitFunc initFunc = ExplInitFunc.create(solver,
+		final ExplInitFunc initFunc = ExplInitFunc.create(factory,
 				And(Leq(Int(0), x.getRef()), Leq(x.getRef(), y.getRef()), Leq(y.getRef(), Int(3))));
 		Assert.assertEquals(10, initFunc.getInitStates(prec).size());
 	}
@@ -68,7 +71,7 @@ public class ExplInitFuncTest {
 	@Test
 	public void testBottom() {
 		final ExplPrec prec = ExplPrec.of(ImmutableList.of(x, y));
-		final ExplInitFunc initFunc = ExplInitFunc.create(solver,
+		final ExplInitFunc initFunc = ExplInitFunc.create(factory,
 				And(Leq(Int(5), x.getRef()), Leq(x.getRef(), y.getRef()), Leq(y.getRef(), Int(3))));
 		final Collection<? extends ExplState> initStates = initFunc.getInitStates(prec);
 		Assert.assertEquals(1, initStates.size());

@@ -40,32 +40,30 @@ import hu.bme.mit.theta.solver.utils.WithPushPop;
  */
 public final class ExprStates {
 
-	public static AllSatSolverFactory allSatSolverFactory = BddAllSatSolverFactory.getInstance();
-
 	private ExprStates() {
 	}
 
 	/**
 	 * Generate all states that satisfy a given expression.
 	 *
-	 * @param solver           Solver
+	 * @param factory          AllSAT solver factory
 	 * @param expr             Expression to be satisfied
 	 * @param exprIndex        Index for unfolding the expression
 	 * @param valuationToState Mapping from a valuation to a state
 	 * @param stateIndexing    Index for extracting the state
 	 * @return States satisfying the expression
 	 */
-	public static <S extends ExprState> Collection<S> createStatesForExpr(final Solver solver,
+	public static <S extends ExprState> Collection<S> createStatesForExpr(final AllSatSolverFactory factory,
 																		  final Expr<BoolType> expr, final int exprIndex,
 																		  final Function<? super Valuation, ? extends S> valuationToState, final VarIndexing stateIndexing) {
-		return createStatesForExpr(solver, expr, exprIndex, valuationToState, stateIndexing, 0);
+		return createStatesForExpr(factory, expr, exprIndex, valuationToState, stateIndexing, 0);
 	}
 
 	/**
 	 * Generate all or a limited number of states that satisfy a given
 	 * expression.
 	 *
-	 * @param solver           Solver
+	 * @param factory          AllSAT solver factory
 	 * @param expr             Expression to be satisfied
 	 * @param exprIndex        Index for unfolding the expression
 	 * @param valuationToState Mapping from a valuation to a state
@@ -73,15 +71,15 @@ public final class ExprStates {
 	 * @param limit            Limit the number of states to generate (0 is unlimited)
 	 * @return States satisfying the expression
 	 */
-	public static <S extends ExprState> Collection<S> createStatesForExpr(final Solver solver,
+	public static <S extends ExprState> Collection<S> createStatesForExpr(final AllSatSolverFactory factory,
 																		  final Expr<BoolType> expr, final int exprIndex,
 																		  final Function<? super Valuation, ? extends S> valuationToState, final VarIndexing stateIndexing,
 																		  final int limit) {
-		AllSatSolver allSatSolver = allSatSolverFactory.createSolver();
+		AllSatSolver allSatSolver = factory.createSolver();
 		allSatSolver.init(PathUtils.unfold(expr, exprIndex));
 		final Collection<S> result = new ArrayList<>();
-		while (allSatSolver.hasNextSolution() && (limit == 0 || result.size() < limit)) {
-			final Valuation model = allSatSolver.getNextSolutionValuation();
+		while (allSatSolver.hasNext() && (limit == 0 || result.size() < limit)) {
+			final Valuation model = allSatSolver.next();
 			if (model == null) continue; // no more solutions
 			final Valuation valuation = PathUtils.extractValuation(model, stateIndexing);
 			final S state = valuationToState.apply(valuation);

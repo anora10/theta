@@ -164,7 +164,7 @@ public final class StsConfigBuilder {
 
 		if (domain == Domain.EXPL) {
 			final Predicate<ExplState> target = new ExplStatePredicate(negProp, solver);
-			final Analysis<ExplState, ExprAction, ExplPrec> analysis = ExplAnalysis.create(solver, init);
+			final Analysis<ExplState, ExprAction, ExplPrec> analysis = ExplAnalysis.create(new BddAllSatSolverFactory(), init);
 			final ArgBuilder<ExplState, StsAction, ExplPrec> argBuilder = ArgBuilder.create(lts, analysis, target,
 					true);
 			final Abstractor<ExplState, StsAction, ExplPrec> abstractor = BasicAbstractor.builder(argBuilder)
@@ -211,11 +211,9 @@ public final class StsConfigBuilder {
 			switch (domain) {
 				case PRED_BOOL:
 					predAbstractor = PredAbstractors.booleanAbstractor(solver, NaivAllSatSolverFactory.getInstance());
-					ExprStates.allSatSolverFactory = NaivAllSatSolverFactory.getInstance();
 					break;
 				case PRED_BOOL_BDD:
 					predAbstractor = PredAbstractors.booleanAbstractor(solver, BddAllSatSolverFactory.getInstance());
-					ExprStates.allSatSolverFactory = BddAllSatSolverFactory.getInstance();
 					break;
 				case PRED_SPLIT:
 					predAbstractor = PredAbstractors.booleanSplitAbstractor(solver);

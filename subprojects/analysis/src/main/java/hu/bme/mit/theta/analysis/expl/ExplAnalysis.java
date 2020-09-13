@@ -24,6 +24,7 @@ import hu.bme.mit.theta.analysis.TransFunc;
 import hu.bme.mit.theta.analysis.expr.ExprAction;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
 import hu.bme.mit.theta.solver.Solver;
 
 public final class ExplAnalysis implements Analysis<ExplState, ExprAction, ExplPrec> {
@@ -32,17 +33,16 @@ public final class ExplAnalysis implements Analysis<ExplState, ExprAction, ExplP
 	private final InitFunc<ExplState, ExplPrec> initFunc;
 	private final TransFunc<ExplState, ExprAction, ExplPrec> transFunc;
 
-	private ExplAnalysis(final Solver solver, final Expr<BoolType> initExpr) {
-		checkNotNull(solver);
+	private ExplAnalysis(final AllSatSolverFactory factory, final Expr<BoolType> initExpr) {
 		checkNotNull(initExpr);
 		this.partialOrd = ExplOrd.getInstance();
-		this.initFunc = ExplInitFunc.create(solver, initExpr);
-		this.transFunc = ExplTransFunc.create(solver);
+		this.initFunc = ExplInitFunc.create(factory, initExpr);
+		this.transFunc = ExplTransFunc.create(factory);
 
 	}
 
-	public static ExplAnalysis create(final Solver solver, final Expr<BoolType> initExpr) {
-		return new ExplAnalysis(solver, initExpr);
+	public static ExplAnalysis create(final AllSatSolverFactory factory, final Expr<BoolType> initExpr) {
+		return new ExplAnalysis(factory, initExpr);
 	}
 
 	@Override

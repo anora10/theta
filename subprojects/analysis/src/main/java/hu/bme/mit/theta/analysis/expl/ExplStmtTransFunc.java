@@ -34,22 +34,23 @@ import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.utils.StmtUnfoldResult;
 import hu.bme.mit.theta.core.utils.StmtUtils;
 import hu.bme.mit.theta.core.utils.VarIndexing;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
 import hu.bme.mit.theta.solver.Solver;
 
 public final class ExplStmtTransFunc implements TransFunc<ExplState, StmtAction, ExplPrec> {
 
-	private final Solver solver;
+	private final AllSatSolverFactory factory;
 	// 0 means arbitrarily many
 	private final int maxSuccToEnumerate;
 
-	private ExplStmtTransFunc(final Solver solver, final int maxSuccToEnumerate) {
-		this.solver = checkNotNull(solver);
+	private ExplStmtTransFunc(final AllSatSolverFactory factory, final int maxSuccToEnumerate) {
+		this.factory = factory;
 		this.maxSuccToEnumerate = maxSuccToEnumerate;
 	}
 
-	public static ExplStmtTransFunc create(final Solver solver, final int maxSuccToEnumerate) {
+	public static ExplStmtTransFunc create(final AllSatSolverFactory factory, final int maxSuccToEnumerate) {
 		checkArgument(maxSuccToEnumerate >= 0, "Max. succ. to enumerate must be non-negative.");
-		return new ExplStmtTransFunc(solver, maxSuccToEnumerate);
+		return new ExplStmtTransFunc(factory, maxSuccToEnumerate);
 	}
 
 	@Override
@@ -78,7 +79,7 @@ public final class ExplStmtTransFunc implements TransFunc<ExplState, StmtAction,
 				// We query (max + 1) states from the solver to see if there
 				// would be more than max
 				final int maxToQuery = maxSuccToEnumerate == 0 ? 0 : maxSuccToEnumerate + 1;
-				final Collection<ExplState> succStates = ExprStates.createStatesForExpr(solver, expr, 0,
+				final Collection<ExplState> succStates = ExprStates.createStatesForExpr(factory, expr, 0,
 						prec::createState, nextIdx, maxToQuery);
 
 				if (succStates.isEmpty()) {

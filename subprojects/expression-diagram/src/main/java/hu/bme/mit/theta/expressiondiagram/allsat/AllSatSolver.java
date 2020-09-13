@@ -9,9 +9,10 @@ import hu.bme.mit.theta.core.type.LitExpr;
 import java.beans.Expression;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
-public interface AllSatSolver {
+public interface AllSatSolver extends Iterator<Valuation> {
     Expression expression = null;
 
     // init functions
@@ -21,18 +22,22 @@ public interface AllSatSolver {
     void init (Expr expr);
 
     // use functions
-    HashMap<Decl, LitExpr> getNextSolution();
-    Valuation getNextSolutionValuation();
+    HashMap<Decl, LitExpr> nextMap();
 
-    boolean hasNextSolution();
 
-    default HashSet<HashMap<Decl, LitExpr>> getAllSolutions() {
-        HashSet<HashMap<Decl, LitExpr>> solutions = new HashSet<>();
-        HashMap<Decl, LitExpr> newSolution = getNextSolution();
-        while (hasNextSolution()) {
+    default HashSet<Valuation> getAllSolutions() {
+        HashSet<Valuation> solutions = new HashSet<>();
+        Valuation newSolution = next();
+        while (hasNext() && newSolution != null) {
             solutions.add(newSolution);
-            newSolution = getNextSolution();
+            newSolution = next();
         }
         return solutions;
     }
+
+    @Override
+    boolean hasNext();
+
+    @Override
+    Valuation next();
 }

@@ -53,19 +53,19 @@ public class BddAllSatSolver implements AllSatSolver{
     }
 
     @Override
-    public HashMap<Decl, LitExpr> getNextSolution() {
+    public HashMap<Decl, LitExpr> nextMap() {
         isFinal = ! solutionCursor.moveNext();
         return isFinal ? null : solutionCursor.getSolutionMap();
     }
 
     @Override
-    public Valuation getNextSolutionValuation() {
-        isFinal = ! solutionCursor.moveNext();
-        return isFinal ? null : solutionCursor.getSolutionValuation();
+    public boolean hasNext() {
+        return !isFinal;
     }
 
     @Override
-    public boolean hasNextSolution() {
-        return !isFinal;
+    public Valuation next() {
+        isFinal = ! solutionCursor.moveNext();
+        return isFinal ? null : solutionCursor.getSolutionValuation();
     }
 }

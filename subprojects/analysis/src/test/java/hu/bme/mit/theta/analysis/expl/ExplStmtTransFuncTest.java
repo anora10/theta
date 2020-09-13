@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
+import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -49,13 +51,13 @@ import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
 public class ExplStmtTransFuncTest {
-	private final Solver solver = Z3SolverFactory.getInstance().createSolver();
+	private final AllSatSolverFactory factory = BddAllSatSolverFactory.getInstance();
 	private final VarDecl<IntType> x = Var("x", Int());
 	private final VarDecl<IntType> y = Var("y", Int());
 
 	@Test
 	public void testSimple() {
-		final ExplStmtTransFunc transFunc = ExplStmtTransFunc.create(solver, 0);
+		final ExplStmtTransFunc transFunc = ExplStmtTransFunc.create(factory, 0);
 		final ExplState sourceState = ExplState.top();
 		final ExplPrec prec = ExplPrec.of(Collections.singleton(x));
 		final List<Stmt> stmts = new ArrayList<>();
@@ -74,7 +76,7 @@ public class ExplStmtTransFuncTest {
 
 	@Test
 	public void testBottom() {
-		final ExplStmtTransFunc transFunc = ExplStmtTransFunc.create(solver, 0);
+		final ExplStmtTransFunc transFunc = ExplStmtTransFunc.create(factory, 0);
 		final ExplState sourceState = ExplState.top();
 		final ExplPrec prec = ExplPrec.of(Collections.singleton(x));
 		final List<Stmt> stmts = new ArrayList<>();
@@ -90,7 +92,7 @@ public class ExplStmtTransFuncTest {
 
 	@Test
 	public void testComplex1() {
-		final ExplStmtTransFunc transFunc = ExplStmtTransFunc.create(solver, 0);
+		final ExplStmtTransFunc transFunc = ExplStmtTransFunc.create(factory, 0);
 		final ExplState sourceState = ExplState.top();
 		final ExplPrec prec = ExplPrec.of(ImmutableSet.of(x, y));
 		final List<Stmt> stmts = new ArrayList<>();
@@ -107,7 +109,7 @@ public class ExplStmtTransFuncTest {
 
 	@Test
 	public void testComplex2() {
-		final ExplStmtTransFunc transFunc = ExplStmtTransFunc.create(solver, 1);
+		final ExplStmtTransFunc transFunc = ExplStmtTransFunc.create(factory, 1);
 		final ExplState sourceState = ExplState.top();
 		final ExplPrec prec = ExplPrec.of(ImmutableSet.of(x, y));
 		final List<Stmt> stmts = new ArrayList<>();
@@ -137,7 +139,7 @@ public class ExplStmtTransFuncTest {
 		solverCallsToExpectedStates.put(0, 3);
 
 		for (final Entry<Integer, Integer> entry : solverCallsToExpectedStates.entrySet()) {
-			final ExplStmtTransFunc transFunc = ExplStmtTransFunc.create(solver, entry.getKey());
+			final ExplStmtTransFunc transFunc = ExplStmtTransFunc.create(factory, entry.getKey());
 			final Collection<? extends ExplState> succStates = transFunc.getSuccStates(sourceState, stmts, prec);
 
 			Assert.assertEquals(entry.getValue().intValue(), succStates.size());

@@ -9,7 +9,6 @@ import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.expressiondiagram.ExpressionNode;
-import hu.bme.mit.theta.expressiondiagram.VariableSubstitution;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Eq;
@@ -56,7 +55,7 @@ public class NaivAllSatSolver implements AllSatSolver{
     }
 
     @Override
-    public HashMap<Decl, LitExpr> getNextSolution() {
+    public HashMap<Decl, LitExpr> nextMap() {
         if (solver.check().isUnsat()) {
             isFinal = true;
             return null;
@@ -76,17 +75,17 @@ public class NaivAllSatSolver implements AllSatSolver{
     }
 
     @Override
-    public Valuation getNextSolutionValuation() {
-        HashMap<Decl, LitExpr> solutionMap = getNextSolution();
+    public boolean hasNext() {
+        return !isFinal;
+    }
+
+    @Override
+    public Valuation next() {
+        HashMap<Decl, LitExpr> solutionMap = nextMap();
         ImmutableValuation.Builder builder = ImmutableValuation.builder();
         for (Decl d: solutionMap.keySet()) {
             builder.put(d, solutionMap.get(d));
         }
         return builder.build();
-    }
-
-    @Override
-    public boolean hasNextSolution() {
-        return !isFinal;
     }
 }

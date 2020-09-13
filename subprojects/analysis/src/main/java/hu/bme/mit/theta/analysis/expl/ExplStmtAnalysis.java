@@ -24,6 +24,7 @@ import hu.bme.mit.theta.analysis.TransFunc;
 import hu.bme.mit.theta.analysis.expr.StmtAction;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
 import hu.bme.mit.theta.solver.Solver;
 
 public final class ExplStmtAnalysis implements Analysis<ExplState, StmtAction, ExplPrec> {
@@ -32,21 +33,21 @@ public final class ExplStmtAnalysis implements Analysis<ExplState, StmtAction, E
 	private final InitFunc<ExplState, ExplPrec> initFunc;
 	private final TransFunc<ExplState, StmtAction, ExplPrec> transFunc;
 
-	private ExplStmtAnalysis(final Solver solver, final Expr<BoolType> initExpr, final int maxSuccToEnumerate) {
-		checkNotNull(solver);
+	private ExplStmtAnalysis(final AllSatSolverFactory factory, final Expr<BoolType> initExpr, final int maxSuccToEnumerate) {
+		checkNotNull(factory);
 		checkNotNull(initExpr);
 		this.partialOrd = ExplOrd.getInstance();
-		this.initFunc = ExplInitFunc.create(solver, initExpr);
-		this.transFunc = ExplStmtTransFunc.create(solver, maxSuccToEnumerate);
+		this.initFunc = ExplInitFunc.create(factory, initExpr);
+		this.transFunc = ExplStmtTransFunc.create(factory, maxSuccToEnumerate);
 	}
 
-	public static ExplStmtAnalysis create(final Solver solver, final Expr<BoolType> initExpr,
+	public static ExplStmtAnalysis create(final AllSatSolverFactory factory, final Expr<BoolType> initExpr,
 										  final int maxSuccToEnumerate) {
-		return new ExplStmtAnalysis(solver, initExpr, maxSuccToEnumerate);
+		return new ExplStmtAnalysis(factory, initExpr, maxSuccToEnumerate);
 	}
 
-	public static ExplStmtAnalysis create(final Solver solver, final Expr<BoolType> initExpr) {
-		return create(solver, initExpr, 0);
+	public static ExplStmtAnalysis create(final AllSatSolverFactory factory, final Expr<BoolType> initExpr) {
+		return create(factory, initExpr, 0);
 	}
 
 	@Override

@@ -25,26 +25,29 @@ import hu.bme.mit.theta.analysis.expr.ExprStates;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.utils.VarIndexing;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolver;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
 import hu.bme.mit.theta.solver.Solver;
 
 public final class ExplInitFunc implements InitFunc<ExplState, ExplPrec> {
 
-	private final Solver solver;
+	//private final Solver solver;
+	AllSatSolverFactory factory;
 	private final Expr<BoolType> initExpr;
 
-	private ExplInitFunc(final Solver solver, final Expr<BoolType> initExpr) {
-		this.solver = checkNotNull(solver);
+	private ExplInitFunc(final AllSatSolverFactory factory, final Expr<BoolType> initExpr) {
+		this.factory = factory;
 		this.initExpr = checkNotNull(initExpr);
 	}
 
-	public static ExplInitFunc create(final Solver solver, final Expr<BoolType> initExpr) {
-		return new ExplInitFunc(solver, initExpr);
+	public static ExplInitFunc create(final AllSatSolverFactory factory, final Expr<BoolType> initExpr) {
+		return new ExplInitFunc(factory, initExpr);
 	}
 
 	@Override
 	public Collection<? extends ExplState> getInitStates(final ExplPrec prec) {
 		checkNotNull(prec);
-		final Collection<ExplState> initStates = ExprStates.createStatesForExpr(solver, initExpr, 0, prec::createState,
+		final Collection<ExplState> initStates = ExprStates.createStatesForExpr(factory, initExpr, 0, prec::createState,
 				VarIndexing.all(0));
 		return initStates.isEmpty() ? Collections.singleton(ExplState.bottom()) : initStates;
 	}

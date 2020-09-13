@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Collection;
 
+import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -44,7 +45,7 @@ public class ExplTransFuncTest {
 	private final ExplPrec prec = ExplPrec.of(ImmutableList.of(x));
 	private final ExplState state = ExplState.of(ImmutableValuation.builder().put(x, Int(1)).build());
 
-	ExplTransFunc transFunc = ExplTransFunc.create(Z3SolverFactory.getInstance().createSolver());
+	ExplTransFunc transFunc = ExplTransFunc.create(BddAllSatSolverFactory.getInstance());
 
 	@Test
 	public void testNormal() {

@@ -32,6 +32,8 @@ import java.util.Collections;
 import java.util.function.Predicate;
 
 import hu.bme.mit.theta.analysis.expr.refinement.*;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
+import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import org.junit.Test;
 
 import hu.bme.mit.theta.analysis.Analysis;
@@ -90,8 +92,9 @@ public class StsExplTest {
 		final STS sts = builder.build();
 
 		final ItpSolver solver = Z3SolverFactory.getInstance().createItpSolver();
+		final AllSatSolverFactory factory = BddAllSatSolverFactory.getInstance();
 
-		final Analysis<ExplState, ExprAction, ExplPrec> analysis = ExplAnalysis.create(solver, sts.getInit());
+		final Analysis<ExplState, ExprAction, ExplPrec> analysis = ExplAnalysis.create(factory, sts.getInit());
 		final Predicate<ExprState> target = new ExprStatePredicate(Not(sts.getProp()), solver);
 
 		final ExplPrec prec = ExplPrec.of(Collections.singleton(vy));

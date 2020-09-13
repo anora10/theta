@@ -21,9 +21,6 @@ import static hu.bme.mit.theta.core.type.booltype.BoolExprs.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import hu.bme.mit.theta.common.logging.ConsoleLogger;
-import hu.bme.mit.theta.common.logging.Logger;
-import hu.bme.mit.theta.common.logging.NullLogger;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.decl.Decls;
@@ -34,7 +31,6 @@ import hu.bme.mit.theta.core.utils.PathUtils;
 import hu.bme.mit.theta.core.utils.VarIndexing;
 import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolver;
 import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
-import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolver;
 import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.utils.WithPushPop;
@@ -152,9 +148,9 @@ public class PredAbstractors {
 				allSatSolver.init(nodeExpr, actLits);
 
 				// Itt legenerálni az összes megoldást (actLits-re)
-				while (allSatSolver.hasNextSolution()) { // Itt végigiterálni az összes megoldáson
+				while (allSatSolver.hasNext()) { // Itt végigiterálni az összes megoldáson
 					final Set<Expr<BoolType>> newStatePreds = new HashSet<>();
-					HashMap<Decl, LitExpr> solutions = allSatSolver.getNextSolution();
+					HashMap<Decl, LitExpr> solutions = allSatSolver.nextMap();
 					if (solutions == null) continue; // no more solutions
 					for (int i = 0; i < preds.size(); ++i) {
 						final ConstDecl<BoolType> lit = (ConstDecl<BoolType>) actLits.get(i);

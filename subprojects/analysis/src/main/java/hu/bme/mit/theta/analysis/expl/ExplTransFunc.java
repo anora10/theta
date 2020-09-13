@@ -24,18 +24,20 @@ import hu.bme.mit.theta.analysis.TransFunc;
 import hu.bme.mit.theta.analysis.expr.ExprAction;
 import hu.bme.mit.theta.analysis.expr.ExprStates;
 import hu.bme.mit.theta.core.type.booltype.BoolExprs;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolver;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
 import hu.bme.mit.theta.solver.Solver;
 
 public final class ExplTransFunc implements TransFunc<ExplState, ExprAction, ExplPrec> {
 
-	private final Solver solver;
+	private final AllSatSolverFactory factory;
 
-	private ExplTransFunc(final Solver solver) {
-		this.solver = checkNotNull(solver);
+	private ExplTransFunc(final AllSatSolverFactory factory) {
+		this.factory = factory;
 	}
 
-	public static ExplTransFunc create(final Solver solver) {
-		return new ExplTransFunc(solver);
+	public static ExplTransFunc create(final AllSatSolverFactory factory) {
+		return new ExplTransFunc(factory);
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public final class ExplTransFunc implements TransFunc<ExplState, ExprAction, Exp
 		checkNotNull(state);
 		checkNotNull(action);
 		checkNotNull(prec);
-		final Collection<ExplState> succStates = ExprStates.createStatesForExpr(solver,
+		final Collection<ExplState> succStates = ExprStates.createStatesForExpr(factory,
 				BoolExprs.And(state.toExpr(), action.toExpr()), 0, prec::createState, action.nextIndexing());
 		return succStates.isEmpty() ? Collections.singleton(ExplState.bottom()) : succStates;
 	}

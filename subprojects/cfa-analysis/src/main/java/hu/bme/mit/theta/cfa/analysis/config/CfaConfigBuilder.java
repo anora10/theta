@@ -59,6 +59,7 @@ import hu.bme.mit.theta.cfa.analysis.prec.LocalCfaPrec;
 import hu.bme.mit.theta.cfa.analysis.prec.LocalCfaPrecRefiner;
 import hu.bme.mit.theta.common.logging.Logger;
 import hu.bme.mit.theta.common.logging.NullLogger;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
 import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import hu.bme.mit.theta.expressiondiagram.allsat.NaivAllSatSolverFactory;
 import hu.bme.mit.theta.solver.ItpSolver;
@@ -229,10 +230,12 @@ public class CfaConfigBuilder {
 	public CfaConfig<? extends State, ? extends Action, ? extends Prec> build(final CFA cfa) {
 		final ItpSolver solver = solverFactory.createItpSolver();
 		final CfaLts lts = encoding.getLts();
+		//TODO beallítani az allsat kapcsolo alapjan
+		final AllSatSolverFactory factory = BddAllSatSolverFactory.getInstance();
 
 		if (domain == Domain.EXPL) {
 			final Analysis<CfaState<ExplState>, CfaAction, CfaPrec<ExplPrec>> analysis = CfaAnalysis
-					.create(cfa.getInitLoc(), ExplStmtAnalysis.create(solver, True(), maxEnum));
+					.create(cfa.getInitLoc(), ExplStmtAnalysis.create(factory, True(), maxEnum));
 			final ArgBuilder<CfaState<ExplState>, CfaAction, CfaPrec<ExplPrec>> argBuilder = ArgBuilder.create(lts,
 					analysis, s -> s.getLoc().equals(cfa.getErrorLoc()), true);
 			final Abstractor<CfaState<ExplState>, CfaAction, CfaPrec<ExplPrec>> abstractor = BasicAbstractor
@@ -282,7 +285,7 @@ public class CfaConfigBuilder {
 					prec = precGranularity.createPrec(ExplPrec.of(cfa.getVars()));
 					break;
 				default:
-					throw new UnsupportedOperationException(initPrec + " initial precision is not supported with " +
+					throw new UnsupportedOperationException(initPrec + " initial   is not supported with " +
 							domain + " domain");
 			}
 
@@ -290,15 +293,13 @@ public class CfaConfigBuilder {
 
 		} else if (domain == Domain.PRED_BOOL || domain == Domain.PRED_BOOL_BDD ||domain == Domain.PRED_CART || domain == Domain.PRED_SPLIT) {
 			PredAbstractor predAbstractor = null;
-
+// TODO log + kapcsoló
 			switch (domain) {
 				case PRED_BOOL:
 					predAbstractor = PredAbstractors.booleanAbstractor(solver, NaivAllSatSolverFactory.getInstance());
-					ExprStates.allSatSolverFactory = NaivAllSatSolverFactory.getInstance();
 					break;
 				case PRED_BOOL_BDD:
 					predAbstractor = PredAbstractors.booleanAbstractor(solver, BddAllSatSolverFactory.getInstance());
-					ExprStates.allSatSolverFactory = BddAllSatSolverFactory.getInstance();
 					break;
 				case PRED_SPLIT:
 					predAbstractor = PredAbstractors.booleanSplitAbstractor(solver);
