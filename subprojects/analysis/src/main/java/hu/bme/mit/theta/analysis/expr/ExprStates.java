@@ -22,10 +22,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Function;
 
+import hu.bme.mit.theta.common.logging.ConsoleLogger;
+import hu.bme.mit.theta.common.logging.Logger;
 import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
+import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.core.utils.PathUtils;
 import hu.bme.mit.theta.core.utils.VarIndexing;
 import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolver;
@@ -34,6 +37,7 @@ import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolver;
 import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.utils.WithPushPop;
+import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
 /**
  * Utility for generating ExprStates.
@@ -75,31 +79,45 @@ public final class ExprStates {
 																		  final Expr<BoolType> expr, final int exprIndex,
 																		  final Function<? super Valuation, ? extends S> valuationToState, final VarIndexing stateIndexing,
 																		  final int limit) {
-		AllSatSolver allSatSolver = factory.createSolver();
-		allSatSolver.init(PathUtils.unfold(expr, exprIndex));
-		final Collection<S> result = new ArrayList<>();
-		while (allSatSolver.hasNext() && (limit == 0 || result.size() < limit)) {
-			final Valuation model = allSatSolver.next();
-			if (model == null) continue; // no more solutions
-			final Valuation valuation = PathUtils.extractValuation(model, stateIndexing);
-			final S state = valuationToState.apply(valuation);
-			result.add(state);
-		}
-		return  result;
-
-//		try (WithPushPop wpp = new WithPushPop(solver)) {
-//			solver.add(PathUtils.unfold(expr, exprIndex));
-//
-//			final Collection<S> result = new ArrayList<>();
-//			while (solver.check().isSat() && (limit == 0 || result.size() < limit)) {
-//				final Valuation model = solver.getModel();
-//				final Valuation valuation = PathUtils.extractValuation(model, stateIndexing);
-//				final S state = valuationToState.apply(valuation);
-//				result.add(state);
-//				solver.add(Not(PathUtils.unfold(state.toExpr(), stateIndexing)));
-//			}
-//			return result;
+//		AllSatSolver allSatSolver = factory.createSolver();
+//		Expr solverExpr = PathUtils.unfold(expr, exprIndex);
+//		allSatSolver.init(solverExpr);
+////		new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n expression: " + solverExpr);
+//		final Collection<S> result = new ArrayList<>();
+//		while (allSatSolver.hasNext() && (limit == 0 || result.size() < limit)) {
+//			final Valuation model = allSatSolver.next();
+////			new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n solutionMap: " + model);
+////			new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n limit resSize : " + limit + " " + result.size());
+//			if (model == null) continue; // no more solutions
+////			new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n" + stateIndexing.getMap() + " map found in Varindexing");
+//			final Valuation valuation = PathUtils.extractValuation(model, stateIndexing);
+////			new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n valuation: " + valuation);
+//			final S state = valuationToState.apply(valuation);
+////			new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n state: " + state.toExpr());
+//			result.add(state);
+////			if (PathUtils.unfold(state.toExpr(), stateIndexing).equals(TrueExpr.getInstance())) break;
 //		}
+//		return  result;
+
+		Solver solver = Z3SolverFactory.getInstance().createSolver();
+		try (WithPushPop wpp = new WithPushPop(solver)) {
+			Expr solverExpr = PathUtils.unfold(expr, exprIndex);
+			solver.add(solverExpr);
+		new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n expression: " + solverExpr);
+			final Collection<S> result = new ArrayList<>();
+			while (solver.check().isSat() && (limit == 0 || result.size() < limit)) {
+				new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n solver assertions: " + solver.getAssertions());
+				final Valuation model = solver.getModel();
+				final Valuation valuation = PathUtils.extractValuation(model, stateIndexing);
+				new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n valuation: " + valuation);
+
+				// ez veszi ki a nem kovetetteket
+				final S state = valuationToState.apply(valuation);
+				result.add(state);
+				solver.add(Not(PathUtils.unfold(state.toExpr(), stateIndexing)));
+			}
+			return result;
+		}
 	}
 
 }

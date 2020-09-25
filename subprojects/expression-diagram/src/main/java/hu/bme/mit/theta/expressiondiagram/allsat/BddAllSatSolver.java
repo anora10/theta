@@ -4,6 +4,7 @@ import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
+import hu.bme.mit.theta.core.utils.VarIndexing;
 import hu.bme.mit.theta.expressiondiagram.ExpressionNode;
 import hu.bme.mit.theta.expressiondiagram.SolutionCursor;
 import hu.bme.mit.theta.expressiondiagram.VariableSubstitution;
@@ -66,6 +67,7 @@ public class BddAllSatSolver implements AllSatSolver{
     @Override
     public Valuation next() {
         isFinal = ! solutionCursor.moveNext();
-        return isFinal ? null : solutionCursor.getSolutionValuation();
+        if (isFinal) return null;
+        return solutionCursor.getSolutionValuation();
     }
 }

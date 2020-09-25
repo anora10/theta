@@ -57,6 +57,7 @@ import hu.bme.mit.theta.common.logging.Logger;
 import hu.bme.mit.theta.common.logging.NullLogger;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
+import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
 import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import hu.bme.mit.theta.expressiondiagram.allsat.NaivAllSatSolverFactory;
 import hu.bme.mit.theta.solver.ItpSolver;
@@ -69,6 +70,10 @@ import hu.bme.mit.theta.sts.analysis.initprec.StsInitPrec;
 import hu.bme.mit.theta.sts.analysis.initprec.StsPropInitPrec;
 
 public final class StsConfigBuilder {
+
+	public enum AllSat {
+		LOOP, MDD
+	}
 
 	public enum Domain {
 		EXPL, PRED_BOOL, PRED_BOOL_BDD, PRED_CART, PRED_SPLIT
@@ -120,15 +125,17 @@ public final class StsConfigBuilder {
 	private final SolverFactory solverFactory;
 	private final Domain domain;
 	private final Refinement refinement;
+	private final AllSat allSat;
 	private Search search = Search.BFS;
 	private PredSplit predSplit = PredSplit.WHOLE;
 	private InitPrec initPrec = InitPrec.EMPTY;
 	private PruneStrategy pruneStrategy = PruneStrategy.LAZY;
 
-	public StsConfigBuilder(final Domain domain, final Refinement refinement, final SolverFactory solverFactory) {
+	public StsConfigBuilder(final Domain domain, final Refinement refinement, final SolverFactory solverFactory, final AllSat allSat) {
 		this.domain = domain;
 		this.refinement = refinement;
 		this.solverFactory = solverFactory;
+		this.allSat = allSat;
 	}
 
 	public StsConfigBuilder logger(final Logger logger) {
@@ -161,10 +168,18 @@ public final class StsConfigBuilder {
 		final LTS<State, StsAction> lts = StsLts.create(sts);
 		final Expr<BoolType> init = sts.getInit();
 		final Expr<BoolType> negProp = Not(sts.getProp());
+		final AllSatSolverFactory factory;
+		switch (allSat) {
+			case LOOP : factory = NaivAllSatSolverFactory.getInstance();
+				break;
+			case MDD : factory = BddAllSatSolverFactory.getInstance();
+				break;
+			default: factory = NaivAllSatSolverFactory.getInstance();
+		}
 
 		if (domain == Domain.EXPL) {
 			final Predicate<ExplState> target = new ExplStatePredicate(negProp, solver);
-			final Analysis<ExplState, ExprAction, ExplPrec> analysis = ExplAnalysis.create(new BddAllSatSolverFactory(), init);
+			final Analysis<ExplState, ExprAction, ExplPrec> analysis = ExplAnalysis.create(factory, init);
 			final ArgBuilder<ExplState, StsAction, ExplPrec> argBuilder = ArgBuilder.create(lts, analysis, target,
 					true);
 			final Abstractor<ExplState, StsAction, ExplPrec> abstractor = BasicAbstractor.builder(argBuilder)
@@ -206,19 +221,18 @@ public final class StsConfigBuilder {
 			final ExplPrec prec = initPrec.builder.createExpl(sts);
 			return StsConfig.create(checker, prec);
 
-		} else if (domain == Domain.PRED_BOOL || domain == Domain.PRED_BOOL_BDD || domain == Domain.PRED_CART || domain == Domain.PRED_SPLIT) {
+		} else if (domain == Domain.PRED_BOOL || domain == Domain.PRED_CART || domain == Domain.PRED_SPLIT) {
 			PredAbstractor predAbstractor = null;
 			switch (domain) {
 				case PRED_BOOL:
-					predAbstractor = PredAbstractors.booleanAbstractor(solver, NaivAllSatSolverFactory.getInstance());
-					break;
-				case PRED_BOOL_BDD:
-					predAbstractor = PredAbstractors.booleanAbstractor(solver, BddAllSatSolverFactory.getInstance());
+					predAbstractor = PredAbstractors.booleanAbstractor(solver, factory);
 					break;
 				case PRED_SPLIT:
+					if (allSat == AllSat.MDD) throw new UnsupportedOperationException(" PRED_SPLIT is not supported with MDD AllSAT solution method.");
 					predAbstractor = PredAbstractors.booleanSplitAbstractor(solver);
 					break;
 				case PRED_CART:
+					if (allSat == AllSat.MDD) throw new UnsupportedOperationException(" PRED_CART is not supported with MDD AllSAT solution method.");
 					predAbstractor = PredAbstractors.cartesianAbstractor(solver);
 					break;
 				default:

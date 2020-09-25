@@ -1,16 +1,18 @@
 package hu.bme.mit.theta.expressiondiagram.allsat;
 
-import hu.bme.mit.theta.core.decl.ConstDecl;
+import hu.bme.mit.theta.common.logging.ConsoleLogger;
+import hu.bme.mit.theta.common.logging.Logger;
 import hu.bme.mit.theta.core.decl.Decl;
+import hu.bme.mit.theta.core.decl.VarDecl;
+import hu.bme.mit.theta.core.model.ImmutableValuation;
 import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
+import hu.bme.mit.theta.core.utils.VarIndexing;
+import hu.bme.mit.theta.expressiondiagram.ExpressionNode;
 
 import java.beans.Expression;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public interface AllSatSolver extends Iterator<Valuation> {
     Expression expression = null;

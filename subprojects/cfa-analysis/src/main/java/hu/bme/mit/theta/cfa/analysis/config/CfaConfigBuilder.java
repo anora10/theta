@@ -57,6 +57,7 @@ import hu.bme.mit.theta.cfa.analysis.prec.GlobalCfaPrec;
 import hu.bme.mit.theta.cfa.analysis.prec.GlobalCfaPrecRefiner;
 import hu.bme.mit.theta.cfa.analysis.prec.LocalCfaPrec;
 import hu.bme.mit.theta.cfa.analysis.prec.LocalCfaPrecRefiner;
+import hu.bme.mit.theta.common.logging.ConsoleLogger;
 import hu.bme.mit.theta.common.logging.Logger;
 import hu.bme.mit.theta.common.logging.NullLogger;
 import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
@@ -66,6 +67,10 @@ import hu.bme.mit.theta.solver.ItpSolver;
 import hu.bme.mit.theta.solver.SolverFactory;
 
 public class CfaConfigBuilder {
+	public enum AllSat {
+		LOOP, MDD
+	}
+
 	public enum Domain {
 		EXPL, PRED_BOOL, PRED_BOOL_BDD, PRED_CART, PRED_SPLIT
 	}
@@ -173,6 +178,7 @@ public class CfaConfigBuilder {
 	private final SolverFactory solverFactory;
 	private final Domain domain;
 	private final Refinement refinement;
+	private final AllSat allSat;
 	private Search search = Search.BFS;
 	private PredSplit predSplit = PredSplit.WHOLE;
 	private PrecGranularity precGranularity = PrecGranularity.GLOBAL;
@@ -181,10 +187,11 @@ public class CfaConfigBuilder {
 	private InitPrec initPrec = InitPrec.EMPTY;
 	private PruneStrategy pruneStrategy = PruneStrategy.LAZY;
 
-	public CfaConfigBuilder(final Domain domain, final Refinement refinement, final SolverFactory solverFactory) {
+	public CfaConfigBuilder(final Domain domain, final Refinement refinement, final SolverFactory solverFactory, final AllSat allSat) {
 		this.domain = domain;
 		this.refinement = refinement;
 		this.solverFactory = solverFactory;
+		this.allSat = allSat;
 	}
 
 	public CfaConfigBuilder logger(final Logger logger) {
@@ -230,10 +237,17 @@ public class CfaConfigBuilder {
 	public CfaConfig<? extends State, ? extends Action, ? extends Prec> build(final CFA cfa) {
 		final ItpSolver solver = solverFactory.createItpSolver();
 		final CfaLts lts = encoding.getLts();
-		//TODO beallítani az allsat kapcsolo alapjan
-		final AllSatSolverFactory factory = BddAllSatSolverFactory.getInstance();
+		final AllSatSolverFactory factory;
+		switch (allSat) {
+			case LOOP : factory = NaivAllSatSolverFactory.getInstance();
+						break;
+			case MDD : factory = BddAllSatSolverFactory.getInstance();
+						break;
+			default: factory = NaivAllSatSolverFactory.getInstance();
+		}
 
 		if (domain == Domain.EXPL) {
+			new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n MEX ENUM: " + maxEnum);
 			final Analysis<CfaState<ExplState>, CfaAction, CfaPrec<ExplPrec>> analysis = CfaAnalysis
 					.create(cfa.getInitLoc(), ExplStmtAnalysis.create(factory, True(), maxEnum));
 			final ArgBuilder<CfaState<ExplState>, CfaAction, CfaPrec<ExplPrec>> argBuilder = ArgBuilder.create(lts,
@@ -291,20 +305,18 @@ public class CfaConfigBuilder {
 
 			return CfaConfig.create(checker, prec);
 
-		} else if (domain == Domain.PRED_BOOL || domain == Domain.PRED_BOOL_BDD ||domain == Domain.PRED_CART || domain == Domain.PRED_SPLIT) {
+		} else if (domain == Domain.PRED_BOOL || domain == Domain.PRED_CART || domain == Domain.PRED_SPLIT) {
 			PredAbstractor predAbstractor = null;
-// TODO log + kapcsoló
 			switch (domain) {
 				case PRED_BOOL:
-					predAbstractor = PredAbstractors.booleanAbstractor(solver, NaivAllSatSolverFactory.getInstance());
-					break;
-				case PRED_BOOL_BDD:
-					predAbstractor = PredAbstractors.booleanAbstractor(solver, BddAllSatSolverFactory.getInstance());
+					predAbstractor = PredAbstractors.booleanAbstractor(solver, factory);
 					break;
 				case PRED_SPLIT:
+					if (allSat == AllSat.MDD) throw new UnsupportedOperationException(" PRED_SPLIT is not supported with MDD AllSAT solution method.");
 					predAbstractor = PredAbstractors.booleanSplitAbstractor(solver);
 					break;
 				case PRED_CART:
+					if (allSat == AllSat.MDD) throw new UnsupportedOperationException(" PRED_CART is not supported with MDD AllSAT solution method.");
 					predAbstractor = PredAbstractors.cartesianAbstractor(solver);
 					break;
 				default:

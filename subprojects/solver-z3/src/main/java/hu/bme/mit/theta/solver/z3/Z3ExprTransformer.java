@@ -31,6 +31,7 @@ import hu.bme.mit.theta.common.dsl.Env;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.decl.ParamDecl;
+import hu.bme.mit.theta.core.decl.VarDecl;
 import hu.bme.mit.theta.core.dsl.DeclSymbol;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.Type;

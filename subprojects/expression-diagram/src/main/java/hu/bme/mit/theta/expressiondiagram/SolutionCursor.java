@@ -162,12 +162,15 @@ public class SolutionCursor {
      */
     public Valuation getSolutionValuation () {
         ImmutableValuation.Builder builder = ImmutableValuation.builder();
+        boolean toBuild = false;
         for (VariableSubstitution vs: nodeCursors.keySet()) {
             if (nodeCursors.get(vs).getLiteral() != null) {
+                toBuild = true;
                 builder.put(vs.decl, nodeCursors.get(vs).getLiteral());
             }
         }
-        return builder.build();
+//        return toBuild ? builder.build() : null;
+        return  builder.build();
     }
 
 }

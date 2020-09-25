@@ -8,6 +8,7 @@ import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
+import hu.bme.mit.theta.core.utils.VarIndexing;
 import hu.bme.mit.theta.expressiondiagram.ExpressionNode;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
@@ -27,7 +28,7 @@ public class NaivAllSatSolver implements AllSatSolver{
     private Solver solver = Z3SolverFactory.getInstance().createSolver();
     private List<? extends Decl> decls;
     boolean isFinal = false;
-    private Logger logger;
+    private Logger logger = new ConsoleLogger(Logger.Level.MAINSTEP);
 
     @Override
     public void setK(HashMap<Decl, Integer> ks) {
@@ -82,6 +83,7 @@ public class NaivAllSatSolver implements AllSatSolver{
     @Override
     public Valuation next() {
         HashMap<Decl, LitExpr> solutionMap = nextMap();
+        if (solutionMap == null) return null;
         ImmutableValuation.Builder builder = ImmutableValuation.builder();
         for (Decl d: solutionMap.keySet()) {
             builder.put(d, solutionMap.get(d));

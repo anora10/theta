@@ -73,6 +73,9 @@ public class CfaCli {
 	private final String[] args;
 	private final TableWriter writer;
 
+	@Parameter(names = {"--allsat"}, description = "AllSAT solution method (LOOP/MDD)")
+	CfaConfigBuilder.AllSat allSat = CfaConfigBuilder.AllSat.LOOP;
+
 	@Parameter(names = "--domain", description = "Abstract domain")
 	Domain domain = Domain.PRED_CART;
 
@@ -94,8 +97,9 @@ public class CfaCli {
 	@Parameter(names = "--encoding", description = "Block encoding")
 	Encoding encoding = Encoding.LBE;
 
+	//TODO maxenum is set to 10
 	@Parameter(names = "--maxenum", description = "Maximal number of explicitly enumerated successors (0: unlimited)")
-	Integer maxEnum = 0;
+	Integer maxEnum = 10;
 
 	@Parameter(names = "--initprec", description = "Initial precision of abstraction")
 	InitPrec initPrec = InitPrec.EMPTY;
@@ -265,7 +269,7 @@ public class CfaCli {
 	}
 
 	private CfaConfig<?, ?, ?> buildConfiguration(final CFA cfa) {
-		return new CfaConfigBuilder(domain, refinement, solverFactory).precGranularity(precGranularity).search(search)
+		return new CfaConfigBuilder(domain, refinement, solverFactory, allSat).precGranularity(precGranularity).search(search)
 				.predSplit(predSplit).encoding(encoding).maxEnum(maxEnum).initPrec(initPrec)
 				.pruneStrategy(pruneStrategy).logger(logger).build(cfa);
 	}

@@ -67,6 +67,9 @@ public class StsCli {
 	private final String[] args;
 	private final TableWriter writer;
 
+	@Parameter(names = {"--allsat"}, description = "AllSAT solution method (LOOP/MDD)")
+	StsConfigBuilder.AllSat allSat = StsConfigBuilder.AllSat.MDD;
+
 	@Parameter(names = {"--domain"}, description = "Abstract domain")
 	Domain domain = Domain.PRED_CART;
 
@@ -174,7 +177,7 @@ public class StsCli {
 	}
 
 	private StsConfig<?, ?, ?> buildConfiguration(final STS sts) {
-		return new StsConfigBuilder(domain, refinement, solverFactory).initPrec(initPrec).search(search)
+		return new StsConfigBuilder(domain, refinement, solverFactory, allSat).initPrec(initPrec).search(search)
 				.predSplit(predSplit).pruneStrategy(pruneStrategy).logger(logger).build(sts);
 	}
 

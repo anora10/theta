@@ -37,6 +37,7 @@ import java.util.Map.Entry;
 import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
 import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.ImmutableSet;
