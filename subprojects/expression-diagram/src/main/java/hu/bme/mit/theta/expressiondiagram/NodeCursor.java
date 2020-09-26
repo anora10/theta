@@ -73,11 +73,18 @@ public class NodeCursor {
         }
         // calculate new result
         mapCursor = null;
-        if (node.nextExpression.size() == node.variableSubstitution.getMaxsize())
+        if (node.nextExpression.size() >= node.variableSubstitution.getMaxsize())
             node.isFinal = true;
         if (node.isFinal) {
             // node revisited, no more solutions
             return false;
+        }
+        if (! ExpressionNode.containsDecl(node.expression, node.variableSubstitution.getDecl())) {
+            // decl not present in expr, default next node
+            literal = DefaultLitExpr.getInstance();
+            newNode = node.substitute(literal);
+            node.isFinal = true;
+            return true;
         }
         // get next solution from solver,
         // it also sets newNode and literal

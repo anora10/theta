@@ -60,7 +60,7 @@ public class ExpressionNode {
     ExpressionNode substitute (LitExpr<? extends Type> literal) {
         // if literal is null, or decl is not in the expression, expression goes one level below
         ExpressionNode newNode;
-        if (literal == null || !containsDecl) {
+        if (literal == null || !containsDecl || literal == DefaultLitExpr.getInstance()) {
             // literal value has no effect on resulting expression
             newNode = variableSubstitution.next.checkIn(expression);
             isFinal = true;
@@ -136,6 +136,16 @@ public class ExpressionNode {
         final Set<ConstDecl<?>> constDecls = new HashSet<>();
         collectDecls(expr, (Collection<Decl<?>>) decls);
         return decls;
+    }
+
+    /**
+     * Check if expression contains decl
+     *
+     * @param expr expression
+     * @return set of decls
+     */
+    public static boolean containsDecl(final Expr<?> expr, Decl<?> decl) {
+        return getDecls(expr).contains(decl);
     }
 
     /**

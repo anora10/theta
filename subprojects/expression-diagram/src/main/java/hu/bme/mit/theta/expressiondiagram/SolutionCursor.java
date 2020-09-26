@@ -51,10 +51,8 @@ public class SolutionCursor {
      */
     private boolean findFirstPath(ExpressionNode n, VariableSubstitution vs) {
         solver.push();
-        if (lastLiteral != null) solver.add(Eq(lastDecl.getRef(), lastLiteral));
+        if (lastLiteral != null && lastLiteral != DefaultLitExpr.getInstance()) solver.add(Eq(lastDecl.getRef(), lastLiteral));
         if (vs == null || vs.next == null || n.expression.equals(TrueExpr.getInstance())) {
-            // TODO false?
-            // TODO literal-lal kezdeni valamit
             if (vs != null && vs.next != null)
                 nodeCursors.put(vs, n.makeCursor(solver));
             //return n.isSatisfiable();    //only for user input (either as root node or after substitution)
@@ -92,7 +90,9 @@ public class SolutionCursor {
         do {
             if (nodeCursors.containsKey(vs)) {
                 LitExpr literal = nodeCursors.get(vs).getLiteral();
-                solver.add(Neq(vs.getDecl().getRef(),literal));
+                if (literal != DefaultLitExpr.getInstance()) {
+                    solver.add(Neq(vs.getDecl().getRef(), literal));
+                }
             }
             if(!nodeCursors.containsKey(vs) || !nodeCursors.get(vs).moveNext()) {
                 solver.pop();
@@ -162,10 +162,9 @@ public class SolutionCursor {
      */
     public Valuation getSolutionValuation () {
         ImmutableValuation.Builder builder = ImmutableValuation.builder();
-        boolean toBuild = false;
         for (VariableSubstitution vs: nodeCursors.keySet()) {
-            if (nodeCursors.get(vs).getLiteral() != null) {
-                toBuild = true;
+            LitExpr literal = nodeCursors.get(vs).getLiteral();
+            if (literal != null && literal != DefaultLitExpr.getInstance()) {
                 builder.put(vs.decl, nodeCursors.get(vs).getLiteral());
             }
         }

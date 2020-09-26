@@ -98,15 +98,14 @@ public final class ExplStmtTransFunc implements TransFunc<ExplState, StmtAction,
 				}
 				Expr solverExpr = PathUtils.unfold(expr, 0);
 				allSatSolver.init(solverExpr, decls);
-				new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n expr: " + solverExpr);
-				new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n decls " + decls);
-//				new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n limit " + maxToQuery);
+//				new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n expr: " + solverExpr);
+//				new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n decls " + decls);
 				while (allSatSolver.hasNext() && (maxToQuery == 0 || maxToQuery >= succStates.size())) {
 					Valuation model = allSatSolver.next();
 //					if (model != null) new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n valuation BEFORE " + model.toExpr());
 					if (model == null) continue;
 					final Valuation valuation = PathUtils.extractValuation(model, nextIdx);
-					if(valuation != null) new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n valuation AFTER " + valuation.toExpr());
+//					if(valuation != null) new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n valuation AFTER " + valuation.toExpr());
 					ExplState explState = prec.createState(valuation);
 					//ExplState explState = ExplState.of(valuation);
 					succStates.add(explState);

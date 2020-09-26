@@ -4,6 +4,7 @@ import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
+import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.utils.VarIndexing;
 import hu.bme.mit.theta.expressiondiagram.ExpressionNode;
 import hu.bme.mit.theta.expressiondiagram.SolutionCursor;
@@ -44,7 +45,8 @@ public class BddAllSatSolver implements AllSatSolver{
         setVariables(decls);
         node = new ExpressionNode(vs, expr);
         solutionCursor = new SolutionCursor(node);
-        isFinal = false;
+        //TODO ha nincs megoldas
+        isFinal = expr.equals(FalseExpr.getInstance());
     }
 
     @Override
@@ -68,6 +70,8 @@ public class BddAllSatSolver implements AllSatSolver{
     public Valuation next() {
         isFinal = ! solutionCursor.moveNext();
         if (isFinal) return null;
-        return solutionCursor.getSolutionValuation();
+        Valuation valuation = solutionCursor.getSolutionValuation();
+        if (valuation.toMap().isEmpty()) isFinal = true;
+        return valuation;
     }
 }
