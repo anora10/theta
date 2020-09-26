@@ -144,8 +144,8 @@ public class SolutionCursor {
      *
      * @return map containing variable-literal pairs
      */
-    public HashMap<Decl, LitExpr> getSolutionMap () {
-        HashMap<Decl, LitExpr> solutionMap = new LinkedHashMap<>();
+    public HashMap<Decl<?>, LitExpr<?>> getSolutionMap () {
+        HashMap<Decl<?>, LitExpr<?>> solutionMap = new LinkedHashMap<>();
         for (VariableSubstitution vs: nodeCursors.keySet()) {
             if (nodeCursors.get(vs).getLiteral() != null) {
                 solutionMap.put(vs.decl, nodeCursors.get(vs).getLiteral());

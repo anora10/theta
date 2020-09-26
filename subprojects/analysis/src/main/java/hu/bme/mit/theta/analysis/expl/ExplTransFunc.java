@@ -46,7 +46,7 @@ public final class ExplTransFunc implements TransFunc<ExplState, ExprAction, Exp
 		checkNotNull(state);
 		checkNotNull(action);
 		checkNotNull(prec);
-		final Collection<ExplState> succStates = ExprStates.createStatesForExpr(factory,
+		final Collection<ExplState> succStates = ExprStates.createStatesForExpr(
 				BoolExprs.And(state.toExpr(), action.toExpr()), 0, prec::createState, action.nextIndexing());
 		return succStates.isEmpty() ? Collections.singleton(ExplState.bottom()) : succStates;
 	}

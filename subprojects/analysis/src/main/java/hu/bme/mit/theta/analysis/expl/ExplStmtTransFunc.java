@@ -96,34 +96,18 @@ public final class ExplStmtTransFunc implements TransFunc<ExplState, StmtAction,
 					int index = nextIdx.get(varDecl);
 					decls.add(varDecl.getConstDecl(index));
 				}
-				Expr solverExpr = PathUtils.unfold(expr, 0);
+				Expr<?> solverExpr = PathUtils.unfold(expr, 0);
 				allSatSolver.init(solverExpr, decls);
-//				new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n expr: " + solverExpr);
-//				new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n decls " + decls);
-				while (allSatSolver.hasNext() && (maxToQuery == 0 || maxToQuery >= succStates.size())) {
-					Valuation model = allSatSolver.next();
-//					if (model != null) new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n valuation BEFORE " + model.toExpr());
-					if (model == null) continue;
-					final Valuation valuation = PathUtils.extractValuation(model, nextIdx);
-//					if(valuation != null) new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n valuation AFTER " + valuation.toExpr());
-					ExplState explState = prec.createState(valuation);
-					//ExplState explState = ExplState.of(valuation);
-					succStates.add(explState);
-				}
 
-				// expr a kihajtogatott kifejezes,
-				// ciklikusan a maxToQuery-vel megoldás és azt a succStates
 				// We query (max + 1) states from the solver to see if there
 				// would be more than max
-				// TODO ezt kell lecserelni, formula az expr-ben, prec-beliek vannak kovete, pontosabban azok 1-es
-				// valtozataival
-				// hogy legyen a prec-belibol _1es? VarIndexing.get(Decl) -> megadja, hogy x épp hanyas indexnél jár
-				// VarDecl.getConstDecl(int) -> megadja a legnagyobb indexű knstans decl-t
-				// kapott valuation-ben még indexelt változók vannak
-				// PathUtils.extractValuation
-				// ExplState.of()-fal
-				//final Collection<ExplState> succStates = ExprStates.createStatesForExpr(factory, expr, 0,
-				//		prec::createState, nextIdx, maxToQuery);
+				while (allSatSolver.hasNext() && (maxToQuery == 0 || maxToQuery >= succStates.size())) {
+					Valuation model = allSatSolver.next();
+					if (model == null) continue;
+					final Valuation valuation = PathUtils.extractValuation(model, nextIdx);
+					ExplState explState = prec.createState(valuation);
+					succStates.add(explState);
+				}
 
 				if (succStates.isEmpty()) {
 					return singleton(ExplState.bottom());

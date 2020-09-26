@@ -1,15 +1,9 @@
 package hu.bme.mit.theta.expressiondiagram.allsat;
 
-import hu.bme.mit.theta.common.logging.ConsoleLogger;
-import hu.bme.mit.theta.common.logging.Logger;
 import hu.bme.mit.theta.core.decl.Decl;
-import hu.bme.mit.theta.core.decl.VarDecl;
-import hu.bme.mit.theta.core.model.ImmutableValuation;
 import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
-import hu.bme.mit.theta.core.utils.VarIndexing;
-import hu.bme.mit.theta.expressiondiagram.ExpressionNode;
 
 import java.beans.Expression;
 import java.util.*;
@@ -18,13 +12,13 @@ public interface AllSatSolver extends Iterator<Valuation> {
     Expression expression = null;
 
     // init functions
-    void setK (HashMap<Decl, Integer> ks);
+    void setK (HashMap<Decl<?>, Integer> ks);
     void setK(int k);
-    void init (Expr expr, List<? extends Decl> decls);
-    void init (Expr expr);
+    void init (Expr<?> expr, List<? extends Decl> decls);
+    void init (Expr<?> expr);
 
     // use functions
-    HashMap<Decl, LitExpr> nextMap();
+    HashMap<Decl<?>, LitExpr<?>> nextMap();
 
 
     default HashSet<Valuation> getAllSolutions() {

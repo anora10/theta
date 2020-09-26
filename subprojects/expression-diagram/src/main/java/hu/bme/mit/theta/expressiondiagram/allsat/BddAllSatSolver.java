@@ -23,9 +23,9 @@ public class BddAllSatSolver implements AllSatSolver{
     }
 
     @Override
-    public void setK(HashMap<Decl, Integer> ks) {
+    public void setK(HashMap<Decl<?>, Integer> ks) {
         VariableSubstitution tempVS = vs;
-        for (Decl d : ks.keySet()) {
+        for (Decl<?> d : ks.keySet()) {
             while (tempVS != null && ! tempVS.getDecl().equals(d)) tempVS = tempVS.getNext();
             if (tempVS == null) continue;
             tempVS.setMaxSize(ks.get(d));
@@ -37,26 +37,26 @@ public class BddAllSatSolver implements AllSatSolver{
         VariableSubstitution tempVS = vs;
         while (tempVS != null) {
             tempVS.setMaxSize(k);
+            tempVS = tempVS.getNext();
         }
     }
 
     @Override
-    public void init(Expr expr, List<? extends Decl> decls) {
+    public void init(Expr<?> expr, List<? extends Decl> decls) {
         setVariables(decls);
         node = new ExpressionNode(vs, expr);
         solutionCursor = new SolutionCursor(node);
-        //TODO ha nincs megoldas
         isFinal = expr.equals(FalseExpr.getInstance());
     }
 
     @Override
-    public void init(Expr expr) {
+    public void init(Expr<?> expr) {
         List<? extends Decl> decls = new ArrayList<>(ExpressionNode.getDecls(expr));
         init(expr, decls);
     }
 
     @Override
-    public HashMap<Decl, LitExpr> nextMap() {
+    public HashMap<Decl<?>, LitExpr<?>> nextMap() {
         isFinal = ! solutionCursor.moveNext();
         return isFinal ? null : solutionCursor.getSolutionMap();
     }

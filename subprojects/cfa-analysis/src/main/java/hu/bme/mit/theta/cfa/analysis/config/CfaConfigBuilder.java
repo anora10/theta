@@ -171,7 +171,7 @@ public class CfaConfigBuilder {
 	}
 
 	public enum InitPrec {
-		EMPTY, ALLVARS, ALLASSUMES;
+		EMPTY, ALLVARS, ALLASSUMES
 	}
 
 	private Logger logger = NullLogger.getInstance();
@@ -247,7 +247,6 @@ public class CfaConfigBuilder {
 		}
 
 		if (domain == Domain.EXPL) {
-			new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "\n MEX ENUM: " + maxEnum);
 			final Analysis<CfaState<ExplState>, CfaAction, CfaPrec<ExplPrec>> analysis = CfaAnalysis
 					.create(cfa.getInitLoc(), ExplStmtAnalysis.create(factory, True(), maxEnum));
 			final ArgBuilder<CfaState<ExplState>, CfaAction, CfaPrec<ExplPrec>> argBuilder = ArgBuilder.create(lts,
@@ -306,7 +305,7 @@ public class CfaConfigBuilder {
 			return CfaConfig.create(checker, prec);
 
 		} else if (domain == Domain.PRED_BOOL || domain == Domain.PRED_CART || domain == Domain.PRED_SPLIT) {
-			PredAbstractor predAbstractor = null;
+			PredAbstractor predAbstractor;
 			switch (domain) {
 				case PRED_BOOL:
 					predAbstractor = PredAbstractors.booleanAbstractor(solver, factory);

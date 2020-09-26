@@ -47,9 +47,9 @@ public class ExprStatesTest {
 		final Expr<BoolType> expr = Geq(vx.getRef(), Int(0));
 		final VarIndexing idx = VarIndexing.all(0);
 
-		Assert.assertEquals(1, ExprStates.createStatesForExpr(factory, expr, 0, prec::createState, idx, 1).size());
-		Assert.assertEquals(5, ExprStates.createStatesForExpr(factory, expr, 0, prec::createState, idx, 5).size());
-		Assert.assertEquals(10, ExprStates.createStatesForExpr(factory, expr, 0, prec::createState, idx, 10).size());
+		Assert.assertEquals(1, ExprStates.createStatesForExpr(expr, 0, prec::createState, idx, 1).size());
+		Assert.assertEquals(5, ExprStates.createStatesForExpr(expr, 0, prec::createState, idx, 5).size());
+		Assert.assertEquals(10, ExprStates.createStatesForExpr(expr, 0, prec::createState, idx, 10).size());
 	}
 
 	@Test
@@ -57,10 +57,10 @@ public class ExprStatesTest {
 		final Expr<BoolType> expr = BoolExprs.And(Geq(vx.getRef(), Int(0)), Geq(Int(3), vx.getRef()));
 		final VarIndexing idx = VarIndexing.all(0);
 
-		Assert.assertEquals(2, ExprStates.createStatesForExpr(factory, expr, 0, prec::createState, idx, 2).size());
-		Assert.assertEquals(4, ExprStates.createStatesForExpr(factory, expr, 0, prec::createState, idx, 4).size());
-		Assert.assertEquals(4, ExprStates.createStatesForExpr(factory, expr, 0, prec::createState, idx, 10).size());
-		Assert.assertEquals(4, ExprStates.createStatesForExpr(factory, expr, 0, prec::createState, idx, 0).size());
-		Assert.assertEquals(4, ExprStates.createStatesForExpr(factory, expr, 0, prec::createState, idx).size());
+		Assert.assertEquals(2, ExprStates.createStatesForExpr(expr, 0, prec::createState, idx, 2).size());
+		Assert.assertEquals(4, ExprStates.createStatesForExpr(expr, 0, prec::createState, idx, 4).size());
+		Assert.assertEquals(4, ExprStates.createStatesForExpr(expr, 0, prec::createState, idx, 10).size());
+		Assert.assertEquals(4, ExprStates.createStatesForExpr(expr, 0, prec::createState, idx, 0).size());
+		Assert.assertEquals(4, ExprStates.createStatesForExpr(expr, 0, prec::createState, idx).size());
 	}
 }

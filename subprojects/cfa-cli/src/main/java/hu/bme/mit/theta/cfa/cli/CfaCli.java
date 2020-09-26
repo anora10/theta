@@ -97,7 +97,6 @@ public class CfaCli {
 	@Parameter(names = "--encoding", description = "Block encoding")
 	Encoding encoding = Encoding.LBE;
 
-	//TODO maxenum is set to 10
 	@Parameter(names = "--maxenum", description = "Maximal number of explicitly enumerated successors (0: unlimited)")
 	Integer maxEnum = 10;
 

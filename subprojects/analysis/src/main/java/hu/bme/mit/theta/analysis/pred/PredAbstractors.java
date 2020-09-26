@@ -150,7 +150,7 @@ public class PredAbstractors {
 				// Itt legenerálni az összes megoldást (actLits-re)
 				while (allSatSolver.hasNext()) { // Itt végigiterálni az összes megoldáson
 					final Set<Expr<BoolType>> newStatePreds = new HashSet<>();
-					HashMap<Decl, LitExpr> solutions = allSatSolver.nextMap();
+					HashMap<Decl<?>, LitExpr<?>> solutions = allSatSolver.nextMap();
 					if (solutions == null) continue; // no more solutions
 					for (int i = 0; i < preds.size(); ++i) {
 						final ConstDecl<BoolType> lit = (ConstDecl<BoolType>) actLits.get(i);
