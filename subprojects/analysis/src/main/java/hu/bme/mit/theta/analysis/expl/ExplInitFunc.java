@@ -16,14 +16,18 @@
 package hu.bme.mit.theta.analysis.expl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static hu.bme.mit.theta.core.type.booltype.BoolExprs.And;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 import hu.bme.mit.theta.analysis.InitFunc;
 import hu.bme.mit.theta.analysis.expr.ExprStates;
+import hu.bme.mit.theta.core.decl.ConstDecl;
+import hu.bme.mit.theta.core.decl.VarDecl;
+import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
+import hu.bme.mit.theta.core.utils.PathUtils;
 import hu.bme.mit.theta.core.utils.VarIndexing;
 import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolver;
 import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
@@ -47,8 +51,31 @@ public final class ExplInitFunc implements InitFunc<ExplState, ExplPrec> {
 	@Override
 	public Collection<? extends ExplState> getInitStates(final ExplPrec prec) {
 		checkNotNull(prec);
-		final Collection<ExplState> initStates = ExprStates.createStatesForExpr(initExpr, 0, prec::createState,
-				VarIndexing.all(0));
+//		final Collection<ExplState> initStates0 = ExprStates.createStatesForExpr(initExpr, 0, prec::createState,
+//				VarIndexing.all(0));
+		final VarIndexing nextIdx = VarIndexing.all(0);
+		Collection<ExplState> initStates = new ArrayList<>();
+		AllSatSolver allSatSolver = factory.createSolver();
+		// create list of followed decls
+		List<ConstDecl<?>> decls = new ArrayList<>();
+		Set<VarDecl<?>> varDeclSet = prec.getVars();
+		for (VarDecl<?> varDecl : varDeclSet) {
+			int index = nextIdx.get(varDecl);
+			decls.add(varDecl.getConstDecl(index));
+		}
+		Expr<?> solverExpr = PathUtils.unfold(initExpr, 0);
+		allSatSolver.init(solverExpr, decls);
+
+		// We query (max + 1) states from the solver to see if there
+		// would be more than max
+		while (allSatSolver.hasNext()) {
+			Valuation model = allSatSolver.next();
+			if (model == null) continue;
+			final Valuation valuation = PathUtils.extractValuation(model, nextIdx);
+			ExplState explState = prec.createState(valuation);
+			initStates.add(explState);
+		}
+
 		return initStates.isEmpty() ? Collections.singleton(ExplState.bottom()) : initStates;
 	}
 

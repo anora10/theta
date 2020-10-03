@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Function;
 
+import hu.bme.mit.theta.common.logging.ConsoleLogger;
+import hu.bme.mit.theta.common.logging.Logger;
 import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
@@ -49,6 +51,7 @@ public final class ExprStates {
 	 */
 	public static <S extends ExprState> Collection<S> createStatesForExpr(final Expr<BoolType> expr, final int exprIndex,
 																		  final Function<? super Valuation, ? extends S> valuationToState, final VarIndexing stateIndexing) {
+		new ConsoleLogger(Logger.Level.MAINSTEP).write(Logger.Level.MAINSTEP, "ExprStates.createStatesForExpr()");
 		return createStatesForExpr(expr, exprIndex, valuationToState, stateIndexing, 0);
 	}
 

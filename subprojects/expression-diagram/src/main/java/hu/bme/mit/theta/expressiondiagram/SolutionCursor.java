@@ -7,6 +7,9 @@ import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
+import hu.bme.mit.theta.expressiondiagram.logger.EmptyLogger;
+import hu.bme.mit.theta.expressiondiagram.logger.ExpressionDiagramLogger;
+import hu.bme.mit.theta.expressiondiagram.logger.SmartLogger;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
@@ -22,6 +25,7 @@ public class SolutionCursor {
     private LitExpr lastLiteral = null;
     private Decl lastDecl = null;
     private Solver solver = Z3SolverFactory.getInstance().createSolver();
+    public static ExpressionDiagramLogger logger = new EmptyLogger();
 
     /**
      * Constructor setting root node

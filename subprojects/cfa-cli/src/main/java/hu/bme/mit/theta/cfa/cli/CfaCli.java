@@ -132,6 +132,11 @@ public class CfaCli {
 	}
 
 	public static void main(final String[] args) {
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		final CfaCli mainApp = new CfaCli(args);
 		mainApp.run();
 	}

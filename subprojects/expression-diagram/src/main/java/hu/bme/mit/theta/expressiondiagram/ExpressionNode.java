@@ -33,6 +33,7 @@ public class ExpressionNode {
     public ExpressionNode(VariableSubstitution vs, Expr expr) {
         variableSubstitution = vs;
         setExpression(expr);
+        SolutionCursor.logger.write(expr.toString(), this);
     }
 
     /**
