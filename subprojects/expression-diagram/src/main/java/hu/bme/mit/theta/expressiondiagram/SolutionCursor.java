@@ -26,7 +26,6 @@ public class SolutionCursor {
     private Decl lastDecl = null;
     private Solver solver = Z3SolverFactory.getInstance().createSolver();
     public static ExpressionDiagramLogger logger = new EmptyLogger();
-
     /**
      * Constructor setting root node
      */
@@ -41,8 +40,11 @@ public class SolutionCursor {
      * @param e expression
      */
     private void initiateSolver(Expr e) {
+        logger.write("Solver reset ", this);
         solver.reset();
+        logger.write("Solver add " + e.toString(), this);
         solver.add(e);
+        logger.write("Solver push ", this);
         solver.push();
     }
 
@@ -54,8 +56,13 @@ public class SolutionCursor {
      * @return false, if no satisfying assignments can be found
      */
     private boolean findFirstPath(ExpressionNode n, VariableSubstitution vs) {
+        logger.write("Solver push ", this);
         solver.push();
-        if (lastLiteral != null && lastLiteral != DefaultLitExpr.getInstance()) solver.add(Eq(lastDecl.getRef(), lastLiteral));
+        if (lastLiteral != null && lastLiteral != DefaultLitExpr.getInstance()) {
+            Expr expr = Eq(lastDecl.getRef(), lastLiteral);
+            logger.write("Solver add " + expr.toString(), this);
+            solver.add(expr);
+        }
         if (vs == null || vs.next == null || n.expression.equals(TrueExpr.getInstance())) {
             if (vs != null && vs.next != null)
                 nodeCursors.put(vs, n.makeCursor(solver));
@@ -67,7 +74,10 @@ public class SolutionCursor {
         boolean found;
         do {
             if (!nodeCursors.get(vs).moveNext()) {
+                logger.write("Solver pop ", this);
                 solver.pop();
+                logger.write("Solver assertions  " + solver.getAssertions().toString(), this);
+
                 return false;
             }
             lastDecl = vs.getDecl();
@@ -85,7 +95,9 @@ public class SolutionCursor {
      */
     private boolean findNextPath(VariableSubstitution vs) {
         if (vs == null || vs.next == null || (nodeCursors.containsKey(vs) && nodeCursors.get(vs).node.expression.equals(TrueExpr.getInstance())) ) {
+            logger.write("Solver pop ", this);
             solver.pop();
+            logger.write("Solver assertions  " + solver.getAssertions().toString(), this);
             return false;
         }
         if (findNextPath(vs.next))
@@ -95,11 +107,15 @@ public class SolutionCursor {
             if (nodeCursors.containsKey(vs)) {
                 LitExpr literal = nodeCursors.get(vs).getLiteral();
                 if (literal != DefaultLitExpr.getInstance()) {
-                    solver.add(Neq(vs.getDecl().getRef(), literal));
+                    Expr expr = Neq(vs.getDecl().getRef(), literal);
+                    logger.write("Solver add " + expr.toString(), this);
+                    solver.add(expr);
                 }
             }
             if(!nodeCursors.containsKey(vs) || !nodeCursors.get(vs).moveNext()) {
+                logger.write("Solver pop ", this);
                 solver.pop();
+                logger.write("Solver assertions  " + solver.getAssertions().toString(), this);
                 return false;
             }
             lastDecl = vs.getDecl();
@@ -118,7 +134,9 @@ public class SolutionCursor {
     public boolean moveNext() {
         if (node.variableSubstitution.next == null) {
             // input expression contains no literals
+            logger.write("Solver check ", this);
             boolean isSat = solver.check().isSat();
+            logger.write("Solver add false", this);
             solver.add(FalseExpr.getInstance());
             return isSat;
         }

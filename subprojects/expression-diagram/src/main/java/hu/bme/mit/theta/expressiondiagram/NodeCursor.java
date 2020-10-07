@@ -26,6 +26,7 @@ public class NodeCursor {
     private LitExpr<? extends Type> literal; // new Literal
     private ObjObjCursor<LitExpr<? extends Type>, ExpressionNode> mapCursor;
 
+
     Solver solver;
     private static Map<Decl<?>, LitExpr<?>> modelMap = null;
 
@@ -101,16 +102,19 @@ public class NodeCursor {
      * @return true, if solver found SAT assigment
      */
     private boolean getSolverResult() {
+        SolutionCursor.logger.write("Solver check ", this);
         SolverStatus status = solver.check();
         if (status.isUnsat()) {
             // no more satisfying assignments
             node.isFinal = true;
             return false;
         }
+        SolutionCursor.logger.write("Solver get model ", this);
         Valuation model = solver.getModel();
         /// save model as queue
         modelMap = model.toMap();
-        return saveSolverLiteral();
+        //return saveSolverLiteral();
+        return saveAllSolverLiterals();
     }
 
     private LitExpr<? extends Type> getDefaultLitexpr(Decl<? extends Type> decl) {
@@ -139,10 +143,40 @@ public class NodeCursor {
             // literal = DefaultLitExpr.getInstance();
         }
         // not inspected assignment found, create new node accordingly
-        // TODO: substituteAll for caching solution
         newNode = node.substitute(literal);
-        if (newNode == null || newNode.expression.equals(FalseExpr.getInstance())) return false;
-        if (newNode.expression.equals(TrueExpr.getInstance())) return true;
+        if (newNode == null || newNode.expression.equals(FalseExpr.getInstance())) {
+            newNode.isFinal = true;
+            return false;
+        }
+        if (newNode.expression.equals(TrueExpr.getInstance())) {
+            newNode.isFinal = true;
+            return true;
+        }
+        return true;
+    }
+
+    private boolean saveAllSolverLiterals() {
+        if (node.variableSubstitution == null || node.variableSubstitution.getDecl() == null) return true;
+
+        if (! ExpressionNode.containsDecl(node.expression, node.variableSubstitution.getDecl())) {
+            // decl not present in expr, default next node
+            literal = DefaultLitExpr.getInstance();
+            newNode = node.substitute(literal);
+            node.isFinal = true;
+            return true;
+        } else {
+            boolean answer = saveSolverLiteral();
+            if (answer == false) {
+                newNode.isFinal = true;
+                return false;
+            }
+            if (newNode.expression.equals(TrueExpr.getInstance())) {
+                newNode.isFinal = true;
+                return true;
+            }
+        }
+        NodeCursor nodeCursor = newNode.makeCursor(solver);
+        nodeCursor.saveAllSolverLiterals();
         return true;
     }
 }

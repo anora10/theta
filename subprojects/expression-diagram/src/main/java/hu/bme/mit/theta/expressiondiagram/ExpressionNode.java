@@ -11,6 +11,7 @@ import hu.bme.mit.theta.core.type.Type;
 import hu.bme.mit.theta.core.type.anytype.RefExpr;
 import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
+import hu.bme.mit.theta.expressiondiagram.simplifier.BasicSimplifier;
 import hu.bme.mit.theta.expressiondiagram.simplifier.TrueSimplifier;
 import hu.bme.mit.theta.solver.Solver;
 
@@ -33,8 +34,9 @@ public class ExpressionNode {
     public ExpressionNode(VariableSubstitution vs, Expr expr) {
         variableSubstitution = vs;
         setExpression(expr);
-        SolutionCursor.logger.write(expr.toString(), this);
+        SolutionCursor.logger.write("Creating ExpressionNode: " + expr.toString(), this);
     }
+
 
     /**
      * Set expression of Node, and check whether it contains the next literal which will be substituted
@@ -72,7 +74,7 @@ public class ExpressionNode {
             Decl decl = variableSubstitution.getDecl();
             ImmutableValuation valuation = ImmutableValuation.builder().put(decl, literal).build();
             // resultingExpression: expression after substitution
-            Expr<? extends Type> resultingExpression = TrueSimplifier.simplify(expression, valuation);
+            Expr<? extends Type> resultingExpression = BasicSimplifier.simplify(expression, valuation);
             newNode = variableSubstitution.next.checkIn(resultingExpression);
         }
         nextExpression.put(literal, newNode);
