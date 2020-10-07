@@ -110,6 +110,7 @@ import hu.bme.mit.theta.core.type.rattype.RatNeqExpr;
 import hu.bme.mit.theta.core.type.rattype.RatPosExpr;
 import hu.bme.mit.theta.core.type.rattype.RatSubExpr;
 import hu.bme.mit.theta.core.utils.BvUtils;
+import hu.bme.mit.theta.core.utils.ExprUtils;
 
 final class Z3ExprTransformer {
 
@@ -296,7 +297,12 @@ final class Z3ExprTransformer {
 
 	public com.microsoft.z3.Expr toTerm(final Expr<?> expr) {
 		try {
-			return exprToTerm.get(expr, () -> table.dispatch(expr));
+//			if (ExprUtils.nodeCountSize(expr) > 3) {
+//				 TODO eliminate magic constant
+				return exprToTerm.get(expr, () -> table.dispatch(expr));
+//			} else {
+//				return table.dispatch(expr);
+//			}
 		} catch (final ExecutionException e) {
 			throw new AssertionError();
 		}
