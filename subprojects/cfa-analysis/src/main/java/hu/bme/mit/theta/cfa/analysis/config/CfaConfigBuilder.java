@@ -72,36 +72,37 @@ public class CfaConfigBuilder {
 	}
 
 	public enum Domain {
-		EXPL, PRED_BOOL, PRED_BOOL_BDD, PRED_CART, PRED_SPLIT
+		EXPL, PRED_BOOL, PRED_CART, PRED_SPLIT
 	}
 
 	public enum Refinement {
-		FW_BIN_ITP, BW_BIN_ITP, SEQ_ITP, MULTI_SEQ, UNSAT_CORE
+		FW_BIN_ITP, BW_BIN_ITP, SEQ_ITP, MULTI_SEQ, UNSAT_CORE, UCB,
+		NWT_WP, NWT_SP, NWT_WP_LV, NWT_SP_LV, NWT_IT_WP, NWT_IT_SP, NWT_IT_WP_LV, NWT_IT_SP_LV
 	}
 
 	public enum Search {
 		BFS {
 			@Override
-			public ArgNodeComparator getComp(final CFA cfa) {
+			public ArgNodeComparator getComp(final CFA cfa, final CFA.Loc errLoc) {
 				return ArgNodeComparators.combine(ArgNodeComparators.targetFirst(), ArgNodeComparators.bfs());
 			}
 		},
 
 		DFS {
 			@Override
-			public ArgNodeComparator getComp(final CFA cfa) {
+			public ArgNodeComparator getComp(final CFA cfa, final CFA.Loc errLoc) {
 				return ArgNodeComparators.combine(ArgNodeComparators.targetFirst(), ArgNodeComparators.dfs());
 			}
 		},
 
 		ERR {
 			@Override
-			public ArgNodeComparator getComp(final CFA cfa) {
-				return new DistToErrComparator(cfa);
+			public ArgNodeComparator getComp(final CFA cfa, final CFA.Loc errLoc) {
+				return new DistToErrComparator(cfa, errLoc);
 			}
 		};
 
-		public abstract ArgNodeComparator getComp(CFA cfa);
+		public abstract ArgNodeComparator getComp(CFA cfa, CFA.Loc errLoc);
 
 	}
 
@@ -155,19 +156,19 @@ public class CfaConfigBuilder {
 	public enum Encoding {
 		SBE {
 			@Override
-			public CfaLts getLts() {
+			public CfaLts getLts(CFA.Loc errorLoc) {
 				return new CfaCachedLts(CfaSbeLts.getInstance());
 			}
 		},
 
 		LBE {
 			@Override
-			public CfaLts getLts() {
-				return new CfaCachedLts(CfaLbeLts.getInstance());
+			public CfaLts getLts(CFA.Loc errorLoc) {
+				return new CfaCachedLts(CfaLbeLts.of(errorLoc));
 			}
 		};
 
-		public abstract CfaLts getLts();
+		public abstract CfaLts getLts(CFA.Loc errorLoc);
 	}
 
 	public enum InitPrec {
@@ -234,9 +235,9 @@ public class CfaConfigBuilder {
 		return this;
 	}
 
-	public CfaConfig<? extends State, ? extends Action, ? extends Prec> build(final CFA cfa) {
+	public CfaConfig<? extends State, ? extends Action, ? extends Prec> build(final CFA cfa, final CFA.Loc errLoc) {
 		final ItpSolver solver = solverFactory.createItpSolver();
-		final CfaLts lts = encoding.getLts();
+		final CfaLts lts = encoding.getLts(errLoc);
 		final AllSatSolverFactory factory;
 		switch (allSat) {
 			case LOOP : factory = NaivAllSatSolverFactory.getInstance();
@@ -250,10 +251,10 @@ public class CfaConfigBuilder {
 			final Analysis<CfaState<ExplState>, CfaAction, CfaPrec<ExplPrec>> analysis = CfaAnalysis
 					.create(cfa.getInitLoc(), ExplStmtAnalysis.create(factory, True(), maxEnum));
 			final ArgBuilder<CfaState<ExplState>, CfaAction, CfaPrec<ExplPrec>> argBuilder = ArgBuilder.create(lts,
-					analysis, s -> s.getLoc().equals(cfa.getErrorLoc()), true);
+					analysis, s -> s.getLoc().equals(errLoc), true);
 			final Abstractor<CfaState<ExplState>, CfaAction, CfaPrec<ExplPrec>> abstractor = BasicAbstractor
 					.builder(argBuilder).projection(CfaState::getLoc)
-					.waitlist(PriorityWaitlist.create(search.getComp(cfa)))
+					.waitlist(PriorityWaitlist.create(search.getComp(cfa, errLoc)))
 					.stopCriterion(refinement == Refinement.MULTI_SEQ ? StopCriterions.fullExploration()
 							: StopCriterions.firstCex()).logger(logger).build();
 
@@ -279,6 +280,74 @@ public class CfaConfigBuilder {
 				case UNSAT_CORE:
 					refiner = SingleExprTraceRefiner.create(ExprTraceUnsatCoreChecker.create(True(), True(), solver),
 							precGranularity.createRefiner(new VarsRefToExplPrec()), pruneStrategy, logger);
+					break;
+				case UCB:
+					refiner = SingleExprTraceRefiner.create(ExprTraceUCBChecker.create(True(), True(), solver),
+							precGranularity.createRefiner(new ItpRefToExplPrec()), pruneStrategy, logger);
+					break;
+				case NWT_SP:
+					refiner = SingleExprTraceRefiner.create(
+						ExprTraceNewtonChecker.create(True(), True(), solver).withoutIT().withSP().withoutLV(),
+						precGranularity.createRefiner(new ItpRefToExplPrec()),
+						pruneStrategy,
+						logger
+					);
+					break;
+				case NWT_WP:
+					refiner = SingleExprTraceRefiner.create(
+						ExprTraceNewtonChecker.create(True(), True(), solver).withoutIT().withWP().withoutLV(),
+						precGranularity.createRefiner(new ItpRefToExplPrec()),
+						pruneStrategy,
+						logger
+					);
+					break;
+				case NWT_SP_LV:
+					refiner = SingleExprTraceRefiner.create(
+						ExprTraceNewtonChecker.create(True(), True(), solver).withoutIT().withSP().withLV(),
+						precGranularity.createRefiner(new ItpRefToExplPrec()),
+						pruneStrategy,
+						logger
+					);
+					break;
+				case NWT_WP_LV:
+					refiner = SingleExprTraceRefiner.create(
+						ExprTraceNewtonChecker.create(True(), True(), solver).withoutIT().withWP().withLV(),
+						precGranularity.createRefiner(new ItpRefToExplPrec()),
+						pruneStrategy,
+						logger
+					);
+					break;
+				case NWT_IT_SP:
+					refiner = SingleExprTraceRefiner.create(
+						ExprTraceNewtonChecker.create(True(), True(), solver).withIT().withSP().withoutLV(),
+						precGranularity.createRefiner(new ItpRefToExplPrec()),
+						pruneStrategy,
+						logger
+					);
+					break;
+				case NWT_IT_WP:
+					refiner = SingleExprTraceRefiner.create(
+						ExprTraceNewtonChecker.create(True(), True(), solver).withIT().withWP().withoutLV(),
+						precGranularity.createRefiner(new ItpRefToExplPrec()),
+						pruneStrategy,
+						logger
+					);
+					break;
+				case NWT_IT_SP_LV:
+					refiner = SingleExprTraceRefiner.create(
+						ExprTraceNewtonChecker.create(True(), True(), solver).withIT().withSP().withLV(),
+						precGranularity.createRefiner(new ItpRefToExplPrec()),
+						pruneStrategy,
+						logger
+					);
+					break;
+				case NWT_IT_WP_LV:
+					refiner = SingleExprTraceRefiner.create(
+						ExprTraceNewtonChecker.create(True(), True(), solver).withIT().withWP().withLV(),
+						precGranularity.createRefiner(new ItpRefToExplPrec()),
+						pruneStrategy,
+						logger
+					);
 					break;
 				default:
 					throw new UnsupportedOperationException(
@@ -324,10 +393,10 @@ public class CfaConfigBuilder {
 			final Analysis<CfaState<PredState>, CfaAction, CfaPrec<PredPrec>> analysis = CfaAnalysis
 					.create(cfa.getInitLoc(), PredAnalysis.create(solver, predAbstractor, True()));
 			final ArgBuilder<CfaState<PredState>, CfaAction, CfaPrec<PredPrec>> argBuilder = ArgBuilder.create(lts,
-					analysis, s -> s.getLoc().equals(cfa.getErrorLoc()), true);
+					analysis, s -> s.getLoc().equals(errLoc), true);
 			final Abstractor<CfaState<PredState>, CfaAction, CfaPrec<PredPrec>> abstractor = BasicAbstractor
 					.builder(argBuilder).projection(CfaState::getLoc)
-					.waitlist(PriorityWaitlist.create(search.getComp(cfa)))
+					.waitlist(PriorityWaitlist.create(search.getComp(cfa, errLoc)))
 					.stopCriterion(refinement == Refinement.MULTI_SEQ ? StopCriterions.fullExploration()
 							: StopCriterions.firstCex()).logger(logger).build();
 
@@ -344,6 +413,33 @@ public class CfaConfigBuilder {
 					break;
 				case MULTI_SEQ:
 					exprTraceChecker = ExprTraceSeqItpChecker.create(True(), True(), solver);
+					break;
+				case UCB:
+					exprTraceChecker = ExprTraceUCBChecker.create(True(), True(), solver);
+					break;
+				case NWT_SP:
+					exprTraceChecker = ExprTraceNewtonChecker.create(True(), True(), solver).withoutIT().withSP().withoutLV();
+					break;
+				case NWT_WP:
+					exprTraceChecker = ExprTraceNewtonChecker.create(True(), True(), solver).withoutIT().withWP().withoutLV();
+					break;
+				case NWT_SP_LV:
+					exprTraceChecker = ExprTraceNewtonChecker.create(True(), True(), solver).withoutIT().withSP().withLV();
+					break;
+				case NWT_WP_LV:
+					exprTraceChecker = ExprTraceNewtonChecker.create(True(), True(), solver).withoutIT().withWP().withLV();
+					break;
+				case NWT_IT_SP:
+					exprTraceChecker = ExprTraceNewtonChecker.create(True(), True(), solver).withIT().withSP().withoutLV();
+					break;
+				case NWT_IT_WP:
+					exprTraceChecker = ExprTraceNewtonChecker.create(True(), True(), solver).withIT().withWP().withoutLV();
+					break;
+				case NWT_IT_SP_LV:
+					exprTraceChecker = ExprTraceNewtonChecker.create(True(), True(), solver).withIT().withSP().withLV();
+					break;
+				case NWT_IT_WP_LV:
+					exprTraceChecker = ExprTraceNewtonChecker.create(True(), True(), solver).withIT().withWP().withLV();
 					break;
 				default:
 					throw new UnsupportedOperationException(
