@@ -132,11 +132,11 @@ public class CfaCli {
 	}
 
 	public static void main(final String[] args) {
-		try {
-			System.in.read();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			System.in.read();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		final CfaCli mainApp = new CfaCli(args);
 		mainApp.run();
 	}
@@ -183,6 +183,7 @@ public class CfaCli {
 		if (benchmarkMode) {
 			writer.newRow();
 		}
+
 	}
 
 	private void printMetrics(){
