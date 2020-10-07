@@ -48,6 +48,9 @@ public class XstsCli {
 	private final String[] args;
 	private final TableWriter writer;
 
+	@Parameter(names = {"--allsat"}, description = "AllSAT solution method (LOOP/MDD)")
+	XstsConfigBuilder.AllSat allSat = XstsConfigBuilder.AllSat.LOOP;
+
 	@Parameter(names = {"--domain"}, description = "Abstract domain")
 	Domain domain = Domain.PRED_CART;
 
