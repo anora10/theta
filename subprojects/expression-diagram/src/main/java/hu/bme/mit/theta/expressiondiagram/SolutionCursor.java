@@ -40,8 +40,8 @@ public class SolutionCursor {
      * @param e expression
      */
     private void initiateSolver(Expr e) {
-        logger.write("Solver reset ", this);
-        solver.reset();
+//        logger.write("Solver reset ", this);
+//        solver.reset();
         logger.write("Solver add " + e.toString(), this);
         solver.add(e);
         logger.write("Solver push ", this);
