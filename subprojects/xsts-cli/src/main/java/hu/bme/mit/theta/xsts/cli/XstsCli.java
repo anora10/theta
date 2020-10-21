@@ -176,7 +176,7 @@ public class XstsCli {
 
 	private XstsConfig<?, ?, ?> buildConfiguration(final XSTS xsts) throws Exception {
 		try {
-			return new XstsConfigBuilder(domain, refinement, Z3SolverFactory.getInstance(), XstsConfigBuilder.AllSat.LOOP)
+			return new XstsConfigBuilder(domain, refinement, Z3SolverFactory.getInstance(), allSat)
 					.maxEnum(maxEnum).initPrec(initPrec).pruneStrategy(pruneStrategy)
 					.search(search).predSplit(predSplit).logger(logger).build(xsts);
 		} catch (final Exception ex) {
