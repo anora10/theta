@@ -18,7 +18,7 @@ public interface AllSatSolver extends Iterator<Valuation> {
     void init (Expr<?> expr, List<? extends Decl> decls);
     void init (Expr<?> expr);
 
-    void writeGraph() throws IOException, InterruptedException;
+    void writeGraph();
 
     // use functions
     HashMap<Decl<?>, LitExpr<?>> nextMap();

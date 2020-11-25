@@ -29,7 +29,7 @@ import static hu.bme.mit.theta.core.type.inttype.IntExprs.Int;
 
 public class AllSatSolverTest {
 
-    AllSatSolver allSatSolver = NaivAllSatSolverFactory.getInstance().createSolver();
+    AllSatSolver allSatSolver = BddAllSatSolverFactory.getInstance().createSolver();
 
     private void makeSolutions() {
         while (allSatSolver.hasNext()) {
@@ -42,6 +42,12 @@ public class AllSatSolverTest {
             System.out.println("\n");
         }
         System.out.println("no more solutions");
+
+        //try {
+            allSatSolver.writeGraph();
+        //} catch (Exception e) {
+        //System.out.println("Graph visualization failed.");
+        //}
     }
 
     @Test // (a v !b) ^ (b v c)

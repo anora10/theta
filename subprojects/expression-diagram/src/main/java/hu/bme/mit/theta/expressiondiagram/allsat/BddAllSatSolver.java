@@ -85,8 +85,9 @@ public class BddAllSatSolver implements AllSatSolver{
     public void writeGraph() {
         Graph graph = node.toGraph();
         try {
-            graphvizWriter.writeFile(graph, graph.getId(), GraphvizWriter.Format.PNG);
+            graphvizWriter.writeFileAutoConvert(graph, graph.getId() + ".dot");
         } catch (Exception e) {
+            System.out.println("error:(");
             //TODO handle error
         }
     }

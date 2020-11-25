@@ -179,26 +179,31 @@ public class ExpressionNode {
     }
 
     static int cnt = 0;
+    static int maxId = 0;
+    private int id = 0;
     public Graph toGraph() {
         Graph graph = new Graph(Integer.toString(cnt),expression.toString());
         Queue<ExpressionNode> queue = new LinkedList<>();
-        List<Expr> visited = new ArrayList<>();
+        List<String> visited = new ArrayList<>();
+        Map<String,Integer> idMap = new HashMap<>();
         queue.add(this);
-        visited.add(expression);
-        graph.addNode(getNodeId(), NodeAttributes.builder().build());
+        id = maxId++;
+        visited.add(getNodeLabel());
+        graph.addNode(getNodeId(), NodeAttributes.builder().label(getNodeLabel()).build());
 
         //BFS loop
         while (!queue.isEmpty()) {
             ExpressionNode currentNode = queue.remove();
-            for (LitExpr<? extends Type> label : nextExpression.keySet()) {
-                ExpressionNode tempNode = nextExpression.get(label);
-                if (! visited.contains(tempNode.expression)) {
-                    graph.addNode(tempNode.getNodeId(), NodeAttributes.builder().build());
-                    visited.add(tempNode.expression);
+            for (LitExpr<? extends Type> edgeLabel : currentNode.nextExpression.keySet()) {
+                ExpressionNode tempNode = currentNode.nextExpression.get(edgeLabel);
+                if (! visited.contains(tempNode.getNodeLabel())) {
+                    tempNode.id = maxId++;
+                    graph.addNode(tempNode.getNodeId(), NodeAttributes.builder().label(tempNode.getNodeLabel()).build());
+                    visited.add(tempNode.getNodeLabel());
                     queue.add(tempNode);
                 }
-                graph.addEdge(currentNode.getNodeId(),tempNode.getNodeId(),EdgeAttributes.builder().label(label.toString()).build());
-                graph.setChild(currentNode.getNodeId(),tempNode.getNodeId());
+                graph.addEdge(currentNode.getNodeId(),tempNode.getNodeId(),EdgeAttributes.builder().label(edgeLabel.toString()).build());
+                //graph.setChild(currentNode.getNodeId(),tempNode.getNodeId());
             }
         }
 
@@ -207,7 +212,20 @@ public class ExpressionNode {
     }
 
     private String getNodeId() {
-        return expression.toString() + " @ " + variableSubstitution.getDecl().toString();
+        return Integer.toString(id);
+//        String id;
+//        if (variableSubstitution == null || variableSubstitution.getDecl() == null)
+//            id =  expression.toString();
+//        else id = expression.toString() + " _ " + variableSubstitution.getDecl().toString();
+//        return id.replaceAll(" ","_").replaceAll("\\(","").replaceAll("\\)","");
+    }
+
+    private String getNodeLabel() {
+        String id;
+        if (variableSubstitution == null || variableSubstitution.getDecl() == null)
+            id =  expression.toString();
+        else id = expression.toString() + " @ " + variableSubstitution.getDecl().toString();
+        return id;
     }
 
 }

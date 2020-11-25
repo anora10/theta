@@ -22,6 +22,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import hu.bme.mit.theta.common.logging.ConsoleLogger;
+import hu.bme.mit.theta.common.logging.Logger;
+import hu.bme.mit.theta.common.logging.NullLogger;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.decl.Decls;
@@ -171,7 +174,10 @@ public class PredAbstractors {
 
 				try {
 					allSatSolver.writeGraph();
-				} catch (Exception e) {}
+				} catch (Exception e) {
+					//TODO exception handling
+					NullLogger.getInstance().write(Logger.Level.MAINSTEP,"graph write failed :(");
+				}
 
 			/////////////////////////////////////////////////
 			if (!split && states.size() > 1) {
