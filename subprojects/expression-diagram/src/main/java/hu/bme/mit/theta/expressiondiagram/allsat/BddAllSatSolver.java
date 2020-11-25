@@ -1,5 +1,7 @@
 package hu.bme.mit.theta.expressiondiagram.allsat;
 
+import hu.bme.mit.theta.common.visualization.Graph;
+import hu.bme.mit.theta.common.visualization.writer.GraphvizWriter;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.Valuation;
 import hu.bme.mit.theta.core.type.Expr;
@@ -10,13 +12,17 @@ import hu.bme.mit.theta.expressiondiagram.ExpressionNode;
 import hu.bme.mit.theta.expressiondiagram.SolutionCursor;
 import hu.bme.mit.theta.expressiondiagram.VariableSubstitution;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class BddAllSatSolver implements AllSatSolver{
     ExpressionNode node = null;
     VariableSubstitution vs = null;
     SolutionCursor solutionCursor;
     boolean isFinal;
+
+    GraphvizWriter graphvizWriter = GraphvizWriter.getInstance();
 
     public void setVariables(List<? extends Decl> decls) {
         vs = ExpressionNode.createDecls(decls, false);
@@ -73,5 +79,17 @@ public class BddAllSatSolver implements AllSatSolver{
         Valuation valuation = solutionCursor.getSolutionValuation();
         if (valuation.toMap().isEmpty()) isFinal = true;
         return valuation;
+    }
+
+    static int cnt = 0;
+    @Override
+    public void writeGraph() {
+        Graph graph = node.toGraph();
+        try {
+            graphvizWriter.writeFile(graph, Integer.toString(cnt), GraphvizWriter.Format.PNG);
+        } catch (Exception e) {
+            //TODO handle error
+        }
+        cnt++;
     }
 }

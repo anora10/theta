@@ -29,7 +29,7 @@ import static hu.bme.mit.theta.core.type.inttype.IntExprs.Int;
 
 public class AllSatSolverTest {
 
-    AllSatSolver allSatSolver = BddAllSatSolverFactory.getInstance().createSolver();
+    AllSatSolver allSatSolver = NaivAllSatSolverFactory.getInstance().createSolver();
 
     private void makeSolutions() {
         while (allSatSolver.hasNext()) {

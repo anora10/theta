@@ -336,7 +336,7 @@ public class SolutionCursorTest {
     }
 
     // most nem megy, mert be kellene allitani az egyes valtozokhoz a max megoldás dbszamot
-    @Ignore
+    //@Ignore
     @Test // 2020 ropi zh linprog feladata
     public void test_int_peti() {
         final List<ConstDecl<?>> actLits = new ArrayList<>();

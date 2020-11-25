@@ -55,6 +55,11 @@ public class NaivAllSatSolver implements AllSatSolver{
     }
 
     @Override
+    public void writeGraph() {
+
+    }
+
+    @Override
     public HashMap<Decl<?>, LitExpr<?>> nextMap() {
         if (solver.check().isUnsat()) {
             isFinal = true;

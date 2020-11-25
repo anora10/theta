@@ -6,6 +6,7 @@ import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.LitExpr;
 
 import java.beans.Expression;
+import java.io.IOException;
 import java.util.*;
 
 public interface AllSatSolver extends Iterator<Valuation> {
@@ -16,6 +17,8 @@ public interface AllSatSolver extends Iterator<Valuation> {
     void setK(int k);
     void init (Expr<?> expr, List<? extends Decl> decls);
     void init (Expr<?> expr);
+
+    void writeGraph() throws IOException, InterruptedException;
 
     // use functions
     HashMap<Decl<?>, LitExpr<?>> nextMap();

@@ -40,7 +40,7 @@ abstract class AbstractGraphWriter implements GraphWriter {
 		} catch (final FileNotFoundException e) {
 			throw e;
 		} finally {
-			if (printWriter != null) {
+			 if (printWriter != null) {
 				printWriter.close();
 			}
 		}

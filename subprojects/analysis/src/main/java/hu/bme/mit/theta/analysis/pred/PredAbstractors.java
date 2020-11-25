@@ -18,6 +18,7 @@ package hu.bme.mit.theta.analysis.pred;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static hu.bme.mit.theta.core.type.booltype.BoolExprs.*;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -167,6 +168,11 @@ public class PredAbstractors {
 					}
 					if(!newStatePreds.isEmpty() || preds.isEmpty()) states.add(PredState.of(newStatePreds));
 				}
+
+				try {
+					allSatSolver.writeGraph();
+				} catch (Exception e) {}
+
 			/////////////////////////////////////////////////
 			if (!split && states.size() > 1) {
 				final Expr<BoolType> pred = Or(states.stream().map(PredState::toExpr).collect(Collectors.toList()));

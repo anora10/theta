@@ -2,6 +2,7 @@ package hu.bme.mit.theta.expressiondiagram;
 
 import com.koloboke.collect.map.hash.HashObjObjMap;
 import com.koloboke.collect.map.hash.HashObjObjMaps;
+import hu.bme.mit.theta.common.visualization.Graph;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.ImmutableValuation;
@@ -175,6 +176,10 @@ public class ExpressionNode {
             oldVS = new VariableSubstitution(oldVS, cd);
         }
         return oldVS;
+    }
+
+    public Graph toGraph() {
+        return null;
     }
 
 }
