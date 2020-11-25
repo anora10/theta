@@ -81,15 +81,13 @@ public class BddAllSatSolver implements AllSatSolver{
         return valuation;
     }
 
-    static int cnt = 0;
     @Override
     public void writeGraph() {
         Graph graph = node.toGraph();
         try {
-            graphvizWriter.writeFile(graph, Integer.toString(cnt), GraphvizWriter.Format.PNG);
+            graphvizWriter.writeFile(graph, graph.getId(), GraphvizWriter.Format.PNG);
         } catch (Exception e) {
             //TODO handle error
         }
-        cnt++;
     }
 }

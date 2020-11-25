@@ -2,7 +2,7 @@ package hu.bme.mit.theta.expressiondiagram;
 
 import com.koloboke.collect.map.hash.HashObjObjMap;
 import com.koloboke.collect.map.hash.HashObjObjMaps;
-import hu.bme.mit.theta.common.visualization.Graph;
+import hu.bme.mit.theta.common.visualization.*;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.ImmutableValuation;
@@ -178,8 +178,36 @@ public class ExpressionNode {
         return oldVS;
     }
 
+    static int cnt = 0;
     public Graph toGraph() {
-        return null;
+        Graph graph = new Graph(Integer.toString(cnt),expression.toString());
+        Queue<ExpressionNode> queue = new LinkedList<>();
+        List<Expr> visited = new ArrayList<>();
+        queue.add(this);
+        visited.add(expression);
+        graph.addNode(getNodeId(), NodeAttributes.builder().build());
+
+        //BFS loop
+        while (!queue.isEmpty()) {
+            ExpressionNode currentNode = queue.remove();
+            for (LitExpr<? extends Type> label : nextExpression.keySet()) {
+                ExpressionNode tempNode = nextExpression.get(label);
+                if (! visited.contains(tempNode.expression)) {
+                    graph.addNode(tempNode.getNodeId(), NodeAttributes.builder().build());
+                    visited.add(tempNode.expression);
+                    queue.add(tempNode);
+                }
+                graph.addEdge(currentNode.getNodeId(),tempNode.getNodeId(),EdgeAttributes.builder().label(label.toString()).build());
+                graph.setChild(currentNode.getNodeId(),tempNode.getNodeId());
+            }
+        }
+
+        cnt++;
+        return graph;
+    }
+
+    private String getNodeId() {
+        return expression.toString() + " @ " + variableSubstitution.getDecl().toString();
     }
 
 }
