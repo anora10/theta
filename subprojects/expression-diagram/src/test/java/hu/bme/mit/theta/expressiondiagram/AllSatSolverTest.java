@@ -61,8 +61,14 @@ public class AllSatSolverTest {
         final ConstDecl<BoolType> cc = Const("c", Bool());
 
         actLits.add(cc);
-        actLits.add(cb);
         actLits.add(ca);
+        actLits.add(cb);
+
+        List<String> variableOrder = new ArrayList<>();
+        variableOrder.add("c");
+        variableOrder.add("b");
+        variableOrder.add("a");
+        BddAllSatSolver.setVariableOrder(variableOrder);
 
         // (a v !b) ^ (b v c)
         Expr<?> expr = BoolExprs.And(Or(ca.getRef(), Not(cb.getRef())), Or(cb.getRef(), cc.getRef()));

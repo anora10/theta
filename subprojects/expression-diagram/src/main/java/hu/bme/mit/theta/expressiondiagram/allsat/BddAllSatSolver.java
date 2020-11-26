@@ -22,10 +22,37 @@ public class BddAllSatSolver implements AllSatSolver{
     SolutionCursor solutionCursor;
     boolean isFinal;
 
+    private static List<String> variableOrder = null;
+
     GraphvizWriter graphvizWriter = GraphvizWriter.getInstance();
 
+    /**
+     * Set order of current variables
+     *
+     * @param decls list of decls
+     */
     public void setVariables(List<? extends Decl> decls) {
-        vs = ExpressionNode.createDecls(decls, false);
+        // if no custom variable order is set
+        if (variableOrder == null) {
+            vs = ExpressionNode.createDecls(decls, false);
+        } else {
+            List<Decl> orderedDecl = new ArrayList();
+            for (String declName : variableOrder) {
+                for (Decl decl : decls) {
+                    if (declName.equals(decl.getName())) orderedDecl.add(decl);
+                }
+            }
+            vs = ExpressionNode.createDecls(orderedDecl, false);
+        }
+    }
+
+    /**
+     * Set order of all possible variables
+     *
+     * @param list list of variables in REVERSED order
+     */
+    public static void setVariableOrder(List<String> list) {
+        variableOrder = list;
     }
 
     @Override
@@ -47,6 +74,12 @@ public class BddAllSatSolver implements AllSatSolver{
         }
     }
 
+    /**
+     * Init solver
+     *
+     * @param expr original expression
+     * @param decls level variable list
+     */
     @Override
     public void init(Expr<?> expr, List<? extends Decl> decls) {
         setVariables(decls);
@@ -55,6 +88,11 @@ public class BddAllSatSolver implements AllSatSolver{
         isFinal = expr.equals(FalseExpr.getInstance());
     }
 
+    /**
+     * Init solver, variables are set automatically
+     *
+     * @param expr original expression
+     */
     @Override
     public void init(Expr<?> expr) {
         List<? extends Decl> decls = new ArrayList<>(ExpressionNode.getDecls(expr));
