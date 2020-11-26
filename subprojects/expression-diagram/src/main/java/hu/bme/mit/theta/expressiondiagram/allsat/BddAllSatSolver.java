@@ -1,5 +1,7 @@
 package hu.bme.mit.theta.expressiondiagram.allsat;
 
+import hu.bme.mit.theta.common.logging.ConsoleLogger;
+import hu.bme.mit.theta.common.logging.Logger;
 import hu.bme.mit.theta.common.visualization.Graph;
 import hu.bme.mit.theta.common.visualization.writer.GraphvizWriter;
 import hu.bme.mit.theta.core.decl.Decl;
@@ -14,7 +16,6 @@ import hu.bme.mit.theta.expressiondiagram.VariableSubstitution;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Logger;
 
 public class BddAllSatSolver implements AllSatSolver{
     ExpressionNode node = null;
@@ -99,17 +100,32 @@ public class BddAllSatSolver implements AllSatSolver{
         init(expr, decls);
     }
 
+    /**
+     * Get next solution as map
+     *
+     * @return solution map
+     */
     @Override
     public HashMap<Decl<?>, LitExpr<?>> nextMap() {
         isFinal = ! solutionCursor.moveNext();
         return isFinal ? null : solutionCursor.getSolutionMap();
     }
 
+    /**
+     * Check if there are solutions left
+     *
+     * @return false if all solutions are found
+     */
     @Override
     public boolean hasNext() {
         return !isFinal;
     }
 
+    /**
+     * Get next solution valuation
+     *
+     * @return next solution
+     */
     @Override
     public Valuation next() {
         isFinal = ! solutionCursor.moveNext();
@@ -119,14 +135,16 @@ public class BddAllSatSolver implements AllSatSolver{
         return valuation;
     }
 
+    /**
+     * Save substitution diagram as a .dot file
+     */
     @Override
     public void writeGraph() {
         Graph graph = node.toGraph();
         try {
             graphvizWriter.writeFileAutoConvert(graph, graph.getId() + ".dot");
-        } catch (Exception e) {
-            System.out.println("error:(");
-            //TODO handle error
+        } catch (final Throwable ex) {
+            new ConsoleLogger(hu.bme.mit.theta.common.logging.Logger.Level.RESULT).write(Logger.Level.RESULT,ex.getMessage());
         }
     }
 }

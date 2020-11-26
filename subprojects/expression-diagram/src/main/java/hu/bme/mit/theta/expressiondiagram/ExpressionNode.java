@@ -181,6 +181,12 @@ public class ExpressionNode {
     static int cnt = 0;
     static int maxId = 0;
     private int id = 0;
+
+    /**
+     * Transform underlying diagram to graph
+     *
+     * @return graph after transformation
+     */
     public Graph toGraph() {
         Graph graph = new Graph(Integer.toString(cnt),expression.toString());
         Queue<ExpressionNode> queue = new LinkedList<>();
