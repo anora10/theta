@@ -31,6 +31,7 @@ import hu.bme.mit.theta.analysis.expr.ExprStates;
 import hu.bme.mit.theta.analysis.expr.StmtAction;
 import hu.bme.mit.theta.common.logging.ConsoleLogger;
 import hu.bme.mit.theta.common.logging.Logger;
+import hu.bme.mit.theta.common.logging.NullLogger;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.decl.VarDecl;
@@ -107,6 +108,12 @@ public final class ExplStmtTransFunc implements TransFunc<ExplState, StmtAction,
 					final Valuation valuation = PathUtils.extractValuation(model, nextIdx);
 					ExplState explState = prec.createState(valuation);
 					succStates.add(explState);
+				}
+
+				try {
+					allSatSolver.writeGraph();
+				} catch (final Throwable ex) {
+					new ConsoleLogger(Logger.Level.RESULT).write(Logger.Level.RESULT,ex.getMessage());
 				}
 
 				if (succStates.isEmpty()) {

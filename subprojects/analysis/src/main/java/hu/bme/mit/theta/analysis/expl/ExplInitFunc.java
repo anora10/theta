@@ -22,6 +22,9 @@ import java.util.*;
 
 import hu.bme.mit.theta.analysis.InitFunc;
 import hu.bme.mit.theta.analysis.expr.ExprStates;
+import hu.bme.mit.theta.common.logging.ConsoleLogger;
+import hu.bme.mit.theta.common.logging.Logger;
+import hu.bme.mit.theta.common.logging.NullLogger;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.VarDecl;
 import hu.bme.mit.theta.core.model.Valuation;
@@ -74,6 +77,12 @@ public final class ExplInitFunc implements InitFunc<ExplState, ExplPrec> {
 			final Valuation valuation = PathUtils.extractValuation(model, nextIdx);
 			ExplState explState = prec.createState(valuation);
 			initStates.add(explState);
+		}
+
+		try {
+			allSatSolver.writeGraph();
+		} catch (final Throwable ex) {
+			new ConsoleLogger(Logger.Level.RESULT).write(Logger.Level.RESULT,ex.getMessage());
 		}
 
 		return initStates.isEmpty() ? Collections.singleton(ExplState.bottom()) : initStates;

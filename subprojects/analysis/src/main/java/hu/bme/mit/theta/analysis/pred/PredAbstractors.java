@@ -172,12 +172,11 @@ public class PredAbstractors {
 					if(!newStatePreds.isEmpty() || preds.isEmpty()) states.add(PredState.of(newStatePreds));
 				}
 
-				try {
-					allSatSolver.writeGraph();
-				} catch (Exception e) {
-					//TODO exception handling
-					NullLogger.getInstance().write(Logger.Level.MAINSTEP,"graph write failed :(");
-				}
+			try {
+				allSatSolver.writeGraph();
+			} catch (final Throwable ex) {
+				new ConsoleLogger(Logger.Level.RESULT).write(Logger.Level.RESULT,ex.getMessage());
+			}
 
 			/////////////////////////////////////////////////
 			if (!split && states.size() > 1) {

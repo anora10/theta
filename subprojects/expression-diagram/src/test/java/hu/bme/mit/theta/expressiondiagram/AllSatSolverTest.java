@@ -1,5 +1,7 @@
 package hu.bme.mit.theta.expressiondiagram;
 
+import hu.bme.mit.theta.common.logging.ConsoleLogger;
+import hu.bme.mit.theta.common.logging.Logger;
 import hu.bme.mit.theta.core.decl.ConstDecl;
 import hu.bme.mit.theta.core.decl.Decl;
 import hu.bme.mit.theta.core.model.Valuation;
@@ -43,11 +45,11 @@ public class AllSatSolverTest {
         }
         System.out.println("no more solutions");
 
-        //try {
+        try {
             allSatSolver.writeGraph();
-        //} catch (Exception e) {
-        //System.out.println("Graph visualization failed.");
-        //}
+        } catch (final Throwable ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     @Test // (a v !b) ^ (b v c)
