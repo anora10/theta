@@ -36,7 +36,6 @@ import hu.bme.mit.theta.analysis.expl.ExplStmtAnalysis;
 import hu.bme.mit.theta.analysis.expl.ItpRefToExplPrec;
 import hu.bme.mit.theta.analysis.expl.VarsRefToExplPrec;
 import hu.bme.mit.theta.analysis.expr.ExprState;
-import hu.bme.mit.theta.analysis.expr.ExprStates;
 import hu.bme.mit.theta.analysis.expr.refinement.*;
 import hu.bme.mit.theta.analysis.pred.ExprSplitters;
 import hu.bme.mit.theta.analysis.pred.ExprSplitters.ExprSplitter;
@@ -57,14 +56,17 @@ import hu.bme.mit.theta.cfa.analysis.prec.GlobalCfaPrec;
 import hu.bme.mit.theta.cfa.analysis.prec.GlobalCfaPrecRefiner;
 import hu.bme.mit.theta.cfa.analysis.prec.LocalCfaPrec;
 import hu.bme.mit.theta.cfa.analysis.prec.LocalCfaPrecRefiner;
-import hu.bme.mit.theta.common.logging.ConsoleLogger;
 import hu.bme.mit.theta.common.logging.Logger;
 import hu.bme.mit.theta.common.logging.NullLogger;
 import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
+import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolver;
 import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import hu.bme.mit.theta.expressiondiagram.allsat.NaivAllSatSolverFactory;
+import hu.bme.mit.theta.expressiondiagram.utils.VariableOrderUtil;
 import hu.bme.mit.theta.solver.ItpSolver;
 import hu.bme.mit.theta.solver.SolverFactory;
+
+import java.util.List;
 
 public class CfaConfigBuilder {
 	public enum AllSat {
@@ -180,6 +182,7 @@ public class CfaConfigBuilder {
 	private final Domain domain;
 	private final Refinement refinement;
 	private final AllSat allSat;
+	private final String variableOrder;
 	private Search search = Search.BFS;
 	private PredSplit predSplit = PredSplit.WHOLE;
 	private PrecGranularity precGranularity = PrecGranularity.GLOBAL;
@@ -188,11 +191,12 @@ public class CfaConfigBuilder {
 	private InitPrec initPrec = InitPrec.EMPTY;
 	private PruneStrategy pruneStrategy = PruneStrategy.LAZY;
 
-	public CfaConfigBuilder(final Domain domain, final Refinement refinement, final SolverFactory solverFactory, final AllSat allSat) {
+	public CfaConfigBuilder(final Domain domain, final Refinement refinement, final SolverFactory solverFactory, final AllSat allSat, final String variableOrder) {
 		this.domain = domain;
 		this.refinement = refinement;
 		this.solverFactory = solverFactory;
 		this.allSat = allSat;
+		this.variableOrder = variableOrder;
 	}
 
 	public CfaConfigBuilder logger(final Logger logger) {
@@ -242,8 +246,12 @@ public class CfaConfigBuilder {
 		switch (allSat) {
 			case LOOP : factory = NaivAllSatSolverFactory.getInstance();
 						break;
-			case MDD : factory = BddAllSatSolverFactory.getInstance();
-						break;
+			case MDD : {
+				factory = BddAllSatSolverFactory.getInstance();
+				BddAllSatSolver.setVariableOrder(VariableOrderUtil.loadVariableOrder(variableOrder));
+				break;
+			}
+
 			default: factory = NaivAllSatSolverFactory.getInstance();
 		}
 

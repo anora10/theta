@@ -26,8 +26,10 @@ import hu.bme.mit.theta.core.decl.VarDecl;
 import hu.bme.mit.theta.core.type.Expr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolverFactory;
+import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolver;
 import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import hu.bme.mit.theta.expressiondiagram.allsat.NaivAllSatSolverFactory;
+import hu.bme.mit.theta.expressiondiagram.utils.VariableOrderUtil;
 import hu.bme.mit.theta.solver.ItpSolver;
 import hu.bme.mit.theta.solver.SolverFactory;
 import hu.bme.mit.theta.xsts.XSTS;
@@ -99,6 +101,7 @@ public class XstsConfigBuilder {
 
 	private Logger logger = NullLogger.getInstance();
 	private final AllSat allSat;
+	private final String variableOrder;
 	private final SolverFactory solverFactory;
 	private final Domain domain;
 	private final Refinement refinement;
@@ -108,11 +111,12 @@ public class XstsConfigBuilder {
 	private InitPrec initPrec = InitPrec.EMPTY;
 	private PruneStrategy pruneStrategy = PruneStrategy.LAZY;
 
-	public XstsConfigBuilder(final Domain domain, final Refinement refinement, final SolverFactory solverFactory, final AllSat allSat) {
+	public XstsConfigBuilder(final Domain domain, final Refinement refinement, final SolverFactory solverFactory, final AllSat allSat, final String variableOrder) {
 		this.domain = domain;
 		this.refinement = refinement;
 		this.solverFactory = solverFactory;
 		this.allSat = allSat;
+		this.variableOrder = variableOrder;
 	}
 
 	public XstsConfigBuilder logger(final Logger logger) {
@@ -154,8 +158,12 @@ public class XstsConfigBuilder {
 		switch (allSat) {
 			case LOOP : factory = NaivAllSatSolverFactory.getInstance();
 				break;
-			case MDD : factory = BddAllSatSolverFactory.getInstance();
+			case MDD :  {
+				factory = BddAllSatSolverFactory.getInstance();
+				BddAllSatSolver.setVariableOrder(VariableOrderUtil.loadVariableOrder(variableOrder));
 				break;
+			}
+
 			default: factory = NaivAllSatSolverFactory.getInstance();
 		}
 

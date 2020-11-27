@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
@@ -73,6 +74,9 @@ public class CfaCli {
 
 	@Parameter(names = {"--allsat"}, description = "AllSAT solution method (LOOP/MDD)")
 	CfaConfigBuilder.AllSat allSat = CfaConfigBuilder.AllSat.LOOP;
+
+	@Parameter(names = {"--variableorder"}, description = "MDD predefined variable order, starting from the end of the list")
+	String variableOrder;
 
 	@Parameter(names = "--domain", description = "Abstract domain")
 	Domain domain = Domain.PRED_CART;
@@ -230,7 +234,7 @@ public class CfaCli {
 
 	private CfaConfig<?, ?, ?> buildConfiguration(final CFA cfa, final CFA.Loc errLoc) throws Exception {
 		try {
-			return new CfaConfigBuilder(domain, refinement, Z3SolverFactory.getInstance(), allSat)
+			return new CfaConfigBuilder(domain, refinement, Z3SolverFactory.getInstance(), allSat, variableOrder)
 					.precGranularity(precGranularity).search(search)
 					.predSplit(predSplit).encoding(encoding).maxEnum(maxEnum).initPrec(initPrec)
 					.pruneStrategy(pruneStrategy).logger(logger).build(cfa, errLoc);

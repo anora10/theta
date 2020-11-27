@@ -51,6 +51,9 @@ public class XstsCli {
 	@Parameter(names = {"--allsat"}, description = "AllSAT solution method (LOOP/MDD)")
 	XstsConfigBuilder.AllSat allSat = XstsConfigBuilder.AllSat.LOOP;
 
+	@Parameter(names = {"--variableorder"}, description = "MDD predefined variable order, starting from the end of the list")
+	String variableOrder;
+
 	@Parameter(names = {"--domain"}, description = "Abstract domain")
 	Domain domain = Domain.PRED_CART;
 
@@ -176,7 +179,7 @@ public class XstsCli {
 
 	private XstsConfig<?, ?, ?> buildConfiguration(final XSTS xsts) throws Exception {
 		try {
-			return new XstsConfigBuilder(domain, refinement, Z3SolverFactory.getInstance(), allSat)
+			return new XstsConfigBuilder(domain, refinement, Z3SolverFactory.getInstance(), allSat, variableOrder)
 					.maxEnum(maxEnum).initPrec(initPrec).pruneStrategy(pruneStrategy)
 					.search(search).predSplit(predSplit).logger(logger).build(xsts);
 		} catch (final Exception ex) {
