@@ -10,6 +10,7 @@ import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.expressiondiagram.logger.EmptyLogger;
 import hu.bme.mit.theta.expressiondiagram.logger.ExpressionDiagramLogger;
 import hu.bme.mit.theta.expressiondiagram.logger.SmartLogger;
+import hu.bme.mit.theta.expressiondiagram.utils.SolverCallUtil;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
@@ -135,6 +136,7 @@ public class SolutionCursor {
         if (node.variableSubstitution.next == null) {
             // input expression contains no literals
             logger.write("Solver check ", this);
+            SolverCallUtil.increaseSolverCalls();
             boolean isSat = solver.check().isSat();
             logger.write("Solver add false", this);
             solver.add(FalseExpr.getInstance());

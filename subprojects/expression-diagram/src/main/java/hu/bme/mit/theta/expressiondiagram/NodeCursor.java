@@ -13,6 +13,7 @@ import hu.bme.mit.theta.core.type.booltype.FalseExpr;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.core.type.inttype.IntLitExpr;
 import hu.bme.mit.theta.core.type.inttype.IntType;
+import hu.bme.mit.theta.expressiondiagram.utils.SolverCallUtil;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.SolverStatus;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
@@ -103,6 +104,7 @@ public class NodeCursor {
      */
     private boolean getSolverResult() {
         SolutionCursor.logger.write("Solver check ", this);
+        SolverCallUtil.increaseSolverCalls();
         SolverStatus status = solver.check();
         if (status.isUnsat()) {
             // no more satisfying assignments

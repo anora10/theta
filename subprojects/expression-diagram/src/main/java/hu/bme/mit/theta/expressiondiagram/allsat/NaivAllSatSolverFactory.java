@@ -1,5 +1,6 @@
 package hu.bme.mit.theta.expressiondiagram.allsat;
 
+import hu.bme.mit.theta.expressiondiagram.utils.SolverCallUtil;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
 public class NaivAllSatSolverFactory implements AllSatSolverFactory{
@@ -15,6 +16,7 @@ public class NaivAllSatSolverFactory implements AllSatSolverFactory{
 
     @Override
     public AllSatSolver createSolver() {
+        //SolverCallUtil.resetSolverCalls();
         return new NaivAllSatSolver();
     }
 }

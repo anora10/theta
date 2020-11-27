@@ -10,6 +10,7 @@ import hu.bme.mit.theta.core.type.LitExpr;
 import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.type.booltype.TrueExpr;
 import hu.bme.mit.theta.expressiondiagram.ExpressionNode;
+import hu.bme.mit.theta.expressiondiagram.utils.SolverCallUtil;
 import hu.bme.mit.theta.solver.Solver;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 import static hu.bme.mit.theta.core.type.abstracttype.AbstractExprs.Eq;
@@ -61,6 +62,7 @@ public class NaivAllSatSolver implements AllSatSolver{
 
     @Override
     public HashMap<Decl<?>, LitExpr<?>> nextMap() {
+        SolverCallUtil.increaseSolverCalls();
         if (solver.check().isUnsat()) {
             isFinal = true;
             return null;

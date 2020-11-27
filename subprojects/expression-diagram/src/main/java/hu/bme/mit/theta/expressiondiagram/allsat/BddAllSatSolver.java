@@ -28,6 +28,7 @@ public class BddAllSatSolver implements AllSatSolver{
 
     GraphvizWriter graphvizWriter = GraphvizWriter.getInstance();
 
+
     /**
      * Set order of current variables
      *
@@ -150,4 +151,5 @@ public class BddAllSatSolver implements AllSatSolver{
             }
         }
     }
+
 }
