@@ -12,6 +12,12 @@ import java.util.List;
 
 public class VariableOrderUtil {
 
+    /**
+     * Load predefined variable order from file
+     *
+     * @param variableOrder file that specifies the variable order
+     * @return list of variable names
+     */
     public static List<String> loadVariableOrder(String variableOrder) {
         if (variableOrder == null) return null;
         List<String> result = new ArrayList<>();
