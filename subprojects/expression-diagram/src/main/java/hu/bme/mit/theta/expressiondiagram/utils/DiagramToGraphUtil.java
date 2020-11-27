@@ -11,8 +11,16 @@ import java.util.*;
 
 public class DiagramToGraphUtil {
 
+    static Boolean visualize = false;
+
     static int cnt = 0;
     static int maxId = 0;
+
+    public static Boolean getVisualize() {return visualize;}
+
+    public static void setVisualize(Boolean visualize) {
+        DiagramToGraphUtil.visualize = visualize;
+    }
 
     /**
      * Transform underlying substitution diagram to graph

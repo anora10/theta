@@ -8,6 +8,7 @@ import hu.bme.mit.theta.core.type.booltype.BoolType;
 import hu.bme.mit.theta.core.type.inttype.IntType;
 import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolver;
 import hu.bme.mit.theta.expressiondiagram.allsat.NaivAllSatSolverFactory;
+import hu.bme.mit.theta.expressiondiagram.utils.DiagramToGraphUtil;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -26,6 +27,7 @@ public class SolutionCursorTest {
     private ExpressionNode node;
 
     private void makeSolutions(ExpressionNode node) {
+        DiagramToGraphUtil.setVisualize(true);
         SolutionCursor solutionCursor = new SolutionCursor(node);
         while (solutionCursor.moveNext()) {
             System.out.println("---megoldas---");

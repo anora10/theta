@@ -141,11 +141,13 @@ public class BddAllSatSolver implements AllSatSolver{
      */
     @Override
     public void writeGraph() {
-        Graph graph = DiagramToGraphUtil.toGraph(node);
-        try {
-            graphvizWriter.writeFileAutoConvert(graph, graph.getId() + ".dot");
-        } catch (final Throwable ex) {
-            new ConsoleLogger(hu.bme.mit.theta.common.logging.Logger.Level.RESULT).write(Logger.Level.RESULT,ex.getMessage());
+        if (DiagramToGraphUtil.getVisualize() == true) {
+            Graph graph = DiagramToGraphUtil.toGraph(node);
+            try {
+                graphvizWriter.writeFileAutoConvert(graph, graph.getId() + ".dot");
+            } catch (final Throwable ex) {
+                new ConsoleLogger(hu.bme.mit.theta.common.logging.Logger.Level.RESULT).write(Logger.Level.RESULT, ex.getMessage());
+            }
         }
     }
 }
