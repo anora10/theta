@@ -14,6 +14,7 @@ import hu.bme.mit.theta.common.logging.Logger;
 import hu.bme.mit.theta.common.logging.NullLogger;
 import hu.bme.mit.theta.common.table.BasicTableWriter;
 import hu.bme.mit.theta.common.table.TableWriter;
+import hu.bme.mit.theta.expressiondiagram.utils.DiagramToGraphUtil;
 import hu.bme.mit.theta.solver.SolverFactory;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 import hu.bme.mit.theta.xsts.XSTS;
@@ -53,6 +54,9 @@ public class XstsCli {
 
 	@Parameter(names = {"--variableorder"}, description = "MDD predefined variable order, starting from the end of the list")
 	String variableOrder;
+
+	@Parameter(names = {"--mddvisualize"}, description = "Visualize substitution diagram")
+	Integer mddVisualize = 0;
 
 	@Parameter(names = {"--domain"}, description = "Abstract domain")
 	Domain domain = Domain.PRED_CART;
@@ -121,6 +125,10 @@ public class XstsCli {
 			ex.usage();
 			return;
 		}
+
+		// set visualize flag for substitution diagram visualization
+		if (mddVisualize == 0) DiagramToGraphUtil.setVisualize(false);
+		else DiagramToGraphUtil.setVisualize(true);
 
 		if (headerOnly) {
 			printHeader();
