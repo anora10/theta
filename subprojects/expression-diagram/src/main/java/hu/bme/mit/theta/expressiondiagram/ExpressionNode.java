@@ -27,6 +27,10 @@ public class ExpressionNode {
     VariableSubstitution variableSubstitution;
     private static Stack<NodeCursor> cursorStack = new Stack<>();
 
+    public Expr getExpression() {return expression;}
+
+    public HashObjObjMap<LitExpr<? extends Type>,ExpressionNode> getNextExpression() {return nextExpression;}
+
     /**
      * Constructor for ExpressionNode, sequence of variable subtitution is given
      *
@@ -178,55 +182,16 @@ public class ExpressionNode {
         return oldVS;
     }
 
-    static int cnt = 0;
-    static int maxId = 0;
-    private int id = 0;
 
-    /**
-     * Transform underlying diagram to graph
-     *
-     * @return graph after transformation
-     */
-    public Graph toGraph() {
-        Graph graph = new Graph(Integer.toString(cnt),expression.toString());
-        Queue<ExpressionNode> queue = new LinkedList<>();
-        List<String> visited = new ArrayList<>();
-        Map<String,Integer> idMap = new HashMap<>();
-        queue.add(this);
-        id = maxId++;
-        visited.add(getNodeLabel());
-        graph.addNode(getNodeId(), NodeAttributes.builder().label(getNodeLabel()).build());
+    private Integer graphNodeId;
 
-        //BFS loop
-        while (!queue.isEmpty()) {
-            ExpressionNode currentNode = queue.remove();
-            for (LitExpr<? extends Type> edgeLabel : currentNode.nextExpression.keySet()) {
-                ExpressionNode tempNode = currentNode.nextExpression.get(edgeLabel);
-                if (! visited.contains(tempNode.getNodeLabel())) {
-                    tempNode.id = maxId++;
-                    graph.addNode(tempNode.getNodeId(), NodeAttributes.builder().label(tempNode.getNodeLabel()).build());
-                    visited.add(tempNode.getNodeLabel());
-                    queue.add(tempNode);
-                }
-                graph.addEdge(currentNode.getNodeId(),tempNode.getNodeId(),EdgeAttributes.builder().label(edgeLabel.toString()).build());
-                //graph.setChild(currentNode.getNodeId(),tempNode.getNodeId());
-            }
-        }
+    public void setNodeId(Integer id) {graphNodeId = id;}
 
-        cnt++;
-        return graph;
+    public String getNodeId() {
+        return Integer.toString(graphNodeId);
     }
 
-    private String getNodeId() {
-        return Integer.toString(id);
-//        String id;
-//        if (variableSubstitution == null || variableSubstitution.getDecl() == null)
-//            id =  expression.toString();
-//        else id = expression.toString() + " _ " + variableSubstitution.getDecl().toString();
-//        return id.replaceAll(" ","_").replaceAll("\\(","").replaceAll("\\)","");
-    }
-
-    private String getNodeLabel() {
+    public String getNodeLabel() {
         String id;
         if (variableSubstitution == null || variableSubstitution.getDecl() == null)
             id =  expression.toString();

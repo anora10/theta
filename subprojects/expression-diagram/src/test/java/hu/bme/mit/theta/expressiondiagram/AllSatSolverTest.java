@@ -45,11 +45,8 @@ public class AllSatSolverTest {
         }
         System.out.println("no more solutions");
 
-        try {
-            allSatSolver.writeGraph();
-        } catch (final Throwable ex) {
-            System.out.println(ex.getMessage());
-        }
+        allSatSolver.writeGraph();
+
     }
 
     @Test // (a v !b) ^ (b v c)

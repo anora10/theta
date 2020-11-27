@@ -13,6 +13,7 @@ import hu.bme.mit.theta.core.utils.VarIndexing;
 import hu.bme.mit.theta.expressiondiagram.ExpressionNode;
 import hu.bme.mit.theta.expressiondiagram.SolutionCursor;
 import hu.bme.mit.theta.expressiondiagram.VariableSubstitution;
+import hu.bme.mit.theta.expressiondiagram.utils.DiagramToGraphUtil;
 
 import java.io.IOException;
 import java.util.*;
@@ -140,7 +141,7 @@ public class BddAllSatSolver implements AllSatSolver{
      */
     @Override
     public void writeGraph() {
-        Graph graph = node.toGraph();
+        Graph graph = DiagramToGraphUtil.toGraph(node);
         try {
             graphvizWriter.writeFileAutoConvert(graph, graph.getId() + ".dot");
         } catch (final Throwable ex) {
