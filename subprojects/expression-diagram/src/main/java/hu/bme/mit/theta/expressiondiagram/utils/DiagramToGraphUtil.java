@@ -13,6 +13,9 @@ public class DiagramToGraphUtil {
 
     static Boolean visualize = false;
 
+    static int allNodes = 0;
+    static int allEdges = 0;
+
     static int cnt = 0;
     static int maxId = 0;
 
@@ -64,7 +67,7 @@ public class DiagramToGraphUtil {
      * @param graph examined graph
      * @return number of nodes in graph
      */
-    public static Integer getNodeNumber(Graph graph) {
+    private static Integer getNodeNumber(Graph graph) {
         return graph.getNodes().size();
     }
 
@@ -74,7 +77,19 @@ public class DiagramToGraphUtil {
      * @param graph examined graph
      * @return number of edges in graph
      */
-    public static Integer getEdgeNumber(Graph graph) {
+    private static Integer getEdgeNumber(Graph graph) {
         return graph.getEdges().size();
     }
+
+    public static void addToAllNodes(Graph g) {
+        allNodes += getNodeNumber(g);
+    }
+
+    public static int getAllNodes() {return allNodes;}
+
+    public static void addToAllEdges(Graph g) {
+        allEdges += getEdgeNumber(g);
+    }
+
+    public static int getAllEdges() {return allEdges;}
 }
