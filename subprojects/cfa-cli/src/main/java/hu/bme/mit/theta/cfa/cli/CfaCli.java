@@ -61,6 +61,7 @@ import hu.bme.mit.theta.common.table.TableWriter;
 import hu.bme.mit.theta.common.visualization.Graph;
 import hu.bme.mit.theta.common.visualization.writer.GraphvizWriter;
 import hu.bme.mit.theta.expressiondiagram.utils.DiagramToGraphUtil;
+import hu.bme.mit.theta.expressiondiagram.utils.SolverCallUtil;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -81,6 +82,9 @@ public class CfaCli {
 
 	@Parameter(names = {"--mddvisualize"}, description = "Visualize substitution diagram")
 	Integer mddVisualize = 0;
+
+	@Parameter(names = {"--mddmetrics"}, description = "Metrics of substitution diagram")
+	Integer mddMetrics = 0;
 
 	@Parameter(names = "--domain", description = "Abstract domain")
 	Domain domain = Domain.PRED_CART;
@@ -171,6 +175,10 @@ public class CfaCli {
 		if (mddVisualize == 0) DiagramToGraphUtil.setVisualize(false);
 		else DiagramToGraphUtil.setVisualize(true);
 
+		// set visualize flag for substitution diagram metrics
+		if (mddMetrics == 0) DiagramToGraphUtil.setVisualize(false);
+		else DiagramToGraphUtil.setMetrics(true);
+
 		if (headerOnly) {
 			printHeader();
 			return;
@@ -225,8 +233,13 @@ public class CfaCli {
 	}
 
 	private void printHeader() {
-		Stream.of("Result", "TimeMs", "AlgoTimeMs", "AbsTimeMs", "RefTimeMs", "Iterations",
-				"ArgSize", "ArgDepth", "ArgMeanBranchFactor", "CexLen").forEach(writer::cell);
+		if (mddMetrics == 0) {
+			Stream.of("Result", "TimeMs", "AlgoTimeMs", "AbsTimeMs", "RefTimeMs", "Iterations",
+					"ArgSize", "ArgDepth", "ArgMeanBranchFactor", "CexLen").forEach(writer::cell);
+		} else {
+			Stream.of("Result", "TimeMs", "AlgoTimeMs", "AbsTimeMs", "RefTimeMs", "Iterations",
+					"ArgSize", "ArgDepth", "ArgMeanBranchFactor", "CexLen", "SolverCalls", "AvgDiagramNodes", "AvgNodeGrad").forEach(writer::cell);
+		}
 		writer.newRow();
 	}
 
@@ -275,6 +288,18 @@ public class CfaCli {
 				writer.cell(status.asUnsafe().getTrace().length() + "");
 			} else {
 				writer.cell("");
+			}
+			if (mddMetrics != 0) {
+				writer.cell(SolverCallUtil.getSolverCalls());
+				if (allSat == CfaConfigBuilder.AllSat.LOOP) { // LOOP
+					// solver calls
+					writer.cell("");
+					writer.cell("");
+				} else { // MDD
+					writer.cell(DiagramToGraphUtil.getAvgNodes());
+					writer.cell(DiagramToGraphUtil.getAvgGrad());
+				}
+
 			}
 			writer.newRow();
 		}

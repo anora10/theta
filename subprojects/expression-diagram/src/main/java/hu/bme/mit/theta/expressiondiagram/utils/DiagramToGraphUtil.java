@@ -12,7 +12,9 @@ import java.util.*;
 public class DiagramToGraphUtil {
 
     static Boolean visualize = false;
+    static Boolean metrics = false;
 
+    static int diagrams = 0;
     static int allNodes = 0;
     static int allEdges = 0;
 
@@ -20,9 +22,13 @@ public class DiagramToGraphUtil {
     static int maxId = 0;
 
     public static Boolean getVisualize() {return visualize;}
-
     public static void setVisualize(Boolean visualize) {
         DiagramToGraphUtil.visualize = visualize;
+    }
+
+    public static Boolean getMetrics() {return metrics;}
+    public static void setMetrics(Boolean metrics) {
+        DiagramToGraphUtil.metrics = metrics;
     }
 
     /**
@@ -83,13 +89,22 @@ public class DiagramToGraphUtil {
 
     public static void addToAllNodes(Graph g) {
         allNodes += getNodeNumber(g);
+        diagrams++;
     }
 
-    public static int getAllNodes() {return allNodes;}
+    //public static int getAllNodes() {return allNodes;}
 
     public static void addToAllEdges(Graph g) {
         allEdges += getEdgeNumber(g);
     }
 
-    public static int getAllEdges() {return allEdges;}
+    //public static int getAllEdges() {return allEdges;}
+
+    public static double getAvgNodes() {
+        return (double) allNodes/diagrams;
+    }
+
+    public static double getAvgGrad() {
+        return (double) allEdges/allNodes;
+    }
 }
