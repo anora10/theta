@@ -83,8 +83,9 @@ public class CfaCli {
 	@Parameter(names = {"--mddvisualize"}, description = "Visualize substitution diagram")
 	Integer mddVisualize = 0;
 
+	// by default, metrics are checked
 	@Parameter(names = {"--mddmetrics"}, description = "Metrics of substitution diagram")
-	Integer mddMetrics = 0;
+	Integer mddMetrics = 1;
 
 	@Parameter(names = "--domain", description = "Abstract domain")
 	Domain domain = Domain.PRED_CART;
@@ -175,8 +176,8 @@ public class CfaCli {
 		if (mddVisualize == 0) DiagramToGraphUtil.setVisualize(false);
 		else DiagramToGraphUtil.setVisualize(true);
 
-		// set visualize flag for substitution diagram metrics
-		if (mddMetrics == 0) DiagramToGraphUtil.setVisualize(false);
+		// set metrics flag for substitution diagram metrics
+		if (mddMetrics == 0) DiagramToGraphUtil.setMetrics(false);
 		else DiagramToGraphUtil.setMetrics(true);
 
 		if (headerOnly) {
@@ -292,14 +293,12 @@ public class CfaCli {
 			if (mddMetrics != 0) {
 				writer.cell(SolverCallUtil.getSolverCalls());
 				if (allSat == CfaConfigBuilder.AllSat.LOOP) { // LOOP
-					// solver calls
 					writer.cell("");
 					writer.cell("");
 				} else { // MDD
 					writer.cell(DiagramToGraphUtil.getAvgNodes());
 					writer.cell(DiagramToGraphUtil.getAvgGrad());
 				}
-
 			}
 			writer.newRow();
 		}

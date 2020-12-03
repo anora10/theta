@@ -15,6 +15,7 @@ import hu.bme.mit.theta.common.logging.NullLogger;
 import hu.bme.mit.theta.common.table.BasicTableWriter;
 import hu.bme.mit.theta.common.table.TableWriter;
 import hu.bme.mit.theta.expressiondiagram.utils.DiagramToGraphUtil;
+import hu.bme.mit.theta.expressiondiagram.utils.SolverCallUtil;
 import hu.bme.mit.theta.solver.SolverFactory;
 import hu.bme.mit.theta.solver.z3.Z3SolverFactory;
 import hu.bme.mit.theta.xsts.XSTS;
@@ -57,6 +58,10 @@ public class XstsCli {
 
 	@Parameter(names = {"--mddvisualize"}, description = "Visualize substitution diagram")
 	Integer mddVisualize = 0;
+
+	// by default, metrics are checked
+	@Parameter(names = {"--mddmetrics"}, description = "Metrics of substitution diagram")
+	Integer mddMetrics = 1;
 
 	@Parameter(names = {"--domain"}, description = "Abstract domain")
 	Domain domain = Domain.PRED_CART;
@@ -130,6 +135,10 @@ public class XstsCli {
 		if (mddVisualize == 0) DiagramToGraphUtil.setVisualize(false);
 		else DiagramToGraphUtil.setVisualize(true);
 
+		// set metrics flag for substitution diagram metrics
+		if (mddMetrics == 0) DiagramToGraphUtil.setMetrics(false);
+		else DiagramToGraphUtil.setMetrics(true);
+
 		if (headerOnly) {
 			printHeader();
 			return;
@@ -165,8 +174,14 @@ public class XstsCli {
 	}
 
 	private void printHeader() {
-		Stream.of("Result", "TimeMs", "AlgoTimeMs", "AbsTimeMs", "RefTimeMs", "Iterations",
-				"ArgSize", "ArgDepth", "ArgMeanBranchFactor", "CexLen", "Vars").forEach(writer::cell);
+		if (mddMetrics == 0) {
+			Stream.of("Result", "TimeMs", "AlgoTimeMs", "AbsTimeMs", "RefTimeMs", "Iterations",
+					"ArgSize", "ArgDepth", "ArgMeanBranchFactor", "CexLen", "Vars").forEach(writer::cell);
+		} else {
+			Stream.of("Result", "TimeMs", "AlgoTimeMs", "AbsTimeMs", "RefTimeMs", "Iterations",
+					"ArgSize", "ArgDepth", "ArgMeanBranchFactor", "CexLen", "Vars",
+					"SolverCalls", "AvgDiagramNodes", "AvgNodeGrad").forEach(writer::cell);
+		}
 		writer.newRow();
 	}
 
@@ -213,6 +228,16 @@ public class XstsCli {
 				writer.cell("");
 			}
 			writer.cell(sts.getVars().size());
+			if (mddMetrics != 0) {
+				writer.cell(SolverCallUtil.getSolverCalls());
+				if (allSat == XstsConfigBuilder.AllSat.LOOP) { // LOOP
+					writer.cell("");
+					writer.cell("");
+				} else { // MDD
+					writer.cell(DiagramToGraphUtil.getAvgNodes());
+					writer.cell(DiagramToGraphUtil.getAvgGrad());
+				}
+			}
 			writer.newRow();
 		}
 	}
