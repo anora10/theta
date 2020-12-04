@@ -38,4 +38,8 @@ public class SolverCallUtil {
         }
         return symbols;
     }
+
+    public static double getAvgExprSymbols() {
+        return (double) exprSymbols/solverCalls;
+    }
 }

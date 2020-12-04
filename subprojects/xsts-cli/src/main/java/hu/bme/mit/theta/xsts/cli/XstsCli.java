@@ -180,7 +180,7 @@ public class XstsCli {
 		} else {
 			Stream.of("Result", "TimeMs", "AlgoTimeMs", "AbsTimeMs", "RefTimeMs", "Iterations",
 					"ArgSize", "ArgDepth", "ArgMeanBranchFactor", "CexLen", "Vars",
-					"SolverCalls", "AvgDiagramNodes", "AvgNodeGrad").forEach(writer::cell);
+					"SolverCalls", "AvgExprSymbols", "AvgDiagramNodes", "AvgNodeGrad").forEach(writer::cell);
 		}
 		writer.newRow();
 	}
@@ -230,6 +230,7 @@ public class XstsCli {
 			writer.cell(sts.getVars().size());
 			if (mddMetrics != 0) {
 				writer.cell(SolverCallUtil.getSolverCalls());
+				writer.cell(SolverCallUtil.getAvgExprSymbols());
 				if (allSat == XstsConfigBuilder.AllSat.LOOP) { // LOOP
 					writer.cell("");
 					writer.cell("");

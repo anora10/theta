@@ -239,7 +239,8 @@ public class CfaCli {
 					"ArgSize", "ArgDepth", "ArgMeanBranchFactor", "CexLen").forEach(writer::cell);
 		} else {
 			Stream.of("Result", "TimeMs", "AlgoTimeMs", "AbsTimeMs", "RefTimeMs", "Iterations",
-					"ArgSize", "ArgDepth", "ArgMeanBranchFactor", "CexLen", "SolverCalls", "AvgDiagramNodes", "AvgNodeGrad").forEach(writer::cell);
+					"ArgSize", "ArgDepth", "ArgMeanBranchFactor", "CexLen",
+					"SolverCalls", "AvgExprSymbols", "AvgDiagramNodes", "AvgNodeGrad").forEach(writer::cell);
 		}
 		writer.newRow();
 	}
@@ -292,6 +293,7 @@ public class CfaCli {
 			}
 			if (mddMetrics != 0) {
 				writer.cell(SolverCallUtil.getSolverCalls());
+				writer.cell(SolverCallUtil.getAvgExprSymbols());
 				if (allSat == CfaConfigBuilder.AllSat.LOOP) { // LOOP
 					writer.cell("");
 					writer.cell("");
