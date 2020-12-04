@@ -104,7 +104,7 @@ public class NodeCursor {
      */
     private boolean getSolverResult() {
         SolutionCursor.logger.write("Solver check ", this);
-        SolverCallUtil.increaseSolverCalls();
+        SolverCallUtil.increaseSolverCalls(solver);
         SolverStatus status = solver.check();
         if (status.isUnsat()) {
             // no more satisfying assignments

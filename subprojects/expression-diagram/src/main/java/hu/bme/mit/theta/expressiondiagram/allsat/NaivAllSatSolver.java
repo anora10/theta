@@ -62,7 +62,7 @@ public class NaivAllSatSolver implements AllSatSolver{
 
     @Override
     public HashMap<Decl<?>, LitExpr<?>> nextMap() {
-        SolverCallUtil.increaseSolverCalls();
+        SolverCallUtil.increaseSolverCalls(solver);
         if (solver.check().isUnsat()) {
             isFinal = true;
             return null;

@@ -136,7 +136,7 @@ public class SolutionCursor {
         if (node.variableSubstitution.next == null) {
             // input expression contains no literals
             logger.write("Solver check ", this);
-            SolverCallUtil.increaseSolverCalls();
+            SolverCallUtil.increaseSolverCalls(solver);
             boolean isSat = solver.check().isSat();
             logger.write("Solver add false", this);
             solver.add(FalseExpr.getInstance());

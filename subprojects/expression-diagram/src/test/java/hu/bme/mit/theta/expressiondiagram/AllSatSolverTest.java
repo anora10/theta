@@ -16,6 +16,7 @@ import hu.bme.mit.theta.expressiondiagram.allsat.AllSatSolver;
 import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolver;
 import hu.bme.mit.theta.expressiondiagram.allsat.BddAllSatSolverFactory;
 import hu.bme.mit.theta.expressiondiagram.allsat.NaivAllSatSolverFactory;
+import hu.bme.mit.theta.expressiondiagram.utils.SolverCallUtil;
 import org.junit.Test;
 
 import java.util.ArrayList;
